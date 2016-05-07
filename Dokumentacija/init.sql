@@ -82,8 +82,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Uplate` (
   `idUplate` INT NOT NULL COMMENT '',
   `DatumUplate` DATE NULL COMMENT '',
   `VisinaUplate` DOUBLE NULL COMMENT '',
-  `IzvrsenaUplata` VARCHAR(45) NULL COMMENT '',
   `idDjeca` INT NULL COMMENT '',
+  `zaMjesec` INT NULL COMMENT '',
+  `zaGodinu` INT NULL COMMENT '',
   PRIMARY KEY (`idUplate`)  COMMENT '',
   INDEX `idDjeca_idx` (`idDjeca` ASC)  COMMENT '',
   CONSTRAINT `idDjeca`
@@ -124,8 +125,8 @@ DROP TABLE IF EXISTS `mydb`.`Aktivnosti` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Aktivnosti` (
   `idAktivnosti` INT NOT NULL COMMENT '',
   `Naziv` VARCHAR(255) NULL COMMENT '',
-  `BrojDjece` INT(11) NULL COMMENT '',
-  `Aktivnosticol` VARCHAR(45) NULL COMMENT '',
+  `BrojDjece` INT NULL COMMENT '',
+  `cijena` INT NULL COMMENT '',
   PRIMARY KEY (`idAktivnosti`)  COMMENT '')
 ENGINE = InnoDB;
 
@@ -153,6 +154,55 @@ CREATE TABLE IF NOT EXISTS `mydb`.`AktivnostiDjeca` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `mydb`.`Zaduzenja`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`Zaduzenja` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`Zaduzenja` (
+  `idZaduzenja` INT NOT NULL COMMENT '',
+  `idDjeca` INT NULL COMMENT '',
+  `mjesec` VARCHAR(45) NULL COMMENT '',
+  `godina` INT NULL COMMENT '',
+  PRIMARY KEY (`idZaduzenja`)  COMMENT '',
+  INDEX `fk_djeca_1_idx` (`idDjeca` ASC)  COMMENT '',
+  CONSTRAINT `fk_djeca_1`
+    FOREIGN KEY (`idDjeca`)
+    REFERENCES `mydb`.`Djeca` (`idDjeca`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Termini`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`Termini` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`Termini` (
+  `idTermini` INT NOT NULL COMMENT '',
+  `idAktivnosti` INT NULL COMMENT '',
+  `idGrupe` INT NULL COMMENT '',
+  `vrijemePocetka` VARCHAR(45) NULL COMMENT '',
+  `vrijemeZavrsetka` VARCHAR(45) NULL COMMENT '',
+  `dan` VARCHAR(45) NULL COMMENT '',
+  PRIMARY KEY (`idTermini`)  COMMENT '',
+  INDEX `fk_aktivnosti_1_idx` (`idAktivnosti` ASC)  COMMENT '',
+  INDEX `fk_grupe_1_idx` (`idGrupe` ASC)  COMMENT '',
+  CONSTRAINT `fk_aktivnosti_1`
+    FOREIGN KEY (`idAktivnosti`)
+    REFERENCES `mydb`.`Aktivnosti` (`idAktivnosti`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_grupe_1`
+    FOREIGN KEY (`idGrupe`)
+    REFERENCES `mydb`.`Grupe` (`idGrupe`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
