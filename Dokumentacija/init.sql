@@ -5,22 +5,22 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema vrtic
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `mydb` ;
+DROP SCHEMA IF EXISTS `vrtic` ;
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema vrtic
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `vrtic` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `vrtic` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Grupe`
+-- Table `vrtic`.`Grupe`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Grupe` ;
+DROP TABLE IF EXISTS `vrtic`.`Grupe` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Grupe` (
+CREATE TABLE IF NOT EXISTS `vrtic`.`Grupe` (
   `idGrupe` INT NOT NULL COMMENT '',
   `naziv` VARCHAR(45) NULL COMMENT '',
   `RedniBroj` INT(11) NULL COMMENT '',
@@ -30,11 +30,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Djeca`
+-- Table `vrtic`.`Djeca`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Djeca` ;
+DROP TABLE IF EXISTS `vrtic`.`Djeca` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Djeca` (
+CREATE TABLE IF NOT EXISTS `vrtic`.`Djeca` (
   `idDjeca` INT NOT NULL COMMENT '',
   `Ime` VARCHAR(255) NULL COMMENT '',
   `Prezime` VARCHAR(255) NULL COMMENT '',
@@ -50,18 +50,18 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Djeca` (
   INDEX `fk_grupe_idx` (`idGrupe` ASC)  COMMENT '',
   CONSTRAINT `fk_grupe`
     FOREIGN KEY (`idGrupe`)
-    REFERENCES `mydb`.`Grupe` (`idGrupe`)
+    REFERENCES `vrtic`.`Grupe` (`idGrupe`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Korisnici`
+-- Table `vrtic`.`Korisnici`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Korisnici` ;
+DROP TABLE IF EXISTS `vrtic`.`Korisnici` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Korisnici` (
+CREATE TABLE IF NOT EXISTS `vrtic`.`Korisnici` (
   `idKorisnika` INT NOT NULL COMMENT '',
   `Ime` VARCHAR(255) NULL COMMENT '',
   `Prezime` VARCHAR(255) NULL COMMENT '',
@@ -74,11 +74,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Uplate`
+-- Table `vrtic`.`Uplate`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Uplate` ;
+DROP TABLE IF EXISTS `vrtic`.`Uplate` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Uplate` (
+CREATE TABLE IF NOT EXISTS `vrtic`.`Uplate` (
   `idUplate` INT NOT NULL COMMENT '',
   `DatumUplate` DATE NULL COMMENT '',
   `VisinaUplate` DOUBLE NULL COMMENT '',
@@ -89,18 +89,18 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Uplate` (
   INDEX `idDjeca_idx` (`idDjeca` ASC)  COMMENT '',
   CONSTRAINT `idDjeca`
     FOREIGN KEY (`idDjeca`)
-    REFERENCES `mydb`.`Djeca` (`idDjeca`)
+    REFERENCES `vrtic`.`Djeca` (`idDjeca`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Vaspitaci`
+-- Table `vrtic`.`Vaspitaci`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Vaspitaci` ;
+DROP TABLE IF EXISTS `vrtic`.`Vaspitaci` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Vaspitaci` (
+CREATE TABLE IF NOT EXISTS `vrtic`.`Vaspitaci` (
   `idVaspitaci` INT NOT NULL COMMENT '',
   `Ime` VARCHAR(255) NULL COMMENT '',
   `Prezime` VARCHAR(255) NULL COMMENT '',
@@ -111,18 +111,18 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Vaspitaci` (
   INDEX `GrupeID_idx` (`idGrupe` ASC)  COMMENT '',
   CONSTRAINT `GrupeID`
     FOREIGN KEY (`idGrupe`)
-    REFERENCES `mydb`.`Grupe` (`idGrupe`)
+    REFERENCES `vrtic`.`Grupe` (`idGrupe`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Aktivnosti`
+-- Table `vrtic`.`Aktivnosti`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Aktivnosti` ;
+DROP TABLE IF EXISTS `vrtic`.`Aktivnosti` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Aktivnosti` (
+CREATE TABLE IF NOT EXISTS `vrtic`.`Aktivnosti` (
   `idAktivnosti` INT NOT NULL COMMENT '',
   `Naziv` VARCHAR(255) NULL COMMENT '',
   `BrojDjece` INT NULL COMMENT '',
@@ -132,34 +132,34 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`AktivnostiDjeca`
+-- Table `vrtic`.`AktivnostiDjeca`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`AktivnostiDjeca` ;
+DROP TABLE IF EXISTS `vrtic`.`AktivnostiDjeca` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`AktivnostiDjeca` (
+CREATE TABLE IF NOT EXISTS `vrtic`.`AktivnostiDjeca` (
   `idDjeca` INT NOT NULL COMMENT '',
   `idAktivnosti` INT NOT NULL COMMENT '',
   INDEX `fk_Aktivnosti_idx` (`idAktivnosti` ASC)  COMMENT '',
   INDEX `fk_Djeca_idx` (`idDjeca` ASC)  COMMENT '',
   CONSTRAINT `fk_Djeca`
     FOREIGN KEY (`idDjeca`)
-    REFERENCES `mydb`.`Djeca` (`idDjeca`)
+    REFERENCES `vrtic`.`Djeca` (`idDjeca`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Aktivnosti`
     FOREIGN KEY (`idAktivnosti`)
-    REFERENCES `mydb`.`Aktivnosti` (`idAktivnosti`)
+    REFERENCES `vrtic`.`Aktivnosti` (`idAktivnosti`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Zaduzenja`
+-- Table `vrtic`.`Zaduzenja`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Zaduzenja` ;
+DROP TABLE IF EXISTS `vrtic`.`Zaduzenja` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Zaduzenja` (
+CREATE TABLE IF NOT EXISTS `vrtic`.`Zaduzenja` (
   `idZaduzenja` INT NOT NULL COMMENT '',
   `idDjeca` INT NULL COMMENT '',
   `mjesec` VARCHAR(45) NULL COMMENT '',
@@ -168,18 +168,18 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Zaduzenja` (
   INDEX `fk_djeca_1_idx` (`idDjeca` ASC)  COMMENT '',
   CONSTRAINT `fk_djeca_1`
     FOREIGN KEY (`idDjeca`)
-    REFERENCES `mydb`.`Djeca` (`idDjeca`)
+    REFERENCES `vrtic`.`Djeca` (`idDjeca`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Termini`
+-- Table `vrtic`.`Termini`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Termini` ;
+DROP TABLE IF EXISTS `vrtic`.`Termini` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Termini` (
+CREATE TABLE IF NOT EXISTS `vrtic`.`Termini` (
   `idTermini` INT NOT NULL COMMENT '',
   `idAktivnosti` INT NULL COMMENT '',
   `idGrupe` INT NULL COMMENT '',
@@ -191,12 +191,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Termini` (
   INDEX `fk_grupe_1_idx` (`idGrupe` ASC)  COMMENT '',
   CONSTRAINT `fk_aktivnosti_1`
     FOREIGN KEY (`idAktivnosti`)
-    REFERENCES `mydb`.`Aktivnosti` (`idAktivnosti`)
+    REFERENCES `vrtic`.`Aktivnosti` (`idAktivnosti`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_grupe_1`
     FOREIGN KEY (`idGrupe`)
-    REFERENCES `mydb`.`Grupe` (`idGrupe`)
+    REFERENCES `vrtic`.`Grupe` (`idGrupe`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
