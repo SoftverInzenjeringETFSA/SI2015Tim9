@@ -22,7 +22,7 @@ USE `tim9` ;
 DROP TABLE IF EXISTS `tim9`.`Grupa` ;
 
 CREATE TABLE IF NOT EXISTS `tim9`.`Grupa` (
-  `idGrupe` INT NOT NULL COMMENT '',
+  `idGrupe` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `naziv` VARCHAR(45) NULL COMMENT '',
   `RedniBroj` INT(11) NULL COMMENT '',
   `Kapacitet` INT(11) NULL COMMENT '',
@@ -36,7 +36,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `tim9`.`Dijete` ;
 
 CREATE TABLE IF NOT EXISTS `tim9`.`Dijete` (
-  `idDijete` INT NOT NULL COMMENT '',
+  `idDijete` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `Ime` VARCHAR(255) NULL COMMENT '',
   `Prezime` VARCHAR(255) NULL COMMENT '',
   `DatumRodjenja` VARCHAR(255) NULL COMMENT '',
@@ -63,7 +63,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `tim9`.`Korisnik` ;
 
 CREATE TABLE IF NOT EXISTS `tim9`.`Korisnik` (
-  `idKorisnika` INT NOT NULL COMMENT '',
+  `idKorisnika` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `Ime` VARCHAR(255) NULL COMMENT '',
   `Prezime` VARCHAR(255) NULL COMMENT '',
   `KorisnickoIme` VARCHAR(255) NULL COMMENT '',
@@ -80,7 +80,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `tim9`.`Uplata` ;
 
 CREATE TABLE IF NOT EXISTS `tim9`.`Uplata` (
-  `idUplate` INT NOT NULL COMMENT '',
+  `idUplate` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `DatumUplate` DATE NULL COMMENT '',
   `VisinaUplate` DOUBLE NULL COMMENT '',
   `idDijete` INT NULL COMMENT '',
@@ -102,7 +102,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `tim9`.`Vaspitac` ;
 
 CREATE TABLE IF NOT EXISTS `tim9`.`Vaspitac` (
-  `idVaspitac` INT NOT NULL COMMENT '',
+  `idVaspitac` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `Ime` VARCHAR(255) NULL COMMENT '',
   `Prezime` VARCHAR(255) NULL COMMENT '',
   `BrojTelefona` VARCHAR(255) NULL COMMENT '',
@@ -124,7 +124,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `tim9`.`Aktivnost` ;
 
 CREATE TABLE IF NOT EXISTS `tim9`.`Aktivnost` (
-  `idAktivnosti` INT NOT NULL COMMENT '',
+  `idAktivnosti` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `Naziv` VARCHAR(255) NULL COMMENT '',
   `BrojDjece` INT NULL COMMENT '',
   `cijena` INT NULL COMMENT '',
@@ -138,7 +138,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `tim9`.`AktivnostiDjeca` ;
 
 CREATE TABLE IF NOT EXISTS `tim9`.`AktivnostiDjeca` (
-  `idDijete` INT NOT NULL COMMENT '',
+  `idDijete` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `idAktivnosti` INT NOT NULL COMMENT '',
   INDEX `fk_Aktivnosti_idx` (`idAktivnosti` ASC)  COMMENT '',
   INDEX `fk_Djeca_idx` (`idDijete` ASC)  COMMENT '',
@@ -161,7 +161,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `tim9`.`Zaduzenja` ;
 
 CREATE TABLE IF NOT EXISTS `tim9`.`Zaduzenja` (
-  `idZaduzenja` INT NOT NULL COMMENT '',
+  `idZaduzenja` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `idDijete` INT NULL COMMENT '',
   `mjesec` VARCHAR(45) NULL COMMENT '',
   `godina` INT NULL COMMENT '',
@@ -181,7 +181,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `tim9`.`Termin` ;
 
 CREATE TABLE IF NOT EXISTS `tim9`.`Termin` (
-  `idTermin` INT NOT NULL COMMENT '',
+  `idTermin` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `idAktivnosti` INT NULL COMMENT '',
   `idGrupe` INT NULL COMMENT '',
   `vrijemePocetka` VARCHAR(45) NULL COMMENT '',
