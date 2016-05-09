@@ -21,7 +21,7 @@ private JTextField textField_5;
 private JTextField textField_6;
 private JTextField textField_7;
 private JTextField textField_8;
-
+final static Logger logger = Logger.getLogger(login.class);
 /**
  * Launch the application.
  */
@@ -33,7 +33,7 @@ public static void OtvoriFormu() {
 				window.frmVrti.setVisible(true);
 				window.frmVrti.setAlwaysOnTop(true);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.info(e);
 			}
 		}
 	});

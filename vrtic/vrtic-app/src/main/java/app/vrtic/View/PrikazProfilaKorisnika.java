@@ -16,7 +16,7 @@ public class PrikazProfilaKorisnika {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
-
+	final static Logger logger = Logger.getLogger(login.class);
 	/**
 	 * Launch the application.
 	 */
@@ -28,7 +28,7 @@ public class PrikazProfilaKorisnika {
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.info(e);
 				}
 			}
 		});
@@ -51,13 +51,7 @@ public class PrikazProfilaKorisnika {
 		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);
 		
-		JButton btnOdjava = new JButton("Odjava");
-		btnOdjava.setBounds(322, 11, 126, 23);
-		frmVrti.getContentPane().add(btnOdjava);
 		
-		JButton btnNewButton = new JButton("Promjena \u0161ifre");
-		btnNewButton.setBounds(189, 11, 126, 23);
-		frmVrti.getContentPane().add(btnNewButton);
 		
 		JLabel lblIme = new JLabel("Ime:");
 		lblIme.setBounds(104, 62, 46, 14);

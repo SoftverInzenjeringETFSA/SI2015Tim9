@@ -9,6 +9,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
+
 public class IzmjenaKorisnika {
 
 
@@ -17,7 +19,7 @@ public class IzmjenaKorisnika {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
-
+	final static Logger logger = Logger.getLogger(login.class);
 	/**
 	 * Launch the application.
 	 */
@@ -29,7 +31,7 @@ public class IzmjenaKorisnika {
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.info(e);
 				}
 			}
 		});

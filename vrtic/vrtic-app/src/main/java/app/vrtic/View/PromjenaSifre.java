@@ -13,7 +13,7 @@ public class PromjenaSifre {
 	private JPasswordField passwordField_2;
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_1;
-
+	final static Logger logger = Logger.getLogger(login.class);
 	/**
 	 * Launch the application.
 	 */
@@ -25,7 +25,7 @@ public class PromjenaSifre {
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.info(e);
 				}
 			}
 		});
