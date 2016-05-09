@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
@@ -77,20 +78,29 @@ public class login {
 			public void actionPerformed(ActionEvent e)
 			{
 				
-				
+				// ovaj dio će za sad biti hardcode da bi se moglo sve otvarati
+				// kad se doda baza i korisnici izmjeniti ovo !!!
+				// !!!
+				if(textField.getText().equals("direktor"))
+				{
 					GlavniProzorDirektor mainFormaDirektor = new GlavniProzorDirektor();
 					mainFormaDirektor.OtvoriFormu();
 					//Ovim cemo sakriti login, pa nam moze posluziti kao glavna forma
 					frmVrti.setVisible(false);
-					
-					/*
+				}
+				else if(textField.getText().equals("blagajnik"))
+				{
 					//a ovo cemo ubaciti ako se loguje kao blagajnik
 					GlavniProzorBlagajnik mainFormaBlagajnik = new GlavniProzorBlagajnik();
 					mainFormaBlagajnik.OtvoriFormu();
 					//Ovim cemo sakriti login, pa nam moze posluziti kao glavna forma
-					frmVrti.setVisible(false);
-					*/
-					
+					frmVrti.setVisible(false);	
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Unesi direktor ili blagajnik, u zavisnosti sta ti treba");
+				}
+				
+							
 			}
 
 		});
