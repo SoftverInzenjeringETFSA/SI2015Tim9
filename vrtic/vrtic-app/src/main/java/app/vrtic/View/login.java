@@ -10,11 +10,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
+import org.apache.log4j.Logger;
 
 public class login {
 	public JDialog dijalog;
-
+	final static Logger logger = Logger.getLogger(login.class);
 	private JFrame frmVrti;
 	private JTextField textField;
 	private JPasswordField passwordField;
@@ -29,7 +29,7 @@ public class login {
 					login window = new login();
 					window.frmVrti.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.info(e);
 				}
 			}
 		});

@@ -22,9 +22,9 @@ import javax.swing.SpinnerDateModel;
 import java.util.Date;
 import java.util.Calendar;
 import javax.swing.JCheckBox;
-
+import org.apache.log4j.Logger;
 public class GlavniProzorBlagajnik {
-
+	final static Logger logger = Logger.getLogger(login.class);
 	private JFrame frmVrti;
 	private JTable table_5;
 	private JTable table_6;
@@ -41,7 +41,7 @@ public class GlavniProzorBlagajnik {
 					window.frmVrti.setVisible(true);
 					
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.info(e);
 				}
 			}
 		});

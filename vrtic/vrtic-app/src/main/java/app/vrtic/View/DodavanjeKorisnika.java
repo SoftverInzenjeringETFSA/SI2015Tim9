@@ -8,8 +8,10 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 
-public class DodavanjeKorisnika {
+import org.apache.log4j.Logger;
 
+public class DodavanjeKorisnika {
+	final static Logger logger = Logger.getLogger(login.class);
 	private JFrame frmVrti;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -28,7 +30,7 @@ public class DodavanjeKorisnika {
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.info(e);
 				}
 			}
 		});

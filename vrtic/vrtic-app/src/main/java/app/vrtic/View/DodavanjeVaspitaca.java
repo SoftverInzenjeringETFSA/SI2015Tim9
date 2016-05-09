@@ -6,13 +6,15 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
+
 public class DodavanjeVaspitaca {
 
 	private JFrame frmVrti;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
-
+	final static Logger logger = Logger.getLogger(login.class);
 	/**
 	 * Launch the application.
 	 */
@@ -24,7 +26,7 @@ public class DodavanjeVaspitaca {
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.info(e);
 				}
 			}
 		});

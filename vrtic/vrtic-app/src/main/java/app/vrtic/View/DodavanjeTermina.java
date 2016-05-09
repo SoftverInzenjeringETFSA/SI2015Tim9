@@ -7,10 +7,13 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+
+import org.apache.log4j.Logger;
+
 import javax.swing.JFormattedTextField;
 
 public class DodavanjeTermina {
-
+	final static Logger logger = Logger.getLogger(login.class);
 	private JFrame frmVrti;
 	private JTextField textField;
 
@@ -25,7 +28,7 @@ public class DodavanjeTermina {
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.info(e);
 				}
 			}
 		});

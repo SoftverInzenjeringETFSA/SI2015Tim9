@@ -10,7 +10,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JTextPane;
-
+import org.apache.log4j.Logger;
 public class IzmjenaDjeteta {private JFrame frmVrti;
 private JTextField textField;
 private JTextField textField_1;

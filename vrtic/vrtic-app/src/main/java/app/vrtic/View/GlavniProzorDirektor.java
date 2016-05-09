@@ -10,6 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import org.apache.log4j.Logger;
+
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
@@ -27,7 +30,7 @@ public class GlavniProzorDirektor {
 	private JTable table_4;
 	private JTable table_5;
 	private JTable table_6;
-
+	final static Logger logger = Logger.getLogger(login.class);
 	/**
 	 * Launch the application.
 	 */
@@ -39,7 +42,7 @@ public class GlavniProzorDirektor {
 					window.frmVrti.setVisible(true);
 					
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.info(e);
 				}
 			}
 		});

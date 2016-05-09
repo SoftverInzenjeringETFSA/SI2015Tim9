@@ -8,11 +8,13 @@ import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
+
 public class DodavanjeGrupe {
 
 	private JFrame frmVrti;
 	private JTextField textField;
-
+	final static Logger logger = Logger.getLogger(login.class);
 	/**
 	 * Launch the application.
 	 */
@@ -24,7 +26,7 @@ public class DodavanjeGrupe {
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.info(e);
 				}
 			}
 		});

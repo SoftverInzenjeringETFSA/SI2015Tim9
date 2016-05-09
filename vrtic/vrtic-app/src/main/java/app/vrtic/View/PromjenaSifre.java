@@ -6,7 +6,7 @@ import javax.swing.JLabel;
 
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
-
+import org.apache.log4j.Logger;
 public class PromjenaSifre {
 
 	private JFrame frmVrti;

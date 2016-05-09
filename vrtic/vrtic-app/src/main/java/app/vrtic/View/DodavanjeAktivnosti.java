@@ -5,9 +5,12 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import org.apache.log4j.Logger;
 
+
+	
 public class DodavanjeAktivnosti {
-
+	final static Logger logger = Logger.getLogger(login.class);
 	private JFrame frmVrti;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -23,7 +26,7 @@ public class DodavanjeAktivnosti {
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.info(e);
 				}
 			}
 		});

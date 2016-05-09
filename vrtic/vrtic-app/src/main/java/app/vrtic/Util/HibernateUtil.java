@@ -1,10 +1,14 @@
 package app.vrtic.Util;
 
+import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
+
 import org.hibernate.cfg.Configuration;
 
-public class HibernateUtil {
+import app.vrtic.View.login;
 
+public class HibernateUtil {
+	final static Logger logger = Logger.getLogger(login.class);
 	  private static final SessionFactory sessionFactory = buildSessionFactory();
 
 	    private static SessionFactory buildSessionFactory() {
@@ -14,7 +18,7 @@ public class HibernateUtil {
 	        }
 	        catch (Exception ex) {
 	            // Make sure you log the exception, as it might be swallowed
-	            System.err.println("Initial SessionFactory creation failed." + ex);
+	            logger.info(ex);
 	            throw new ExceptionInInitializerError(ex);
 	        }
 	    }

@@ -10,8 +10,10 @@ import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JTextPane;
 
-public class EvidentiranjeDjeteta {
+import org.apache.log4j.Logger;
 
+public class EvidentiranjeDjeteta {
+	final static Logger logger = Logger.getLogger(login.class);
 	private JFrame frmVrti;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -34,7 +36,7 @@ public class EvidentiranjeDjeteta {
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.info(e);
 				}
 			}
 		});

@@ -1,5 +1,6 @@
 package app.vrtic.View;
 import java.awt.EventQueue;
+import org.apache.log4j.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
