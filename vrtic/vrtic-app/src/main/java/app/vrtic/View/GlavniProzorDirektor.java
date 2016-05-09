@@ -1,5 +1,7 @@
 package app.vrtic.View;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -132,6 +134,18 @@ public class GlavniProzorDirektor {
 		JButton btnIzmijeniPodatke = new JButton("Izmijeni podatke");
 		btnIzmijeniPodatke.setBounds(58, 164, 126, 23);
 		panel_1.add(btnIzmijeniPodatke);
+		btnIzmijeniPodatke.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				
+				
+					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta();
+					novifrejm.OtvoriFormu();
+					
+			}
+
+		});
 		
 		JButton btnEvidentirajDijete = new JButton("Evidentiraj dijete");
 		btnEvidentirajDijete.setBounds(265, 164, 147, 23);

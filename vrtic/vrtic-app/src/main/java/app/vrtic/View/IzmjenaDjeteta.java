@@ -25,7 +25,7 @@ private JTextField textField_8;
 /**
  * Launch the application.
  */
-public static void main(String[] args) {
+public static void OtvoriFormu() {
 	EventQueue.invokeLater(new Runnable() {
 		public void run() {
 			try {
@@ -52,7 +52,7 @@ private void initialize() {
 	frmVrti = new JFrame();
 	frmVrti.setTitle("Vrti\u0107");
 	frmVrti.setBounds(100, 100, 517, 726);
-	frmVrti.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	frmVrti.getContentPane().setLayout(null);
 	
 	/*JButton btnOdjava = new JButton("Odjava");
