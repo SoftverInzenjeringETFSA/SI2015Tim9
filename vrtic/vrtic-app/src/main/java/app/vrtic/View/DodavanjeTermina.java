@@ -17,12 +17,13 @@ public class DodavanjeTermina {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					DodavanjeTermina window = new DodavanjeTermina();
 					window.frmVrti.setVisible(true);
+					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -44,7 +45,7 @@ public class DodavanjeTermina {
 		frmVrti = new JFrame();
 		frmVrti.setTitle("Vrti\u0107");
 		frmVrti.setBounds(100, 100, 503, 322);
-		frmVrti.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);
 		
 		

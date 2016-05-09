@@ -1,8 +1,11 @@
 package app.vrtic.View;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
@@ -10,6 +13,7 @@ import javax.swing.JTextField;
 
 
 public class login {
+	public JDialog dijalog;
 
 	private JFrame frmVrti;
 	private JTextField textField;
@@ -68,6 +72,28 @@ public class login {
 		JButton btnPrijava = new JButton("Prijava");
 		btnPrijava.setBounds(235, 184, 89, 23);
 		frmVrti.getContentPane().add(btnPrijava);
+		btnPrijava.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				
+				
+					GlavniProzorDirektor mainFormaDirektor = new GlavniProzorDirektor();
+					mainFormaDirektor.OtvoriFormu();
+					//Ovim cemo sakriti login, pa nam moze posluziti kao glavna forma
+					frmVrti.setVisible(false);
+					
+					/*
+					//a ovo cemo ubaciti ako se loguje kao blagajnik
+					GlavniProzorBlagajnik mainFormaBlagajnik = new GlavniProzorBlagajnik();
+					mainFormaBlagajnik.OtvoriFormu();
+					//Ovim cemo sakriti login, pa nam moze posluziti kao glavna forma
+					frmVrti.setVisible(false);
+					*/
+					
+			}
+
+		});
 	}
 }
 

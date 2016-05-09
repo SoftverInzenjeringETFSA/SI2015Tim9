@@ -19,12 +19,13 @@ public class PrikazGrupe {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					PrikazGrupe window = new PrikazGrupe();
 					window.frmVrti.setVisible(true);
+					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -46,7 +47,7 @@ public class PrikazGrupe {
 		frmVrti = new JFrame();
 		frmVrti.setTitle("Vrti\u0107");
 		frmVrti.setBounds(100, 100, 657, 345);
-		frmVrti.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);
 		
 		

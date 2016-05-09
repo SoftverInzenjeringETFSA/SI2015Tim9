@@ -31,6 +31,7 @@ public static void OtvoriFormu() {
 			try {
 				IzmjenaDjeteta window = new IzmjenaDjeteta();
 				window.frmVrti.setVisible(true);
+				window.frmVrti.setAlwaysOnTop(true);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

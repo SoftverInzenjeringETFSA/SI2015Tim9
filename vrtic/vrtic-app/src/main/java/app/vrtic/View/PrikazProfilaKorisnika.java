@@ -19,12 +19,13 @@ public class PrikazProfilaKorisnika {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					PrikazProfilaKorisnika window = new PrikazProfilaKorisnika();
 					window.frmVrti.setVisible(true);
+					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -46,7 +47,7 @@ public class PrikazProfilaKorisnika {
 		frmVrti = new JFrame();
 		frmVrti.setTitle("Vrti\u0107");
 		frmVrti.setBounds(100, 100, 474, 300);
-		frmVrti.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);
 		
 		JButton btnOdjava = new JButton("Odjava");

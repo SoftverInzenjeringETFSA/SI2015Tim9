@@ -17,12 +17,13 @@ public class PromjenaSifre {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					PromjenaSifre window = new PromjenaSifre();
 					window.frmVrti.setVisible(true);
+					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -44,7 +45,7 @@ public class PromjenaSifre {
 		frmVrti = new JFrame();
 		frmVrti.setTitle("Vrti\u0107");
 		frmVrti.setBounds(100, 100, 450, 300);
-		frmVrti.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);
 		
 		JLabel lblKorisnickaSifra = new JLabel("Nova \u0161ifra:");

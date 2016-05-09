@@ -1,5 +1,7 @@
 package app.vrtic.View;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -31,12 +33,13 @@ public class GlavniProzorBlagajnik {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					GlavniProzorBlagajnik window = new GlavniProzorBlagajnik();
 					window.frmVrti.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -283,9 +286,29 @@ public class GlavniProzorBlagajnik {
 		JButton btnOdjava = new JButton("Odjava");
 		btnOdjava.setBounds(581, 8, 126, 23);
 		frmVrti.getContentPane().add(btnOdjava);
+		btnOdjava.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e)
+		    {
+		       login NoviLogin = new login();
+		       frmVrti.dispose();
+		       login.main(null);
+		       
+		    }
+		});
 		
 		JButton btnPromjenaSifre = new JButton("Promjena \u0161ifre");
 		btnPromjenaSifre.setBounds(445, 8, 126, 23);
 		frmVrti.getContentPane().add(btnPromjenaSifre);
+		
+		btnPromjenaSifre.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+					PromjenaSifre novifrejm = new PromjenaSifre();
+					novifrejm.OtvoriFormu();
+										
+			}
+
+		});
 	}
 }

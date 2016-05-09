@@ -31,12 +31,13 @@ public class GlavniProzorDirektor {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					GlavniProzorDirektor window = new GlavniProzorDirektor();
 					window.frmVrti.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -94,10 +95,30 @@ public class GlavniProzorDirektor {
 		JButton btnPrikazi = new JButton("Prika\u017Ei");
 		btnPrikazi.setBounds(564, 14, 123, 23);
 		panel.add(btnPrikazi);
+		btnPrikazi.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+					PrikazProfilaKorisnika novifrejm = new PrikazProfilaKorisnika();
+					novifrejm.OtvoriFormu();
+										
+			}
+
+		});
 		
 		JButton btnIzmijeni = new JButton("Izmijeni");
 		btnIzmijeni.setBounds(564, 57, 123, 23);
 		panel.add(btnIzmijeni);
+		btnIzmijeni.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+					IzmjenaKorisnika novifrejm = new IzmjenaKorisnika();
+					novifrejm.OtvoriFormu();
+										
+			}
+
+		});
 		
 		JButton btnObrisi = new JButton("Obri\u0161i");
 		btnObrisi.setBounds(564, 101, 123, 23);
@@ -106,6 +127,16 @@ public class GlavniProzorDirektor {
 		JButton btnDodajKorisnika = new JButton("Dodaj korisnika");
 		btnDodajKorisnika.setBounds(564, 177, 123, 23);
 		panel.add(btnDodajKorisnika);
+		btnDodajKorisnika.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+					DodavanjeKorisnika novifrejm = new DodavanjeKorisnika();
+					novifrejm.OtvoriFormu();
+										
+			}
+
+		});
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Djeca", null, panel_1, null);
@@ -138,11 +169,9 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				
-				
 					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta();
 					novifrejm.OtvoriFormu();
-					
+										
 			}
 
 		});
@@ -150,10 +179,20 @@ public class GlavniProzorDirektor {
 		JButton btnEvidentirajDijete = new JButton("Evidentiraj dijete");
 		btnEvidentirajDijete.setBounds(265, 164, 147, 23);
 		panel_1.add(btnEvidentirajDijete);
+		btnEvidentirajDijete.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+					EvidentiranjeDjeteta novifrejm = new EvidentiranjeDjeteta();
+					novifrejm.OtvoriFormu();
+										
+			}
+
+		});
 		
-		JButton btnObriiDijete = new JButton("Obri\u0161i dijete");
-		btnObriiDijete.setBounds(488, 164, 126, 23);
-		panel_1.add(btnObriiDijete);
+		JButton btnObrisiDijete = new JButton("Obri\u0161i dijete");
+		btnObrisiDijete.setBounds(488, 164, 126, 23);
+		panel_1.add(btnObrisiDijete);
 		
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("Grupe", null, panel_2, null);
@@ -176,17 +215,37 @@ public class GlavniProzorDirektor {
 		list.setBounds(47, 36, 140, 96);
 		panel_2.add(list);
 		
-		JButton btnObrii = new JButton("Obri\u0161i");
-		btnObrii.setBounds(561, 33, 126, 23);
-		panel_2.add(btnObrii);
+		JButton btnObrisiGrupu = new JButton("Obri\u0161i");
+		btnObrisiGrupu.setBounds(561, 33, 126, 23);
+		panel_2.add(btnObrisiGrupu);
 		
-		JButton btnPrikai = new JButton("Prika\u017Ei");
-		btnPrikai.setBounds(561, 77, 126, 23);
-		panel_2.add(btnPrikai);
+		JButton btnPrikaziGrupu = new JButton("Prika\u017Ei");
+		btnPrikaziGrupu.setBounds(561, 77, 126, 23);
+		panel_2.add(btnPrikaziGrupu);
+		btnPrikaziGrupu.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+					PrikazGrupe novifrejm = new PrikazGrupe();
+					novifrejm.OtvoriFormu();
+										
+			}
+
+		});
 		
 		JButton btnDodajGrupu = new JButton("Dodaj grupu");
 		btnDodajGrupu.setBounds(561, 158, 126, 23);
 		panel_2.add(btnDodajGrupu);
+		btnDodajGrupu.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+					DodavanjeGrupe novifrejm = new DodavanjeGrupe();
+					novifrejm.OtvoriFormu();
+										
+			}
+
+		});
 		
 		JPanel panel_3 = new JPanel();
 		tabbedPane.addTab("Aktivnosti", null, panel_3, null);
@@ -214,13 +273,24 @@ public class GlavniProzorDirektor {
 		table_2.getColumnModel().getColumn(1).setPreferredWidth(96);
 		scrollPane_2.setViewportView(table_2);
 		
-		JButton btnDodajAktivnost = new JButton("Obri\u0161i aktivnost");
-		btnDodajAktivnost.setBounds(550, 162, 126, 23);
-		panel_3.add(btnDodajAktivnost);
+		JButton btnObrisiAktivnost = new JButton("Obri\u0161i aktivnost");
+		btnObrisiAktivnost.setBounds(550, 162, 126, 23);
+		panel_3.add(btnObrisiAktivnost);
 		
-		JButton button = new JButton("Dodaj aktivnost");
-		button.setBounds(414, 162, 126, 23);
-		panel_3.add(button);
+		
+		JButton btnDodajAktivnost = new JButton("Dodaj aktivnost");
+		btnDodajAktivnost.setBounds(414, 162, 126, 23);
+		panel_3.add(btnDodajAktivnost);
+		btnDodajAktivnost.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+					DodavanjeAktivnosti novifrejm = new DodavanjeAktivnosti();
+					novifrejm.OtvoriFormu();
+										
+			}
+
+		});
 		
 		JPanel panel_4 = new JPanel();
 		tabbedPane.addTab("Vaspita\u010Di", null, panel_4, null);
@@ -246,13 +316,23 @@ public class GlavniProzorDirektor {
 		));
 		scrollPane_3.setViewportView(table_3);
 		
-		JButton btnObrii_1 = new JButton("Dodaj vaspita\u010Da");
-		btnObrii_1.setBounds(549, 164, 126, 23);
-		panel_4.add(btnObrii_1);
+		JButton btnDodajVaspitaca = new JButton("Dodaj vaspita\u010Da");
+		btnDodajVaspitaca.setBounds(549, 164, 126, 23);
+		panel_4.add(btnDodajVaspitaca);
+		btnDodajVaspitaca.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+					DodavanjeAktivnosti novifrejm = new DodavanjeAktivnosti();
+					novifrejm.OtvoriFormu();
+										
+			}
+
+		});
 		
-		JButton btnObrii_2 = new JButton("Obri\u0161i");
-		btnObrii_2.setBounds(413, 164, 126, 23);
-		panel_4.add(btnObrii_2);
+		JButton btnObrisiVaspitaca = new JButton("Obri\u0161i");
+		btnObrisiVaspitaca.setBounds(413, 164, 126, 23);
+		panel_4.add(btnObrisiVaspitaca);
 		
 		JPanel panel_5 = new JPanel();
 		tabbedPane.addTab("Raspored", null, panel_5, null);
@@ -367,9 +447,30 @@ public class GlavniProzorDirektor {
 		JButton btnOdjava = new JButton("Odjava");
 		btnOdjava.setBounds(581, 8, 126, 23);
 		frmVrti.getContentPane().add(btnOdjava);
+		btnOdjava.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e)
+		    {
+		       login NoviLogin = new login();
+		       frmVrti.dispose();
+		       login.main(null);
+		       
+		    }
+		});
 		
 		JButton btnPromjenaSifre = new JButton("Promjena \u0161ifre");
 		btnPromjenaSifre.setBounds(445, 8, 126, 23);
 		frmVrti.getContentPane().add(btnPromjenaSifre);
+		
+		btnPromjenaSifre.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+					PromjenaSifre novifrejm = new PromjenaSifre();
+					novifrejm.OtvoriFormu();
+										
+			}
+
+		});
+		
 	}
 }
