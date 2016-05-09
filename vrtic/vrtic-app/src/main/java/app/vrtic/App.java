@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import org.hibernate.Session;
 import app.vrtic.Util.HibernateUtil;
+import app.vrtic.View.login;
 import app.vrtic.modeli.Korisnik;
 /**
  * Hello world!
@@ -29,6 +30,8 @@ public class App
         		JOptionPane.showMessageDialog(null, dajKorisnike(session).size());
         		session.close();    		
          */
+        login lg = new login();
+        lg.main(null);
     }
     /*
     public static ArrayList<Korisnik> dajKorisnike(Session s){
