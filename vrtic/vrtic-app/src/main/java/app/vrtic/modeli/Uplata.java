@@ -1,12 +1,14 @@
 package app.vrtic.modeli;
 
 // default package
-// Generated 09-May-2016 02:07:59 by Hibernate Tools 5.1.0.Alpha1
+// Generated 09-May-2016 12:32:34 by Hibernate Tools 5.1.0.Alpha1
 
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,7 +23,7 @@ import javax.persistence.TemporalType;
 @Table(name = "uplata", catalog = "tim9")
 public class Uplata implements java.io.Serializable {
 
-	private int idUplate;
+	private Integer idUplate;
 	private Dijete dijete;
 	private Date datumUplate;
 	private Double visinaUplate;
@@ -31,13 +33,7 @@ public class Uplata implements java.io.Serializable {
 	public Uplata() {
 	}
 
-	public Uplata(int idUplate) {
-		this.idUplate = idUplate;
-	}
-
-	public Uplata(int idUplate, Dijete dijete, Date datumUplate, Double visinaUplate, Integer zaMjesec,
-			Integer zaGodinu) {
-		this.idUplate = idUplate;
+	public Uplata(Dijete dijete, Date datumUplate, Double visinaUplate, Integer zaMjesec, Integer zaGodinu) {
 		this.dijete = dijete;
 		this.datumUplate = datumUplate;
 		this.visinaUplate = visinaUplate;
@@ -46,13 +42,14 @@ public class Uplata implements java.io.Serializable {
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "idUplate", unique = true, nullable = false)
-	public int getIdUplate() {
+	public Integer getIdUplate() {
 		return this.idUplate;
 	}
 
-	public void setIdUplate(int idUplate) {
+	public void setIdUplate(Integer idUplate) {
 		this.idUplate = idUplate;
 	}
 

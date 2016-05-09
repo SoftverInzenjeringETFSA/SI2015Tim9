@@ -1,11 +1,13 @@
 package app.vrtic.modeli;
 
 // default package
-// Generated 09-May-2016 02:07:59 by Hibernate Tools 5.1.0.Alpha1
+// Generated 09-May-2016 12:32:34 by Hibernate Tools 5.1.0.Alpha1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "vaspitac", catalog = "tim9")
 public class Vaspitac implements java.io.Serializable {
 
-	private int idVaspitac;
+	private Integer idVaspitac;
 	private Grupa grupa;
 	private String ime;
 	private String prezime;
@@ -28,13 +30,7 @@ public class Vaspitac implements java.io.Serializable {
 	public Vaspitac() {
 	}
 
-	public Vaspitac(int idVaspitac) {
-		this.idVaspitac = idVaspitac;
-	}
-
-	public Vaspitac(int idVaspitac, Grupa grupa, String ime, String prezime, String brojTelefona,
-			String adresaPrebivalista) {
-		this.idVaspitac = idVaspitac;
+	public Vaspitac(Grupa grupa, String ime, String prezime, String brojTelefona, String adresaPrebivalista) {
 		this.grupa = grupa;
 		this.ime = ime;
 		this.prezime = prezime;
@@ -43,13 +39,14 @@ public class Vaspitac implements java.io.Serializable {
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "idVaspitac", unique = true, nullable = false)
-	public int getIdVaspitac() {
+	public Integer getIdVaspitac() {
 		return this.idVaspitac;
 	}
 
-	public void setIdVaspitac(int idVaspitac) {
+	public void setIdVaspitac(Integer idVaspitac) {
 		this.idVaspitac = idVaspitac;
 	}
 

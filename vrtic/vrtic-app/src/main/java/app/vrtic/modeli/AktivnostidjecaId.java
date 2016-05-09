@@ -1,7 +1,7 @@
 package app.vrtic.modeli;
 
 // default package
-// Generated 09-May-2016 02:07:59 by Hibernate Tools 5.1.0.Alpha1
+// Generated 09-May-2016 12:32:34 by Hibernate Tools 5.1.0.Alpha1
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

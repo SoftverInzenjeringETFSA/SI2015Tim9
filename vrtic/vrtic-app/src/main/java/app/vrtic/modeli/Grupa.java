@@ -1,13 +1,15 @@
 package app.vrtic.modeli;
 
 // default package
-// Generated 09-May-2016 02:07:59 by Hibernate Tools 5.1.0.Alpha1
+// Generated 09-May-2016 12:32:34 by Hibernate Tools 5.1.0.Alpha1
 
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -19,7 +21,7 @@ import javax.persistence.Table;
 @Table(name = "grupa", catalog = "tim9")
 public class Grupa implements java.io.Serializable {
 
-	private int idGrupe;
+	private Integer idGrupe;
 	private String naziv;
 	private Integer redniBroj;
 	private Integer kapacitet;
@@ -30,13 +32,8 @@ public class Grupa implements java.io.Serializable {
 	public Grupa() {
 	}
 
-	public Grupa(int idGrupe) {
-		this.idGrupe = idGrupe;
-	}
-
-	public Grupa(int idGrupe, String naziv, Integer redniBroj, Integer kapacitet, Set<Vaspitac> vaspitacs,
-			Set<Dijete> dijetes, Set<Termin> termins) {
-		this.idGrupe = idGrupe;
+	public Grupa(String naziv, Integer redniBroj, Integer kapacitet, Set<Vaspitac> vaspitacs, Set<Dijete> dijetes,
+			Set<Termin> termins) {
 		this.naziv = naziv;
 		this.redniBroj = redniBroj;
 		this.kapacitet = kapacitet;
@@ -46,13 +43,14 @@ public class Grupa implements java.io.Serializable {
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "idGrupe", unique = true, nullable = false)
-	public int getIdGrupe() {
+	public Integer getIdGrupe() {
 		return this.idGrupe;
 	}
 
-	public void setIdGrupe(int idGrupe) {
+	public void setIdGrupe(Integer idGrupe) {
 		this.idGrupe = idGrupe;
 	}
 

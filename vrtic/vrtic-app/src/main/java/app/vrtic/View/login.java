@@ -1,10 +1,13 @@
+package app.vrtic.View;
+
 import java.awt.EventQueue;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.JPasswordField;
-import javax.swing.JButton;
+import javax.swing.JTextField;
+
 
 public class login {
 
@@ -67,3 +70,6 @@ public class login {
 		frmVrti.getContentPane().add(btnPrijava);
 	}
 }
+
+
+

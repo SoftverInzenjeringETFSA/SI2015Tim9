@@ -1,3 +1,4 @@
+package app.vrtic.View;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -7,7 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
-public class dodavanjeGrupe {
+public class DodavanjeGrupe {
 
 	private JFrame frmVrti;
 	private JTextField textField;
@@ -19,7 +20,7 @@ public class dodavanjeGrupe {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					dodavanjeGrupe window = new dodavanjeGrupe();
+					DodavanjeGrupe window = new DodavanjeGrupe();
 					window.frmVrti.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,7 +32,7 @@ public class dodavanjeGrupe {
 	/**
 	 * Create the application.
 	 */
-	public dodavanjeGrupe() {
+	public DodavanjeGrupe() {
 		initialize();
 	}
 
@@ -45,13 +46,7 @@ public class dodavanjeGrupe {
 		frmVrti.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);
 		
-		JButton btnNewButton = new JButton("Promjena \u0161ifre");
-		btnNewButton.setBounds(212, 11, 126, 23);
-		frmVrti.getContentPane().add(btnNewButton);
-		
-		JButton btnOdjava = new JButton("Odjava");
-		btnOdjava.setBounds(351, 11, 126, 23);
-		frmVrti.getContentPane().add(btnOdjava);
+	
 		
 		JLabel lblNazivGrupe = new JLabel("Naziv grupe:");
 		lblNazivGrupe.setBounds(36, 61, 72, 14);

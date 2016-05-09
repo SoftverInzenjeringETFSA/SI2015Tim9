@@ -1,3 +1,4 @@
+package app.vrtic.View;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -14,7 +15,7 @@ import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
-public class glavniProzorDirektor {
+public class GlavniProzorDirektor {
 
 	private JFrame frmVrti;
 	private JTable table;
@@ -32,7 +33,7 @@ public class glavniProzorDirektor {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					glavniProzorDirektor window = new glavniProzorDirektor();
+					GlavniProzorDirektor window = new GlavniProzorDirektor();
 					window.frmVrti.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +45,7 @@ public class glavniProzorDirektor {
 	/**
 	 * Create the application.
 	 */
-	public glavniProzorDirektor() {
+	public GlavniProzorDirektor() {
 		initialize();
 	}
 

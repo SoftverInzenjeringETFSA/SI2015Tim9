@@ -1,3 +1,4 @@
+package app.vrtic.View;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -7,13 +8,14 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 
-public class izmjenaKorisnika {
+public class DodavanjeKorisnika {
 
 	private JFrame frmVrti;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
+	private JTextField textField_4;
 
 	/**
 	 * Launch the application.
@@ -22,7 +24,7 @@ public class izmjenaKorisnika {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					izmjenaKorisnika window = new izmjenaKorisnika();
+					DodavanjeKorisnika window = new DodavanjeKorisnika();
 					window.frmVrti.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,7 +36,7 @@ public class izmjenaKorisnika {
 	/**
 	 * Create the application.
 	 */
-	public izmjenaKorisnika() {
+	public DodavanjeKorisnika() {
 		initialize();
 	}
 
@@ -44,42 +46,35 @@ public class izmjenaKorisnika {
 	private void initialize() {
 		frmVrti = new JFrame();
 		frmVrti.setTitle("Vrti\u0107");
-		frmVrti.setBounds(100, 100, 474, 323);
+		frmVrti.setBounds(100, 100, 474, 354);
 		frmVrti.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);
 		
-		JButton btnOdjava = new JButton("Odjava");
-		btnOdjava.setBounds(322, 11, 126, 23);
-		frmVrti.getContentPane().add(btnOdjava);
-		
-		JButton btnNewButton = new JButton("Promjena \u0161ifre");
-		btnNewButton.setBounds(189, 11, 126, 23);
-		frmVrti.getContentPane().add(btnNewButton);
 		
 		JLabel lblIme = new JLabel("Ime:");
-		lblIme.setBounds(104, 62, 46, 14);
+		lblIme.setBounds(100, 62, 46, 14);
 		frmVrti.getContentPane().add(lblIme);
 		
 		JLabel lblPrezime = new JLabel("Prezime:");
-		lblPrezime.setBounds(84, 100, 66, 14);
+		lblPrezime.setBounds(80, 100, 66, 14);
 		frmVrti.getContentPane().add(lblPrezime);
 		
 		JLabel lblNewLabel = new JLabel("Korisni\u010Dko ime:");
-		lblNewLabel.setBounds(55, 137, 95, 14);
+		lblNewLabel.setBounds(61, 137, 95, 14);
 		frmVrti.getContentPane().add(lblNewLabel);
 		
 		JLabel lblBrojTelefona = new JLabel("Broj telefona:");
-		lblBrojTelefona.setBounds(58, 172, 95, 14);
+		lblBrojTelefona.setBounds(61, 172, 95, 14);
 		frmVrti.getContentPane().add(lblBrojTelefona);
 		
 		JLabel lblUloga = new JLabel("Uloga:");
-		lblUloga.setBounds(94, 219, 46, 14);
+		lblUloga.setBounds(96, 250, 46, 14);
 		frmVrti.getContentPane().add(lblUloga);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setEditable(true);
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Pravnik/Direktor", "Blagajnik"}));
-		comboBox.setBounds(166, 216, 149, 20);
+		comboBox.setBounds(166, 247, 149, 20);
 		frmVrti.getContentPane().add(comboBox);
 		
 		textField = new JTextField();
@@ -102,8 +97,17 @@ public class izmjenaKorisnika {
 		frmVrti.getContentPane().add(textField_3);
 		textField_3.setColumns(10);
 		
-		JButton btnIzmijeni = new JButton("Izmijeni");
-		btnIzmijeni.setBounds(322, 250, 126, 23);
+		JButton btnIzmijeni = new JButton("Dodaj korisnika");
+		btnIzmijeni.setBounds(322, 281, 126, 23);
 		frmVrti.getContentPane().add(btnIzmijeni);
+		
+		JLabel lblKorisnikaifra = new JLabel("Korisni\u010Dka \u0161ifra:");
+		lblKorisnikaifra.setBounds(51, 208, 95, 14);
+		frmVrti.getContentPane().add(lblKorisnikaifra);
+		
+		textField_4 = new JTextField();
+		textField_4.setColumns(10);
+		textField_4.setBounds(166, 205, 149, 20);
+		frmVrti.getContentPane().add(textField_4);
 	}
 }

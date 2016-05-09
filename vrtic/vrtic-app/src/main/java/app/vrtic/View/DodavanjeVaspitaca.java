@@ -1,3 +1,4 @@
+package app.vrtic.View;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -5,7 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-public class dodavanjeVaspitaca {
+public class DodavanjeVaspitaca {
 
 	private JFrame frmVrti;
 	private JTextField textField;
@@ -19,7 +20,7 @@ public class dodavanjeVaspitaca {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					dodavanjeVaspitaca window = new dodavanjeVaspitaca();
+					DodavanjeVaspitaca window = new DodavanjeVaspitaca();
 					window.frmVrti.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,7 +32,7 @@ public class dodavanjeVaspitaca {
 	/**
 	 * Create the application.
 	 */
-	public dodavanjeVaspitaca() {
+	public DodavanjeVaspitaca() {
 		initialize();
 	}
 
@@ -45,13 +46,6 @@ public class dodavanjeVaspitaca {
 		frmVrti.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);
 		
-		JButton btnOdjava = new JButton("Odjava");
-		btnOdjava.setBounds(352, 11, 126, 23);
-		frmVrti.getContentPane().add(btnOdjava);
-		
-		JButton btnNewButton = new JButton("Promjena \u0161ifre");
-		btnNewButton.setBounds(216, 11, 126, 23);
-		frmVrti.getContentPane().add(btnNewButton);
 		
 		JLabel lblNazivAktivnosti = new JLabel("Ime:");
 		lblNazivAktivnosti.setBounds(90, 72, 103, 14);

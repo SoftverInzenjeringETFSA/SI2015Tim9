@@ -1,4 +1,4 @@
-package app.vrtic;
+package app.vrtic.View;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;

@@ -1,13 +1,15 @@
 package app.vrtic.modeli;
 
 // default package
-// Generated 09-May-2016 02:07:59 by Hibernate Tools 5.1.0.Alpha1
+// Generated 09-May-2016 12:32:34 by Hibernate Tools 5.1.0.Alpha1
 
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -19,7 +21,7 @@ import javax.persistence.Table;
 @Table(name = "aktivnost", catalog = "tim9")
 public class Aktivnost implements java.io.Serializable {
 
-	private int idAktivnosti;
+	private Integer idAktivnosti;
 	private String naziv;
 	private Integer brojDjece;
 	private Integer cijena;
@@ -29,13 +31,8 @@ public class Aktivnost implements java.io.Serializable {
 	public Aktivnost() {
 	}
 
-	public Aktivnost(int idAktivnosti) {
-		this.idAktivnosti = idAktivnosti;
-	}
-
-	public Aktivnost(int idAktivnosti, String naziv, Integer brojDjece, Integer cijena, Set<Termin> termins,
+	public Aktivnost(String naziv, Integer brojDjece, Integer cijena, Set<Termin> termins,
 			Set<Aktivnostidjeca> aktivnostidjecas) {
-		this.idAktivnosti = idAktivnosti;
 		this.naziv = naziv;
 		this.brojDjece = brojDjece;
 		this.cijena = cijena;
@@ -44,13 +41,14 @@ public class Aktivnost implements java.io.Serializable {
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "idAktivnosti", unique = true, nullable = false)
-	public int getIdAktivnosti() {
+	public Integer getIdAktivnosti() {
 		return this.idAktivnosti;
 	}
 
-	public void setIdAktivnosti(int idAktivnosti) {
+	public void setIdAktivnosti(Integer idAktivnosti) {
 		this.idAktivnosti = idAktivnosti;
 	}
 

@@ -1,10 +1,12 @@
 package app.vrtic.modeli;
 
 // default package
-// Generated 09-May-2016 02:07:59 by Hibernate Tools 5.1.0.Alpha1
+// Generated 09-May-2016 12:32:34 by Hibernate Tools 5.1.0.Alpha1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,7 +17,7 @@ import javax.persistence.Table;
 @Table(name = "korisnik", catalog = "tim9")
 public class Korisnik implements java.io.Serializable {
 
-	private int idKorisnika;
+	private Integer idKorisnika;
 	private String ime;
 	private String prezime;
 	private String korisnickoIme;
@@ -26,13 +28,8 @@ public class Korisnik implements java.io.Serializable {
 	public Korisnik() {
 	}
 
-	public Korisnik(int idKorisnika) {
-		this.idKorisnika = idKorisnika;
-	}
-
-	public Korisnik(int idKorisnika, String ime, String prezime, String korisnickoIme, String sifra, String privilegije,
+	public Korisnik(String ime, String prezime, String korisnickoIme, String sifra, String privilegije,
 			String brojTelefona) {
-		this.idKorisnika = idKorisnika;
 		this.ime = ime;
 		this.prezime = prezime;
 		this.korisnickoIme = korisnickoIme;
@@ -42,13 +39,14 @@ public class Korisnik implements java.io.Serializable {
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "idKorisnika", unique = true, nullable = false)
-	public int getIdKorisnika() {
+	public Integer getIdKorisnika() {
 		return this.idKorisnika;
 	}
 
-	public void setIdKorisnika(int idKorisnika) {
+	public void setIdKorisnika(Integer idKorisnika) {
 		this.idKorisnika = idKorisnika;
 	}
 

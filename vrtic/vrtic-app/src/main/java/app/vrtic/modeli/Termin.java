@@ -1,11 +1,13 @@
 package app.vrtic.modeli;
 
 // default package
-// Generated 09-May-2016 02:07:59 by Hibernate Tools 5.1.0.Alpha1
+// Generated 09-May-2016 12:32:34 by Hibernate Tools 5.1.0.Alpha1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "termin", catalog = "tim9")
 public class Termin implements java.io.Serializable {
 
-	private int idTermin;
+	private Integer idTermin;
 	private Aktivnost aktivnost;
 	private Grupa grupa;
 	private String vrijemePocetka;
@@ -28,13 +30,7 @@ public class Termin implements java.io.Serializable {
 	public Termin() {
 	}
 
-	public Termin(int idTermin) {
-		this.idTermin = idTermin;
-	}
-
-	public Termin(int idTermin, Aktivnost aktivnost, Grupa grupa, String vrijemePocetka, String vrijemeZavrsetka,
-			String dan) {
-		this.idTermin = idTermin;
+	public Termin(Aktivnost aktivnost, Grupa grupa, String vrijemePocetka, String vrijemeZavrsetka, String dan) {
 		this.aktivnost = aktivnost;
 		this.grupa = grupa;
 		this.vrijemePocetka = vrijemePocetka;
@@ -43,13 +39,14 @@ public class Termin implements java.io.Serializable {
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "idTermin", unique = true, nullable = false)
-	public int getIdTermin() {
+	public Integer getIdTermin() {
 		return this.idTermin;
 	}
 
-	public void setIdTermin(int idTermin) {
+	public void setIdTermin(Integer idTermin) {
 		this.idTermin = idTermin;
 	}
 

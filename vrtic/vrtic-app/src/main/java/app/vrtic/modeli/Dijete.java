@@ -1,7 +1,7 @@
 package app.vrtic.modeli;
 
 // default package
-// Generated 09-May-2016 02:07:59 by Hibernate Tools 5.1.0.Alpha1
+// Generated 09-May-2016 12:32:34 by Hibernate Tools 5.1.0.Alpha1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,7 +26,7 @@ import javax.persistence.TemporalType;
 @Table(name = "dijete", catalog = "tim9")
 public class Dijete implements java.io.Serializable {
 
-	private int idDijete;
+	private Integer idDijete;
 	private Grupa grupa;
 	private String ime;
 	private String prezime;
@@ -42,15 +44,9 @@ public class Dijete implements java.io.Serializable {
 	public Dijete() {
 	}
 
-	public Dijete(int idDijete) {
-		this.idDijete = idDijete;
-	}
-
-	public Dijete(int idDijete, Grupa grupa, String ime, String prezime, String datumRodjenja,
-			String adresaPrebivalista, String imeRoditelja, String brojTelefona, String prezimeRoditelja,
-			Date datumUpisa, Date datumIsteka, Set<Uplata> uplatas, Set<Aktivnostidjeca> aktivnostidjecas,
-			Set<Zaduzenja> zaduzenjas) {
-		this.idDijete = idDijete;
+	public Dijete(Grupa grupa, String ime, String prezime, String datumRodjenja, String adresaPrebivalista,
+			String imeRoditelja, String brojTelefona, String prezimeRoditelja, Date datumUpisa, Date datumIsteka,
+			Set<Uplata> uplatas, Set<Aktivnostidjeca> aktivnostidjecas, Set<Zaduzenja> zaduzenjas) {
 		this.grupa = grupa;
 		this.ime = ime;
 		this.prezime = prezime;
@@ -67,13 +63,14 @@ public class Dijete implements java.io.Serializable {
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "idDijete", unique = true, nullable = false)
-	public int getIdDijete() {
+	public Integer getIdDijete() {
 		return this.idDijete;
 	}
 
-	public void setIdDijete(int idDijete) {
+	public void setIdDijete(Integer idDijete) {
 		this.idDijete = idDijete;
 	}
 

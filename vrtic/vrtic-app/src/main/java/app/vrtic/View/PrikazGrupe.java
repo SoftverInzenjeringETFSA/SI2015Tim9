@@ -1,3 +1,4 @@
+package app.vrtic.View;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -8,7 +9,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class prikazGrupe {
+public class PrikazGrupe {
 
 	private JFrame frmVrti;
 	private JTextField textField;
@@ -22,7 +23,7 @@ public class prikazGrupe {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					prikazGrupe window = new prikazGrupe();
+					PrikazGrupe window = new PrikazGrupe();
 					window.frmVrti.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,7 +35,7 @@ public class prikazGrupe {
 	/**
 	 * Create the application.
 	 */
-	public prikazGrupe() {
+	public PrikazGrupe() {
 		initialize();
 	}
 
@@ -48,13 +49,7 @@ public class prikazGrupe {
 		frmVrti.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);
 		
-		JButton btnPromjena = new JButton("Promjena \u0161ifre");
-		btnPromjena.setBounds(369, 11, 126, 23);
-		frmVrti.getContentPane().add(btnPromjena);
 		
-		JButton btnOdjava = new JButton("Odjava");
-		btnOdjava.setBounds(505, 11, 126, 23);
-		frmVrti.getContentPane().add(btnOdjava);
 		
 		JLabel lblGrupa = new JLabel("Grupa ");
 		lblGrupa.setBounds(26, 36, 46, 14);

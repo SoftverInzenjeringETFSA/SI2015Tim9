@@ -1,5 +1,4 @@
-package app.vrtic;
-
+package app.vrtic.View;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -9,8 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 
-public class IzmjenaKorisnika {
-
+public class PrikazProfilaKorisnika {
 
 	private JFrame frmVrti;
 	private JTextField textField;
@@ -25,7 +23,7 @@ public class IzmjenaKorisnika {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					IzmjenaKorisnika window = new IzmjenaKorisnika();
+					PrikazProfilaKorisnika window = new PrikazProfilaKorisnika();
 					window.frmVrti.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -37,7 +35,7 @@ public class IzmjenaKorisnika {
 	/**
 	 * Create the application.
 	 */
-	public IzmjenaKorisnika() {
+	public PrikazProfilaKorisnika() {
 		initialize();
 	}
 
@@ -47,7 +45,7 @@ public class IzmjenaKorisnika {
 	private void initialize() {
 		frmVrti = new JFrame();
 		frmVrti.setTitle("Vrti\u0107");
-		frmVrti.setBounds(100, 100, 474, 323);
+		frmVrti.setBounds(100, 100, 474, 300);
 		frmVrti.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);
 		
@@ -80,37 +78,32 @@ public class IzmjenaKorisnika {
 		frmVrti.getContentPane().add(lblUloga);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setEditable(true);
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Pravnik/Direktor", "Blagajnik"}));
 		comboBox.setBounds(166, 216, 149, 20);
 		frmVrti.getContentPane().add(comboBox);
 		
 		textField = new JTextField();
+		textField.setEditable(false);
 		textField.setBounds(166, 59, 149, 20);
 		frmVrti.getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
+		textField_1.setEditable(false);
 		textField_1.setBounds(166, 97, 149, 20);
 		frmVrti.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
 		
 		textField_2 = new JTextField();
+		textField_2.setEditable(false);
 		textField_2.setBounds(166, 134, 149, 20);
 		frmVrti.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
 		
 		textField_3 = new JTextField();
+		textField_3.setEditable(false);
 		textField_3.setBounds(166, 169, 149, 20);
 		frmVrti.getContentPane().add(textField_3);
 		textField_3.setColumns(10);
-		
-		JButton btnIzmijeni = new JButton("Izmijeni");
-		btnIzmijeni.setBounds(322, 250, 126, 23);
-		frmVrti.getContentPane().add(btnIzmijeni);
 	}
-
 }
-
-
-
