@@ -1,0 +1,1 @@
+ALTER DATABASE tim9 CHARACTER SET utf32 COLLATE utf32_unicode_ci;
