@@ -1,5 +1,7 @@
 package app.vrtic.View;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -13,8 +15,10 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import app.vrtic.Model.Aktivnost;
+import app.vrtic.Model.Grupa;
 import app.vrtic.Model.Termin;
 import app.vrtic.Service.AktivnostServis;
+import app.vrtic.Service.GrupaServis;
 import app.vrtic.Service.TerminServis;
 
 import javax.swing.JFormattedTextField;
@@ -23,6 +27,7 @@ public class DodavanjeTermina {
 	final static Logger logger = Logger.getLogger(login.class);
 	private Session s;
 	private JFrame frmVrti;
+	
 
 	/**
 	 * Launch the application.
@@ -77,12 +82,17 @@ public class DodavanjeTermina {
 		lblVaspita.setBounds(22, 169, 183, 14);
 		frmVrti.getContentPane().add(lblVaspita);
 		
-		JComboBox comboBox = new JComboBox(); //Odabrana aktivnost
+		final JComboBox comboBox = new JComboBox(); //Odabrana aktivnost
 		comboBox.setBounds(198, 96, 173, 20);
 		frmVrti.getContentPane().add(comboBox);
 		
+		final JComboBox grupeComboBox = new JComboBox();
+		grupeComboBox.setBounds(198, 58, 173, 20);
+		frmVrti.getContentPane().add(grupeComboBox);
 		
-		JComboBox comboBox_1 = new JComboBox();  //Dan u sedmici
+		
+		
+		final JComboBox comboBox_1 = new JComboBox();  //Dan u sedmici
 		comboBox_1.setBounds(198, 127, 173, 20);
 		frmVrti.getContentPane().add(comboBox_1);
 		comboBox_1.addItem("Ponedjeljak");
@@ -97,11 +107,11 @@ public class DodavanjeTermina {
 		lblVrijemeZavretkaAktivnosti.setBounds(10, 205, 183, 14);
 		frmVrti.getContentPane().add(lblVrijemeZavretkaAktivnosti);
 		
-		JFormattedTextField formattedTextField = new JFormattedTextField();
+		final JFormattedTextField formattedTextField = new JFormattedTextField();
 		formattedTextField.setBounds(198, 166, 72, 20);
 		frmVrti.getContentPane().add(formattedTextField);
 		
-		JFormattedTextField formattedTextField_1 = new JFormattedTextField();
+		final JFormattedTextField formattedTextField_1 = new JFormattedTextField();
 		formattedTextField_1.setBounds(198, 202, 72, 20);
 		frmVrti.getContentPane().add(formattedTextField_1);
 		
@@ -113,20 +123,49 @@ public class DodavanjeTermina {
 		label.setBounds(280, 205, 72, 14);
 		frmVrti.getContentPane().add(label);
 		
-		JButton btnKraj = new JButton("Kraj");
+		JButton btnKraj = new JButton("Zatvori");
 		btnKraj.setBounds(289, 249, 82, 23);
 		frmVrti.getContentPane().add(btnKraj);
+		btnKraj.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				frmVrti.dispose();
+										
+			}
+
+		});
 		
-		JButton btnDalje = new JButton("Dalje");
+		JButton btnDalje = new JButton("Dodaj");
 		btnDalje.setBounds(198, 249, 82, 23);
 		frmVrti.getContentPane().add(btnDalje);
+		btnDalje.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				Termin NoviTermin = new Termin();	
+				NoviTermin.setDan(comboBox_1.getSelectedItem().toString());
+			//	NoviTermin.setGrupa(grupeComboBox.getSelectedItem().toString());
+				//NoviTermin.setVrijemePocetka(t.getVrijemePocetka());
+		//		NoviTermin.setVrijemeZavrsetka(t.getVrijemeZavrsetka());
+			//	NoviTermin.setAktivnost(comboBox.getSelectedItem().toString());
+				
+				
+				
+				
+				
+				formattedTextField.setText("");
+				formattedTextField_1.setText("");
+										
+			}
+
+		});
+		
 		
 		dodajAktivnosti(comboBox);
-		
+		dodajGrupeuCombo(grupeComboBox);
 				
-		JComboBox grupeComboBox = new JComboBox();
-		grupeComboBox.setBounds(198, 58, 173, 20);
-		frmVrti.getContentPane().add(grupeComboBox);
+		
 	}
 	
 	public void dodajAktivnosti(JComboBox jcb){
@@ -135,7 +174,22 @@ public class DodavanjeTermina {
 		
 		for(int i = 0; i<akt.size();i++){
 			jcb.addItem(akt.get(i).getNaziv());
+			
 		}
+		
+	}
+	
+	public void dodajGrupeuCombo(JComboBox jcb){
+		GrupaServis gr = new GrupaServis(this.s);
+		ArrayList<Grupa> grupe = gr.sveGrupe();
+		
+		for(int i = 0; i<grupe.size();i++){
+			jcb.addItem(grupe.get(i).getNaziv());
+		}
+		
+	}
+	
+	public void dodajTermin(){
 		
 	}
 }
