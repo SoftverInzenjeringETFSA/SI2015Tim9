@@ -54,7 +54,7 @@ public class AktivnostServis {
 		return true;
 	}
 	
-	public ArrayList<Aktivnost> SviTermini(){
+	public ArrayList<Aktivnost> SveAktivnosti(){
 
 		List<Aktivnost> t = s.createCriteria(Aktivnost.class).list();
 		return new ArrayList<Aktivnost>(t);
