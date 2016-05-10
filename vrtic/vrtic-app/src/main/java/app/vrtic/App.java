@@ -21,7 +21,7 @@ public class App
 {
 	public Session session = HibernateUtil.getSessionFactory().openSession();
 	private static Scanner sc = new Scanner(System.in);
-    public void main()
+	public static void main(String[] args)
     {
         System.out.println( "Hello World!" );
       //Kod za transakcije
