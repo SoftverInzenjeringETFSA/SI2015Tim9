@@ -1,5 +1,7 @@
 package app.vrtic.View;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
@@ -7,6 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+
+import app.vrtic.Model.Aktivnost;
+import app.vrtic.Service.AktivnostServis;
 
 
 	
@@ -51,6 +56,7 @@ public class DodavanjeAktivnosti {
 		frmVrti.setBounds(100, 100, 504, 231);
 		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);
+		Aktivnost akt = new Aktivnost();
 		
 		
 		
@@ -65,6 +71,21 @@ public class DodavanjeAktivnosti {
 		JButton btnDodajAktivnost = new JButton("Dodaj aktivnost");
 		btnDodajAktivnost.setBounds(352, 159, 126, 23);
 		frmVrti.getContentPane().add(btnDodajAktivnost);
+		btnDodajAktivnost.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				    Aktivnost a = new Aktivnost();
+					AktivnostServis akts = new AktivnostServis(s);
+					a.setNaziv(textField.getText());
+					a.setCijena(Integer.valueOf(textField_1.getText()));
+					a.setBrojDjece(30);
+					boolean uspjesnoDodavanje = akts.dodajAktivnost(a);
+					frmVrti.dispose();
+										
+			}
+
+		});
 		
 		textField = new JTextField();
 		textField.setBounds(160, 47, 182, 20);
