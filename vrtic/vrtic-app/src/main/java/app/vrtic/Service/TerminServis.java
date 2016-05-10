@@ -24,7 +24,7 @@ public class TerminServis {
 		NoviTermin.setAktivnost(t.getAktivnost());
 		
 		
-		s.save(t); //spasavanje u sesiju
+		s.save(NoviTermin); //spasavanje u sesiju
 		transakcija.commit(); //komitanje transakcije
 		return true;
 	}
