@@ -1,4 +1,4 @@
-package app.vrtic.modeli;
+package app.vrtic.Model;
 
 // default package
 // Generated 09-May-2016 12:32:34 by Hibernate Tools 5.1.0.Alpha1

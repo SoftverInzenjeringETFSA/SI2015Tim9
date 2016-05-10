@@ -9,9 +9,10 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 import org.hibernate.Session;
+
+import app.vrtic.Model.Korisnik;
 import app.vrtic.Util.HibernateUtil;
 import app.vrtic.View.login;
-import app.vrtic.modeli.Korisnik;
 /**
  * Hello world!
  *

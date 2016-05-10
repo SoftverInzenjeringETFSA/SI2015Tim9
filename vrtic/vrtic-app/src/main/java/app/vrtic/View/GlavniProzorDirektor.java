@@ -326,7 +326,7 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-					DodavanjeAktivnosti novifrejm = new DodavanjeAktivnosti();
+					DodavanjeVaspitaca novifrejm = new DodavanjeVaspitaca();
 					novifrejm.OtvoriFormu();
 										
 			}
@@ -362,7 +362,14 @@ public class GlavniProzorDirektor {
 		scrollPane_4.setViewportView(table_4);
 		
 		JButton btnKreirajRaspored = new JButton("Kreiraj raspored");
-		btnKreirajRaspored.setBounds(549, 161, 126, 23);
+		btnKreirajRaspored.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				DodavanjeTermina novifrejm = new DodavanjeTermina();
+				novifrejm.OtvoriFormu();
+			}
+		});
+		btnKreirajRaspored.setBounds(533, 158, 126, 23);
 		panel_5.add(btnKreirajRaspored);
 		
 		JPanel panel_6 = new JPanel();
