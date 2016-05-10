@@ -1,6 +1,10 @@
 package app.vrtic.Service;
 
 import app.vrtic.Model.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -48,5 +52,11 @@ public class AktivnostServis {
 		s.save(akt); //spasavanje u sesiju
 		transakcija.commit(); //komitanje transakcije
 		return true;
+	}
+	
+	public ArrayList<Aktivnost> SviTermini(){
+
+		List<Aktivnost> t = s.createCriteria(Aktivnost.class).list();
+		return new ArrayList<Aktivnost>(t);
 	}
 }
