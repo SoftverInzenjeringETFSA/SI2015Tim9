@@ -280,6 +280,7 @@ public class EvidentiranjeDjeteta {
 					d.setDatumIsteka(dateFormat.parse(textFieldDatumIsteka.getText()));
 				}
 				catch (Exception e1) {
+					logger.info(e1);
 					JOptionPane.showMessageDialog(null, "Datum upisa i/ili istika nisu u ispravnom formatu");
 				}
 				
