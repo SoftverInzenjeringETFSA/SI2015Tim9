@@ -226,7 +226,7 @@ public class EvidentiranjeDjeteta {
 				// hardcode dok se na poveze comboBox
 				d.setGrupa(null);
 				
-				ds.evidentirajDijete(d);
+				ds.evidentiraj(d);
 			}
 		});
 		

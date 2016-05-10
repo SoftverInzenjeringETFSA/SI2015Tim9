@@ -1,15 +1,11 @@
 package app.vrtic.Service;
 
-import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JOptionPane;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import app.vrtic.Model.Aktivnost;
 import app.vrtic.Model.Dijete;
 
 
