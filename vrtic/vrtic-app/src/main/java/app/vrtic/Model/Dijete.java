@@ -193,5 +193,11 @@ public class Dijete implements java.io.Serializable {
 	public void setZaduzenjas(Set<Zaduzenja> zaduzenjas) {
 		this.zaduzenjas = zaduzenjas;
 	}
+	
+	@Override
+	public String toString() {
+		
+		return this.ime+" "+this.prezime+","+this.imeRoditelja+" "+this.prezimeRoditelja;
+	}
 
 }

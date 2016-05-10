@@ -20,24 +20,29 @@ import javax.swing.JTextField;
 
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JCheckBox;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+
+import app.vrtic.Model.Dijete;
 public class GlavniProzorBlagajnik {
 	final static Logger logger = Logger.getLogger(login.class);
 	private JFrame frmVrti;
 	private JTable table_5;
 	private JTable table_6;
 	private JTextField textField;
-
+   // private DijeteServis ds;
+    private Session s;
 	/**
 	 * Launch the application.
 	 */
-	public static void OtvoriFormu() {
+	public void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GlavniProzorBlagajnik window = new GlavniProzorBlagajnik();
+					GlavniProzorBlagajnik window = new GlavniProzorBlagajnik(s);
 					window.frmVrti.setVisible(true);
 					
 				} catch (Exception e) {
@@ -50,7 +55,8 @@ public class GlavniProzorBlagajnik {
 	/**
 	 * Create the application.
 	 */
-	public GlavniProzorBlagajnik() {
+	public GlavniProzorBlagajnik(Session s) {
+		this.s = s;
 		initialize();
 	}
 
@@ -72,66 +78,54 @@ public class GlavniProzorBlagajnik {
 		tabbedPane.addTab("Evidencija uplate", null, panel_5, null);
 		panel_5.setLayout(null);
 		
-		JLabel lblDijete = new JLabel("Dijete:");
-		lblDijete.setBounds(107, 49, 46, 14);
+		JLabel lblDijete = new JLabel("Dijete, roditelj:");
+		lblDijete.setBounds(22, 49, 103, 14);
 		panel_5.add(lblDijete);
 		
-		JLabel lblRoditelj = new JLabel("Roditelj:");
-		lblRoditelj.setBounds(98, 91, 46, 14);
-		panel_5.add(lblRoditelj);
-		
-		JLabel lblGrupa = new JLabel("Grupa:");
-		lblGrupa.setBounds(106, 141, 46, 14);
-		panel_5.add(lblGrupa);
-		
 		JLabel lblDatumUplate = new JLabel("Datum uplate:");
-		lblDatumUplate.setBounds(65, 182, 108, 14);
+		lblDatumUplate.setBounds(22, 104, 108, 14);
 		panel_5.add(lblDatumUplate);
 		
 		JLabel lblGodina_2 = new JLabel("Godina:");
-		lblGodina_2.setBounds(100, 213, 46, 14);
+		lblGodina_2.setBounds(51, 163, 46, 14);
 		panel_5.add(lblGodina_2);
 		
 		JLabel lblIznos = new JLabel("Iznos:");
-		lblIznos.setBounds(109, 245, 46, 14);
+		lblIznos.setBounds(61, 219, 46, 14);
 		panel_5.add(lblIznos);
 		
 		JButton btnIzracunaj = new JButton("Izra\u010Dunaj");
-		btnIzracunaj.setBounds(167, 241, 89, 23);
+		btnIzracunaj.setBounds(135, 215, 89, 23);
 		panel_5.add(btnIzracunaj);
 		
 		JLabel lblKm = new JLabel("KM");
-		lblKm.setBounds(306, 245, 46, 14);
+		lblKm.setBounds(272, 219, 46, 14);
 		panel_5.add(lblKm);
 		
 		textField = new JTextField();
-		textField.setBounds(257, 242, 39, 20);
+		textField.setBounds(223, 216, 39, 20);
 		panel_5.add(textField);
 		textField.setColumns(10);
 		
 		JButton btnPotvrdi = new JButton("Potvrdi");
-		btnPotvrdi.setBounds(207, 290, 89, 23);
+		btnPotvrdi.setBounds(135, 311, 127, 23);
 		panel_5.add(btnPotvrdi);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(167, 46, 129, 20);
+		comboBox_1.setBounds(135, 46, 248, 20);
+		/* ArrayList<Dijete> djeca = ds.dajDjecu();
+		for(int i=0;i< djeca.size();i++)
+		comboBox_1.addItem(djeca.get(i));*/
 		panel_5.add(comboBox_1);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setBounds(167, 88, 129, 20);
-		panel_5.add(comboBox_2);
-		
-		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setBounds(167, 138, 129, 20);
-		panel_5.add(comboBox_3);
-		
 		JSpinner spinner_3 = new JSpinner();
-		spinner_3.setBounds(167, 179, 129, 20);
+		spinner_3.setBounds(135, 101, 134, 20);
 		spinner_3.setModel(new SpinnerDateModel(new Date(1461794400000L), null, null, Calendar.DAY_OF_YEAR));
 		panel_5.add(spinner_3);
 		
 		JSpinner spinner_2 = new JSpinner();
-		spinner_2.setBounds(167, 210, 129, 20);
+		spinner_2.setModel(new SpinnerDateModel(new Date(1463954400000L), null, null, Calendar.YEAR));
+		spinner_2.setBounds(135, 160, 134, 20);
 		panel_5.add(spinner_2);
 		
 		JLabel lblMjeseci = new JLabel("Mjeseci:");
@@ -289,9 +283,9 @@ public class GlavniProzorBlagajnik {
 		btnOdjava.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e)
 		    {
-		       login NoviLogin = new login();
+		       login NoviLogin = new login(s);
 		       frmVrti.dispose();
-		       login.main(null);
+		       NoviLogin.OtvoriFormu();
 		       
 		    }
 		});
@@ -304,7 +298,7 @@ public class GlavniProzorBlagajnik {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-					PromjenaSifre novifrejm = new PromjenaSifre();
+					PromjenaSifre novifrejm = new PromjenaSifre(s);
 					novifrejm.OtvoriFormu();
 										
 			}

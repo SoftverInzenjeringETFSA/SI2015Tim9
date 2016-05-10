@@ -10,10 +10,11 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 public class IzmjenaKorisnika {
 
-
+    private Session s;
 	private JFrame frmVrti;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -23,11 +24,11 @@ public class IzmjenaKorisnika {
 	/**
 	 * Launch the application.
 	 */
-	public static void OtvoriFormu() {
+	public void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					IzmjenaKorisnika window = new IzmjenaKorisnika();
+					IzmjenaKorisnika window = new IzmjenaKorisnika(s);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -40,7 +41,8 @@ public class IzmjenaKorisnika {
 	/**
 	 * Create the application.
 	 */
-	public IzmjenaKorisnika() {
+	public IzmjenaKorisnika(Session s) {
+		this.s = s;
 		initialize();
 	}
 

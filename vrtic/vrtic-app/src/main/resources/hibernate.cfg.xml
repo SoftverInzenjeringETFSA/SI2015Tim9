@@ -9,15 +9,15 @@
   <property name="hibernate.connection.username">EtfSI2015</property>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
   <property name="hibernate.hbm2ddl.auto">update</property>
-  <mapping class="app.vrtic.modeli.Aktivnost"/>
-  <mapping class="app.vrtic.modeli.Aktivnostidjeca"/>
-  <mapping class="app.vrtic.modeli.AktivnostidjecaId"/>
-  <mapping class="app.vrtic.modeli.Dijete"/>
-  <mapping class="app.vrtic.modeli.Grupa"/>
-  <mapping class="app.vrtic.modeli.Korisnik"/>
-  <mapping class="app.vrtic.modeli.Termin"/>
-  <mapping class="app.vrtic.modeli.Uplata"/>
-  <mapping class="app.vrtic.modeli.Vaspitac"/>
-  <mapping class="app.vrtic.modeli.Zaduzenja"/>
+  <mapping class="app.vrtic.Model.Zaduzenja"/>
+  <mapping class="app.vrtic.Model.Vaspitac"/>
+  <mapping class="app.vrtic.Model.Uplata"/>
+  <mapping class="app.vrtic.Model.Termin"/>
+  <mapping class="app.vrtic.Model.Korisnik"/>
+  <mapping class="app.vrtic.Model.Grupa"/>
+  <mapping class="app.vrtic.Model.Dijete"/>
+  <mapping class="app.vrtic.Model.Aktivnost"/>
+  <mapping class="app.vrtic.Model.Aktivnostidjeca"/>
+  <mapping class="app.vrtic.Model.AktivnostidjecaId"/>
  </session-factory>
 </hibernate-configuration>

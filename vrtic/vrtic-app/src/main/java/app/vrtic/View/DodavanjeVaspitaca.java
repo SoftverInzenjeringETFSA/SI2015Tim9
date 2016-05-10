@@ -7,10 +7,12 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 public class DodavanjeVaspitaca {
 
 	private JFrame frmVrti;
+	private Session s;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -18,11 +20,11 @@ public class DodavanjeVaspitaca {
 	/**
 	 * Launch the application.
 	 */
-	public static void OtvoriFormu() {
+	public void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DodavanjeVaspitaca window = new DodavanjeVaspitaca();
+					DodavanjeVaspitaca window = new DodavanjeVaspitaca(s);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -35,7 +37,8 @@ public class DodavanjeVaspitaca {
 	/**
 	 * Create the application.
 	 */
-	public DodavanjeVaspitaca() {
+	public DodavanjeVaspitaca(Session s) {
+		this.s = s;
 		initialize();
 	}
 

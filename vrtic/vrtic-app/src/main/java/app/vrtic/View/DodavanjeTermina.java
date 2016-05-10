@@ -1,6 +1,5 @@
 package app.vrtic.View;
 import java.awt.EventQueue;
-import app.vrtic.Service.*;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
@@ -16,19 +15,18 @@ import javax.swing.JFormattedTextField;
 
 public class DodavanjeTermina {
 	final static Logger logger = Logger.getLogger(login.class);
+	private Session s;
 	private JFrame frmVrti;
 	private JTextField textField;
-	private Session s;
-	private TerminServis ts;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void OtvoriFormu() {
+	public void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DodavanjeTermina window = new DodavanjeTermina();
+					DodavanjeTermina window = new DodavanjeTermina(s);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -41,18 +39,10 @@ public class DodavanjeTermina {
 	/**
 	 * Create the application.
 	 */
-	public DodavanjeTermina() {
-		initialize();
-	}
-	
-	//Konstruktor forme sa sesijom
-	
 	public DodavanjeTermina(Session s) {
-		this.s = s; 		
-		this.ts = new TerminServis(s);
+		this.s = s;
 		initialize();
 	}
-	
 
 	/**
 	 * Initialize the contents of the frame.

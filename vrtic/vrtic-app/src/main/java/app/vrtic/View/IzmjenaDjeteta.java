@@ -11,7 +11,11 @@ import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JTextPane;
 import org.apache.log4j.Logger;
-public class IzmjenaDjeteta {private JFrame frmVrti;
+import org.hibernate.Session;
+
+public class IzmjenaDjeteta {
+private Session s;
+private JFrame frmVrti;
 private JTextField textField;
 private JTextField textField_1;
 private JTextField textField_2;
@@ -25,11 +29,11 @@ final static Logger logger = Logger.getLogger(login.class);
 /**
  * Launch the application.
  */
-public static void OtvoriFormu() {
+public void OtvoriFormu() {
 	EventQueue.invokeLater(new Runnable() {
 		public void run() {
 			try {
-				IzmjenaDjeteta window = new IzmjenaDjeteta();
+				IzmjenaDjeteta window = new IzmjenaDjeteta(s);
 				window.frmVrti.setVisible(true);
 				window.frmVrti.setAlwaysOnTop(true);
 			} catch (Exception e) {
@@ -42,7 +46,8 @@ public static void OtvoriFormu() {
 /**
  * Create the application.
  */
-public IzmjenaDjeteta() {
+public IzmjenaDjeteta(Session s) {
+	this.s = s;
 	initialize();
 }
 

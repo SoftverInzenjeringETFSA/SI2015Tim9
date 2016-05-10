@@ -12,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -31,14 +32,15 @@ public class GlavniProzorDirektor {
 	private JTable table_5;
 	private JTable table_6;
 	final static Logger logger = Logger.getLogger(login.class);
+	private Session s;
 	/**
 	 * Launch the application.
 	 */
-	public static void OtvoriFormu() {
+	public void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GlavniProzorDirektor window = new GlavniProzorDirektor();
+					GlavniProzorDirektor window = new GlavniProzorDirektor(s);
 					window.frmVrti.setVisible(true);
 					
 				} catch (Exception e) {
@@ -51,7 +53,8 @@ public class GlavniProzorDirektor {
 	/**
 	 * Create the application.
 	 */
-	public GlavniProzorDirektor() {
+	public GlavniProzorDirektor(Session s) {
+		this.s = s;
 		initialize();
 	}
 
@@ -102,7 +105,7 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-					PrikazProfilaKorisnika novifrejm = new PrikazProfilaKorisnika();
+					PrikazProfilaKorisnika novifrejm = new PrikazProfilaKorisnika(s);
 					novifrejm.OtvoriFormu();
 										
 			}
@@ -116,7 +119,7 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-					IzmjenaKorisnika novifrejm = new IzmjenaKorisnika();
+					IzmjenaKorisnika novifrejm = new IzmjenaKorisnika(s);
 					novifrejm.OtvoriFormu();
 										
 			}
@@ -134,7 +137,7 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-					DodavanjeKorisnika novifrejm = new DodavanjeKorisnika();
+					DodavanjeKorisnika novifrejm = new DodavanjeKorisnika(s);
 					novifrejm.OtvoriFormu();
 										
 			}
@@ -172,7 +175,7 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta();
+					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s);
 					novifrejm.OtvoriFormu();
 										
 			}
@@ -186,7 +189,7 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-					EvidentiranjeDjeteta novifrejm = new EvidentiranjeDjeteta();
+					EvidentiranjeDjeteta novifrejm = new EvidentiranjeDjeteta(s);
 					novifrejm.OtvoriFormu();
 										
 			}
@@ -229,7 +232,7 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-					PrikazGrupe novifrejm = new PrikazGrupe();
+					PrikazGrupe novifrejm = new PrikazGrupe(s);
 					novifrejm.OtvoriFormu();
 										
 			}
@@ -243,7 +246,7 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-					DodavanjeGrupe novifrejm = new DodavanjeGrupe();
+					DodavanjeGrupe novifrejm = new DodavanjeGrupe(s);
 					novifrejm.OtvoriFormu();
 										
 			}
@@ -288,7 +291,7 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-					DodavanjeAktivnosti novifrejm = new DodavanjeAktivnosti();
+					DodavanjeAktivnosti novifrejm = new DodavanjeAktivnosti(s);
 					novifrejm.OtvoriFormu();
 										
 			}
@@ -326,7 +329,7 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-					DodavanjeVaspitaca novifrejm = new DodavanjeVaspitaca();
+					DodavanjeVaspitaca novifrejm = new DodavanjeVaspitaca(s);
 					novifrejm.OtvoriFormu();
 										
 			}
@@ -365,7 +368,7 @@ public class GlavniProzorDirektor {
 		btnKreirajRaspored.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				DodavanjeTermina novifrejm = new DodavanjeTermina();
+				DodavanjeTermina novifrejm = new DodavanjeTermina(s);
 				novifrejm.OtvoriFormu();
 			}
 		});
@@ -435,6 +438,7 @@ public class GlavniProzorDirektor {
 				{null, null, null, null, null},
 				{null, null, null, null, null},
 				{null, null, null, null, null},
+				
 			},
 			new String[] {
 				"Ime i prezime roditelja", "Broj telefona", "Mjesec", "Godina", "Iznos"
@@ -460,9 +464,9 @@ public class GlavniProzorDirektor {
 		btnOdjava.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e)
 		    {
-		       login NoviLogin = new login();
+		       login NoviLogin = new login(s);
 		       frmVrti.dispose();
-		       login.main(null);
+		       NoviLogin.OtvoriFormu();
 		       
 		    }
 		});
@@ -475,7 +479,7 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-					PromjenaSifre novifrejm = new PromjenaSifre();
+					PromjenaSifre novifrejm = new PromjenaSifre(s);
 					novifrejm.OtvoriFormu();
 										
 			}

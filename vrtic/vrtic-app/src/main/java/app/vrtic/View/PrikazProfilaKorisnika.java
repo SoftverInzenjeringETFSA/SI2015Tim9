@@ -1,6 +1,7 @@
 package app.vrtic.View;
 import java.awt.EventQueue;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
@@ -10,7 +11,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 
 public class PrikazProfilaKorisnika {
-
+    private Session s;
 	private JFrame frmVrti;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -20,11 +21,11 @@ public class PrikazProfilaKorisnika {
 	/**
 	 * Launch the application.
 	 */
-	public static void OtvoriFormu() {
+	public void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PrikazProfilaKorisnika window = new PrikazProfilaKorisnika();
+					PrikazProfilaKorisnika window = new PrikazProfilaKorisnika(s);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -37,7 +38,8 @@ public class PrikazProfilaKorisnika {
 	/**
 	 * Create the application.
 	 */
-	public PrikazProfilaKorisnika() {
+	public PrikazProfilaKorisnika(Session s) {
+		this.s = s;
 		initialize();
 	}
 

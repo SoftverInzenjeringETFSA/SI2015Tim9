@@ -9,20 +9,22 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 public class DodavanjeGrupe {
-
+    
 	private JFrame frmVrti;
+	private Session s;
 	private JTextField textField;
 	final static Logger logger = Logger.getLogger(login.class);
 	/**
 	 * Launch the application.
 	 */
-	public static void OtvoriFormu() {
+	public void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DodavanjeGrupe window = new DodavanjeGrupe();
+					DodavanjeGrupe window = new DodavanjeGrupe(s);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -35,7 +37,8 @@ public class DodavanjeGrupe {
 	/**
 	 * Create the application.
 	 */
-	public DodavanjeGrupe() {
+	public DodavanjeGrupe(Session s) {
+		this.s = s;
 		initialize();
 	}
 
