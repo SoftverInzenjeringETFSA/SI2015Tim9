@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
@@ -209,18 +210,67 @@ public class EvidentiranjeDjeteta {
 		textPane.setBounds(166, 553, 213, 91);
 		frmVrti.getContentPane().add(textPane);
 		
+		JLabel labelFormat = new JLabel("dd-mm-gggg");
+		labelFormat.setBounds(365, 137, 79, 14);
+		frmVrti.getContentPane().add(labelFormat);
+		
+		JLabel label = new JLabel("dd-mm-gggg");
+		label.setBounds(365, 484, 79, 14);
+		frmVrti.getContentPane().add(label);
+		
+		JLabel label_1 = new JLabel("dd-mm-gggg");
+		label_1.setBounds(365, 520, 79, 14);
+		frmVrti.getContentPane().add(label_1);
+		
 		
 		btnIzmijeni.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				// treba dodati validacije !!!
+				if(textFieldImeDjeteta.getText().length() < 4) {
+					JOptionPane.showMessageDialog(null, "Ime mora sadržavati barem 3 slova.");
+					return;
+				}
+				
+				if(textFieldPrezimeDjeteta.getText().length() < 4) {
+					JOptionPane.showMessageDialog(null, "Prezime mora sadržavati barem 3 slova.");
+					return;
+				}
+				
+				Pattern datum  = Pattern.compile("^[0-3]?[0-9]-[0-3]?[0-9]-(?:[0-9]{2})?[0-9]{2}$");
+				if (!datum.matcher(textFieldDatumRodjenjaDjeteta.getText()).matches()) {
+					JOptionPane.showMessageDialog(null, "Datum rodjenja nije u ispravnom datumu.");
+			        return;
+			    }
+				if(textFieldImeRoditelja.getText().length() < 4) {
+					JOptionPane.showMessageDialog(null, "Ime roditelja mora sadržavati barem 3 slova.");
+					return;
+				}
+				
+				if(textFieldPrezimeRoditelja.getText().length() < 4) {
+					JOptionPane.showMessageDialog(null, "Prezime roditelja mora sadržavati barem 3 slova.");
+					return;
+				}
+				
+				if(textFieldAdresaStanovanja.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Niste unijeli adresu");
+					return;
+				}
+				
+				if(textFieldBrojTelefona.getText().length() <= 8) {
+					JOptionPane.showMessageDialog(null, "Broj telefona nije u ispravnom formatu.");
+					return;
+				}
+				
 				DijeteServis ds = new DijeteServis(s);
+				
+				// jer u bazu upisuje kao yyyy-mm-dd
+				String[] s = textFieldDatumRodjenjaDjeteta.getText().split("-");
 				
 				Dijete d = new Dijete();
 				d.setIme(textFieldImeDjeteta.getText());
 				d.setPrezime(textFieldPrezimeDjeteta.getText());
-				d.setDatumRodjenja(textFieldDatumRodjenjaDjeteta.getText());
+				d.setDatumRodjenja(s[2]+"-"+s[1]+"-"+s[0]); // yyyy-mm-dd
 				d.setAdresaPrebivalista(textFieldAdresaStanovanja.getText());
 				d.setImeRoditelja(textFieldImeRoditelja.getText());
 				d.setBrojTelefona(textFieldBrojTelefona.getText());
