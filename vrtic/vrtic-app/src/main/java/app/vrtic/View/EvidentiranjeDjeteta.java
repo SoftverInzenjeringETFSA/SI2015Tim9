@@ -3,6 +3,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
@@ -10,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JTextPane;
@@ -18,7 +20,10 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import app.vrtic.Model.Dijete;
+import app.vrtic.Model.Grupa;
 import app.vrtic.Service.DijeteServis;
+import app.vrtic.Service.GrupaServis;
+import javax.swing.JList;
 
 public class EvidentiranjeDjeteta {
 	private Session s;
@@ -33,6 +38,7 @@ public class EvidentiranjeDjeteta {
 	private JTextField textFieldBrojTelefona;
 	private JTextField textFieldDatumUpisa;
 	private JTextField textFieldDatumIsteka;
+	private JComboBox comboBoxGrupa;
 	
 	public SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -99,11 +105,12 @@ public class EvidentiranjeDjeteta {
 		lblUloga.setBounds(26, 219, 130, 14);
 		frmVrti.getContentPane().add(lblUloga);
 		
-		JComboBox comboBoxGrupa = new JComboBox();
+		
+		comboBoxGrupa = new JComboBox();
 		comboBoxGrupa.setEditable(true);
-		comboBoxGrupa.setModel(new DefaultComboBoxModel(new String[] {"Grupa 1", "Grupa 2", "Grupa 3", "Grupa 4", "Grupa 5"}));
 		comboBoxGrupa.setBounds(166, 405, 189, 20);
 		frmVrti.getContentPane().add(comboBoxGrupa);
+		
 		
 		textFieldImeDjeteta = new JTextField();
 		textFieldImeDjeteta.setBounds(166, 59, 189, 20);
@@ -202,6 +209,7 @@ public class EvidentiranjeDjeteta {
 		textPane.setBounds(166, 553, 213, 91);
 		frmVrti.getContentPane().add(textPane);
 		
+		
 		btnIzmijeni.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -224,13 +232,27 @@ public class EvidentiranjeDjeteta {
 				catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, "Datum upisa i/ili istika nisu u ispravnom formatu");
 				}
-				// hardcode dok se na poveze comboBox
-				d.setGrupa(null);
+				
+				Grupa g = (Grupa)comboBoxGrupa.getSelectedItem();
+				d.setGrupa(g);
 				
 				ds.evidentiraj(d);
 			}
 		});
+		postaviListu();
+
+	}
+	
+	public void postaviListu() {
+		GrupaServis gs = new GrupaServis(s);
+		List<Grupa> grupe = gs.sveGrupe();
 		
+		DefaultComboBoxModel model=new DefaultComboBoxModel();
 		
+		for(Grupa g : grupe){
+			model.addElement(g);
+		}
+		
+		comboBoxGrupa.setModel(model);
 	}
 }

@@ -107,5 +107,10 @@ public class Grupa implements java.io.Serializable {
 	public void setTermins(Set<Termin> termins) {
 		this.termins = termins;
 	}
+	
+	public String toString() { 
+	    return this.idGrupe + ": " + this.naziv;
+	} 
+
 
 }

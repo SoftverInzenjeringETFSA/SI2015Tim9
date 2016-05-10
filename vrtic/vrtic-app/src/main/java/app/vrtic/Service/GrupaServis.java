@@ -1,6 +1,10 @@
 package app.vrtic.Service;
 
 import app.vrtic.Model.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -44,5 +48,12 @@ public class GrupaServis {
 		transakcija.commit();
 		return true;
 	}
-
+	
+	// vraca sve grupe
+	public ArrayList<Grupa> sveGrupe(){
+		List<Grupa> t = s.createCriteria(Grupa.class).list();
+		return new ArrayList<Grupa>(t);
+	}
+	
+	
 }
