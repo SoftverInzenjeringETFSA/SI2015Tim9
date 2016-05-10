@@ -19,9 +19,9 @@ import app.vrtic.View.login;
  */
 public class App 
 {
-	
+	public Session session = HibernateUtil.getSessionFactory().openSession();
 	private static Scanner sc = new Scanner(System.in);
-    public static void main( String[] args )
+    public void main()
     {
         System.out.println( "Hello World!" );
       //Kod za transakcije

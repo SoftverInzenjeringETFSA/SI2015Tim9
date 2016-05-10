@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 public class login {
 	public JDialog dijalog;
@@ -19,14 +20,16 @@ public class login {
 	private JFrame frmVrti;
 	private JTextField textField;
 	private JPasswordField passwordField;
-
+	private Session sesija;
 	/**
 	 * Launch the application.
 	 */
+	//public void main(final Session s) {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					//login window = new login(s);
 					login window = new login();
 					window.frmVrti.setVisible(true);
 				} catch (Exception e) {
@@ -40,6 +43,7 @@ public class login {
 	 * Create the application.
 	 */
 	public login() {
+		
 		initialize();
 	}
 
