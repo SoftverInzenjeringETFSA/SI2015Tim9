@@ -9,9 +9,12 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 public class DodavanjeKorisnika {
+	
 	final static Logger logger = Logger.getLogger(login.class);
+	private Session s;
 	private JFrame frmVrti;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -22,11 +25,11 @@ public class DodavanjeKorisnika {
 	/**
 	 * Launch the application.
 	 */
-	public static void OtvoriFormu() {
+	public void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DodavanjeKorisnika window = new DodavanjeKorisnika();
+					DodavanjeKorisnika window = new DodavanjeKorisnika(s);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -39,7 +42,8 @@ public class DodavanjeKorisnika {
 	/**
 	 * Create the application.
 	 */
-	public DodavanjeKorisnika() {
+	public DodavanjeKorisnika(Session s) {
+		this.s = s;
 		initialize();
 	}
 

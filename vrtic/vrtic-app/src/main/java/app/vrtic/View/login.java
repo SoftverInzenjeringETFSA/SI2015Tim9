@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 public class login {
 	public JDialog dijalog;
@@ -19,15 +20,16 @@ public class login {
 	private JFrame frmVrti;
 	private JTextField textField;
 	private JPasswordField passwordField;
+	private Session s;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					login window = new login();
+					login window = new login(s);
 					window.frmVrti.setVisible(true);
 				} catch (Exception e) {
 					logger.info(e);
@@ -39,7 +41,8 @@ public class login {
 	/**
 	 * Create the application.
 	 */
-	public login() {
+	public login(Session s) {
+		this.s = s;
 		initialize();
 	}
 
@@ -83,7 +86,7 @@ public class login {
 				// !!!
 				if(textField.getText().equals("direktor"))
 				{
-					GlavniProzorDirektor mainFormaDirektor = new GlavniProzorDirektor();
+					GlavniProzorDirektor mainFormaDirektor = new GlavniProzorDirektor(s);
 					mainFormaDirektor.OtvoriFormu();
 					//Ovim cemo sakriti login, pa nam moze posluziti kao glavna forma
 					frmVrti.setVisible(false);
@@ -91,7 +94,7 @@ public class login {
 				else if(textField.getText().equals("blagajnik"))
 				{
 					//a ovo cemo ubaciti ako se loguje kao blagajnik
-					GlavniProzorBlagajnik mainFormaBlagajnik = new GlavniProzorBlagajnik();
+					GlavniProzorBlagajnik mainFormaBlagajnik = new GlavniProzorBlagajnik(s);
 					mainFormaBlagajnik.OtvoriFormu();
 					//Ovim cemo sakriti login, pa nam moze posluziti kao glavna forma
 					frmVrti.setVisible(false);	

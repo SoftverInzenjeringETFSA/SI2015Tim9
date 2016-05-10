@@ -6,11 +6,13 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 
 	
 public class DodavanjeAktivnosti {
 	final static Logger logger = Logger.getLogger(login.class);
+	private Session s;
 	private JFrame frmVrti;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -18,11 +20,11 @@ public class DodavanjeAktivnosti {
 	/**
 	 * Launch the application.
 	 */
-	public static void OtvoriFormu() {
+	public void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DodavanjeAktivnosti window = new DodavanjeAktivnosti();
+					DodavanjeAktivnosti window = new DodavanjeAktivnosti(s);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -35,7 +37,8 @@ public class DodavanjeAktivnosti {
 	/**
 	 * Create the application.
 	 */
-	public DodavanjeAktivnosti() {
+	public DodavanjeAktivnosti(Session s) {
+		this.s = s;
 		initialize();
 	}
 

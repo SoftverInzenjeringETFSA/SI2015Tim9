@@ -24,15 +24,16 @@ public class App
     public static void main( String[] args )
     {
         System.out.println( "Hello World!" );
+        Session session = HibernateUtil.getSessionFactory().openSession();
       //Kod za transakcije
     	/*
-        Session session = HibernateUtil.getSessionFactory().openSession();
+      
         		//dodajUsera(session);
         		JOptionPane.showMessageDialog(null, dajKorisnike(session).size());
         		session.close();    		
          */
-        login lg = new login();
-        lg.main(null);
+        login lg = new login(session);
+        lg.OtvoriFormu();
     }
     /*
     public static ArrayList<Korisnik> dajKorisnike(Session s){

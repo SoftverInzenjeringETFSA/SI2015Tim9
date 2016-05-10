@@ -7,21 +7,23 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 public class PromjenaSifre {
 
 	private JFrame frmVrti;
 	private JPasswordField passwordField_2;
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_1;
+	private Session s;
 	final static Logger logger = Logger.getLogger(login.class);
 	/**
 	 * Launch the application.
 	 */
-	public static void OtvoriFormu() {
+	public void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PromjenaSifre window = new PromjenaSifre();
+					PromjenaSifre window = new PromjenaSifre(s);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -34,7 +36,8 @@ public class PromjenaSifre {
 	/**
 	 * Create the application.
 	 */
-	public PromjenaSifre() {
+	public PromjenaSifre(Session s) {
+		this.s = s;
 		initialize();
 	}
 

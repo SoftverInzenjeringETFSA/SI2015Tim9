@@ -9,22 +9,24 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 import javax.swing.JFormattedTextField;
 
 public class DodavanjeTermina {
 	final static Logger logger = Logger.getLogger(login.class);
+	private Session s;
 	private JFrame frmVrti;
 	private JTextField textField;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void OtvoriFormu() {
+	public void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DodavanjeTermina window = new DodavanjeTermina();
+					DodavanjeTermina window = new DodavanjeTermina(s);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -37,7 +39,8 @@ public class DodavanjeTermina {
 	/**
 	 * Create the application.
 	 */
-	public DodavanjeTermina() {
+	public DodavanjeTermina(Session s) {
+		this.s = s;
 		initialize();
 	}
 

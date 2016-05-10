@@ -11,8 +11,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JTextPane;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 public class EvidentiranjeDjeteta {
+	private Session s;
 	final static Logger logger = Logger.getLogger(login.class);
 	private JFrame frmVrti;
 	private JTextField textField;
@@ -28,11 +30,11 @@ public class EvidentiranjeDjeteta {
 	/**
 	 * Launch the application.
 	 */
-	public static void OtvoriFormu() {
+	public void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					EvidentiranjeDjeteta window = new EvidentiranjeDjeteta();
+					EvidentiranjeDjeteta window = new EvidentiranjeDjeteta(s);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -45,7 +47,8 @@ public class EvidentiranjeDjeteta {
 	/**
 	 * Create the application.
 	 */
-	public EvidentiranjeDjeteta() {
+	public EvidentiranjeDjeteta(Session s) {
+		this.s = s;
 		initialize();
 	}
 

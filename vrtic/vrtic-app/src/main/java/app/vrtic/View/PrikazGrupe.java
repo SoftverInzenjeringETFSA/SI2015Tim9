@@ -9,10 +9,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 
 public class PrikazGrupe {
 	final static Logger logger = Logger.getLogger(login.class);
+	private Session s;
 	private JFrame frmVrti;
 	private JTextField textField;
 	private JTable table;
@@ -21,11 +23,11 @@ public class PrikazGrupe {
 	/**
 	 * Launch the application.
 	 */
-	public static void OtvoriFormu() {
+	public void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PrikazGrupe window = new PrikazGrupe();
+					PrikazGrupe window = new PrikazGrupe(s);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -38,7 +40,8 @@ public class PrikazGrupe {
 	/**
 	 * Create the application.
 	 */
-	public PrikazGrupe() {
+	public PrikazGrupe(Session s) {
+		this.s = s;
 		initialize();
 	}
 
