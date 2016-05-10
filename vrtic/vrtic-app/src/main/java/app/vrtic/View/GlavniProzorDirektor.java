@@ -2,6 +2,7 @@ package app.vrtic.View;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -13,6 +14,9 @@ import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+
+import app.vrtic.Model.Termin;
+import app.vrtic.Service.TerminServis;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -33,6 +37,7 @@ public class GlavniProzorDirektor {
 	private JTable table_6;
 	final static Logger logger = Logger.getLogger(login.class);
 	private Session s;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -67,6 +72,8 @@ public class GlavniProzorDirektor {
 		frmVrti.setBounds(100, 100, 733, 331);
 		frmVrti.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);
+		Termin termin = new Termin();
+		
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10, 42, 702, 239);
@@ -351,18 +358,21 @@ public class GlavniProzorDirektor {
 		table_4 = new JTable();
 		table_4.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				
 			},
 			new String[] {
 				"Dan", "Grupa", "Aktivnost", "Vrijeme po\u010Detka", "Vrijeme zavr\u0161etka"
 			}
 		));
 		scrollPane_4.setViewportView(table_4);
+		
+		
 		
 		JButton btnKreirajRaspored = new JButton("Kreiraj raspored");
 		btnKreirajRaspored.addActionListener(new ActionListener() {
@@ -486,5 +496,26 @@ public class GlavniProzorDirektor {
 
 		});
 		
+		refreshujRaspored();
+		
 	}
+	public void refreshujRaspored(){
+		TerminServis servistermin = new TerminServis(this.s);
+		ArrayList<Termin> termini = servistermin.SviTermini();
+		Object[][] data= new Object[termini.size()][];
+		for(int i = 0; i<termini.size();i++) 
+			data[i]= new Object[]{(String)termini.get(i).getDan(), (String) termini.get(i).getGrupa().getNaziv(), (String) termini.get(i).getAktivnost().getNaziv(), (String) termini.get(i).getVrijemePocetka(), (String)termini.get(i).getVrijemeZavrsetka()};
+		
+		table_4.setModel(new DefaultTableModel(
+				data,
+				new String[] {
+						"Dan", "Grupa", "Aktivnost", "Vrijeme po\u010Detka", "Vrijeme zavr\u0161etka"
 }
+			));
+		
+		
+		}
+}
+
+
+
