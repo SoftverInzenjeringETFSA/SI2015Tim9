@@ -39,7 +39,7 @@ public class AktivnostServis {
 	}
 	
 	//dodavanje aktivnosti
-	public boolean dodajTermin(Aktivnost t) {
+	public boolean dodajAktivnost(Aktivnost t) {
 		Transaction transakcija = s.beginTransaction(); //pocetak transakcije
 		Aktivnost akt = new Aktivnost();
 		akt.setBrojDjece(t.getBrojDjece());
