@@ -1,5 +1,6 @@
 package app.vrtic.View;
 import java.awt.EventQueue;
+import app.vrtic.Service.*;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
@@ -9,6 +10,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 import javax.swing.JFormattedTextField;
 
@@ -16,6 +18,8 @@ public class DodavanjeTermina {
 	final static Logger logger = Logger.getLogger(login.class);
 	private JFrame frmVrti;
 	private JTextField textField;
+	private Session s;
+	private TerminServis ts;
 
 	/**
 	 * Launch the application.
@@ -40,6 +44,15 @@ public class DodavanjeTermina {
 	public DodavanjeTermina() {
 		initialize();
 	}
+	
+	//Konstruktor forme sa sesijom
+	
+	public DodavanjeTermina(Session s) {
+		this.s = s; 		
+		this.ts = new TerminServis(s);
+		initialize();
+	}
+	
 
 	/**
 	 * Initialize the contents of the frame.
