@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
@@ -11,8 +12,17 @@ import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
+import app.vrtic.Model.Korisnik;
+import app.vrtic.Service.KorisnikServis;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class DodavanjeKorisnika {
+	private Korisnik k;
+	private KorisnikServis ks;
 	
+	private String porukaValidacija="";
 	final static Logger logger = Logger.getLogger(login.class);
 	private Session s;
 	private JFrame frmVrti;
@@ -44,6 +54,7 @@ public class DodavanjeKorisnika {
 	 */
 	public DodavanjeKorisnika(Session s) {
 		this.s = s;
+		this.ks=new KorisnikServis(s);		
 		initialize();
 	}
 
@@ -78,7 +89,7 @@ public class DodavanjeKorisnika {
 		lblUloga.setBounds(96, 250, 46, 14);
 		frmVrti.getContentPane().add(lblUloga);
 		
-		JComboBox comboBox = new JComboBox();
+		final JComboBox comboBox = new JComboBox();
 		comboBox.setEditable(true);
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Pravnik/Direktor", "Blagajnik"}));
 		comboBox.setBounds(166, 247, 149, 20);
@@ -105,6 +116,27 @@ public class DodavanjeKorisnika {
 		textField_3.setColumns(10);
 		
 		JButton btnIzmijeni = new JButton("Dodaj korisnika");
+		btnIzmijeni.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {				
+				if(validirajFormu(comboBox)!=""){
+					if(k==null)k= new Korisnik();
+					k.setIme(textField.getText());
+					k.setPrezime(textField_1.getText());
+					k.setKorisnickoIme(textField_2.getText());
+					k.setBrojTelefona(textField_3.getText());
+					k.setSifra(textField_4.getText());
+					if(comboBox.getSelectedIndex()==0){
+						k.setPrivilegije("direktor");
+					}
+					else if(comboBox.getSelectedIndex()==1){
+						k.setPrivilegije("blagajnik");
+					}				
+					ks.kreirajKorisnika(k);
+				}
+				else
+					JOptionPane.showMessageDialog(null,porukaValidacija);
+			}
+		});
 		btnIzmijeni.setBounds(322, 281, 126, 23);
 		frmVrti.getContentPane().add(btnIzmijeni);
 		
@@ -116,5 +148,22 @@ public class DodavanjeKorisnika {
 		textField_4.setColumns(10);
 		textField_4.setBounds(166, 205, 149, 20);
 		frmVrti.getContentPane().add(textField_4);
+	}
+	
+	private String validirajFormu(JComboBox comboBox){
+		if(textField.getText()=="")
+			porukaValidacija="Unesite ime korisnika!";
+		else if(textField_1.getText()=="")
+			porukaValidacija="Unesite prezime korisnika!";
+		else if(textField_2.getText()=="")
+			porukaValidacija="Unesite korisnièko ime korisnika!";
+		else if(textField_3.getText()=="")
+			porukaValidacija="Unesite broj telefona korisnika!";
+		else if(textField_4.getText()=="")
+			porukaValidacija="Unesite korisnièku šifru korisnika!";
+		else if (comboBox.getSelectedIndex()==-1){
+			porukaValidacija="Odaberite privilegiju korisnika!";
+		}
+		return porukaValidacija;		
 	}
 }
