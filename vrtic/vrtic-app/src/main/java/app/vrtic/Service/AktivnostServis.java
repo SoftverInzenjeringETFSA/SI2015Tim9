@@ -1,6 +1,10 @@
 package app.vrtic.Service;
 
 import app.vrtic.Model.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -23,6 +27,16 @@ public class AktivnostServis {
 	}
 	
 	
+	/*
+	public Aktivnost pretragaPoNazivu(String naziv)
+	{
+		Transaction transakcija = s.beginTransaction();
+		Aktivnost akt = (Aktivnost) s.get(Aktivnost.class, naziv);
+		transakcija.commit();
+		return akt;
+	}
+	
+	*/
 	//brisanje aktivnosti
 	public boolean ObrisiAktivnost(int id) {
 		Transaction trans = s.beginTransaction();
@@ -35,7 +49,7 @@ public class AktivnostServis {
 	}
 	
 	//dodavanje aktivnosti
-	public boolean dodajTermin(Aktivnost t) {
+	public boolean dodajAktivnost(Aktivnost t) {
 		Transaction transakcija = s.beginTransaction(); //pocetak transakcije
 		Aktivnost akt = new Aktivnost();
 		akt.setBrojDjece(t.getBrojDjece());
@@ -48,5 +62,11 @@ public class AktivnostServis {
 		s.save(akt); //spasavanje u sesiju
 		transakcija.commit(); //komitanje transakcije
 		return true;
+	}
+	
+	public ArrayList<Aktivnost> SveAktivnosti(){
+
+		List<Aktivnost> t = s.createCriteria(Aktivnost.class).list();
+		return new ArrayList<Aktivnost>(t);
 	}
 }
