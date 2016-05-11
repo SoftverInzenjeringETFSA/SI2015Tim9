@@ -31,8 +31,9 @@ public class ZaduzenjeServis {
 		Zaduzenja z = new Zaduzenja();
 		z.setGodina(godina);
 		z.setDijete(d);
-		for(int i=0; i<12;i++)
-		z.setMjesec(mjeseci[i]);
+		for(int i=0; i<12;i++){
+			z.setMjesec(mjeseci[i]);
+		}
 		t.commit();
 		return true;
 		}

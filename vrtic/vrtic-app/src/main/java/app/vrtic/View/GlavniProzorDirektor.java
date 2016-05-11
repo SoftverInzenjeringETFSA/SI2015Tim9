@@ -15,7 +15,9 @@ import javax.swing.table.DefaultTableModel;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
+import app.vrtic.Model.Korisnik;
 import app.vrtic.Model.Termin;
+import app.vrtic.Service.KorisnikServis;
 import app.vrtic.Service.TerminServis;
 
 import javax.swing.JLabel;
@@ -37,6 +39,8 @@ public class GlavniProzorDirektor {
 	private JTable table_6;
 	final static Logger logger = Logger.getLogger(login.class);
 	private Session s;
+	int id;
+	Korisnik user = new Korisnik();
 	
 	/**
 	 * Launch the application.
@@ -45,7 +49,7 @@ public class GlavniProzorDirektor {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GlavniProzorDirektor window = new GlavniProzorDirektor(s);
+					GlavniProzorDirektor window = new GlavniProzorDirektor(s, id);
 					window.frmVrti.setVisible(true);
 					
 				} catch (Exception e) {
@@ -58,7 +62,9 @@ public class GlavniProzorDirektor {
 	/**
 	 * Create the application.
 	 */
-	public GlavniProzorDirektor(Session s) {
+	public GlavniProzorDirektor(Session s, int id) {
+		KorisnikServis us = new KorisnikServis(s);
+		user = us.dajKorisnika(id);
 		this.s = s;
 		initialize();
 	}

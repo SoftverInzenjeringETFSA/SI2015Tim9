@@ -28,8 +28,10 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import app.vrtic.Model.Dijete;
+import app.vrtic.Model.Korisnik;
 import app.vrtic.Model.Zaduzenja;
 import app.vrtic.Service.DijeteServis;
+import app.vrtic.Service.KorisnikServis;
 import app.vrtic.Service.UplataServis;
 import app.vrtic.Service.ZaduzenjeServis;
 
@@ -45,6 +47,8 @@ public class GlavniProzorBlagajnik {
    private UplataServis us;
    private ZaduzenjeServis zs;
     private Session s;
+	int id;
+	Korisnik user = new Korisnik();
 	/**
 	 * Launch the application.
 	 */
@@ -52,7 +56,7 @@ public class GlavniProzorBlagajnik {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GlavniProzorBlagajnik window = new GlavniProzorBlagajnik(s);
+					GlavniProzorBlagajnik window = new GlavniProzorBlagajnik(s, id);
 					window.frmVrti.setVisible(true);
 					
 				} catch (Exception e) {
@@ -65,7 +69,9 @@ public class GlavniProzorBlagajnik {
 	/**
 	 * Create the application.
 	 */
-	public GlavniProzorBlagajnik(Session s) {
+	public GlavniProzorBlagajnik(Session s, int id) {
+		KorisnikServis us = new KorisnikServis(s);
+		user = us.dajKorisnika(id);
 		this.s = s;
 		this.ds = new DijeteServis(s);
 		this.us = new UplataServis(s);
@@ -128,8 +134,9 @@ public class GlavniProzorBlagajnik {
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setBounds(135, 46, 248, 20);
 		ArrayList<Dijete> djeca = ds.svaDjeca();
-		for(int i=0;i< djeca.size();i++)
-		comboBox_1.addItem(djeca.get(i));
+		for(int i=0;i< djeca.size();i++){
+			comboBox_1.addItem(djeca.get(i));
+		}
 		panel_5.add(comboBox_1);
 		
 		JLabel lblMjeseci = new JLabel("Mjeseci:");
@@ -259,9 +266,10 @@ public class GlavniProzorBlagajnik {
 				ArrayList<Zaduzenja> listaZaduzenja = zs.vratiZaduzenjaPoGodiniIMjesecu(godina, mjesec);
 				Object[][] podaci = new Object[listaZaduzenja.size()][];
 				
-					for(int i=0; i<listaZaduzenja.size();i++)
+					for(int i=0; i<listaZaduzenja.size();i++){
 						//podaci[i]= new Object[]{listaZaduzenja.get(i).getMjesec(),listaZaduzenja.get(i).getGodina().toString()};
 				podaci[i] = new Object[]{zs.vratiPodatkeZaIzvjestajPrvaKolona((int)listaZaduzenja.get(i).getIdZaduzenja()),zs.vratiPodatkeZaIzvjestajDrugaKolona((int)listaZaduzenja.get(i).getIdZaduzenja())};
+					}
 				table_6.setModel(new DefaultTableModel(
 						podaci,
 						new String[] {
