@@ -3,7 +3,10 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
@@ -20,11 +23,24 @@ import javax.swing.JTextPane;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
+import app.vrtic.Model.Aktivnost;
+import app.vrtic.Model.Aktivnostidjeca;
+import app.vrtic.Model.AktivnostidjecaId;
 import app.vrtic.Model.Dijete;
 import app.vrtic.Model.Grupa;
+import app.vrtic.Service.AktivnostDjecaServis;
+import app.vrtic.Service.AktivnostServis;
 import app.vrtic.Service.DijeteServis;
 import app.vrtic.Service.GrupaServis;
 import javax.swing.JList;
+import javax.swing.JInternalFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JPanel;
+import java.awt.FlowLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.GridLayout;
 
 public class EvidentiranjeDjeteta {
 	private Session s;
@@ -40,6 +56,12 @@ public class EvidentiranjeDjeteta {
 	private JTextField textFieldDatumUpisa;
 	private JTextField textFieldDatumIsteka;
 	private JComboBox comboBoxGrupa;
+	private JPanel panel;
+	private JScrollPane scrollPane;
+	
+	private ArrayList<JCheckBox> cb; // lista checkBox aktivnosti
+	public AktivnostServis as;
+	public ArrayList<Aktivnost> la; // lista svih aktivnosti
 	
 	public SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -65,6 +87,9 @@ public class EvidentiranjeDjeteta {
 	 */
 	public EvidentiranjeDjeteta(Session s) {
 		this.s = s;
+		this.cb = new ArrayList<JCheckBox>();
+		this.as = new AktivnostServis(s);
+		this.la = as.SveAktivnosti();
 		initialize();
 	}
 
@@ -77,15 +102,6 @@ public class EvidentiranjeDjeteta {
 		frmVrti.setBounds(100, 100, 517, 726);
 		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);
-		/*
-		JButton btnOdjava = new JButton("Odjava");
-		btnOdjava.setBounds(365, 11, 126, 23);
-		frmVrti.getContentPane().add(btnOdjava);
-		
-		JButton btnNewButton = new JButton("Promjena \u0161ifre");
-		btnNewButton.setBounds(229, 11, 126, 23);
-		frmVrti.getContentPane().add(btnNewButton);
-		*/
 		JLabel lblIme = new JLabel("Ime djeteta:");
 		lblIme.setBounds(71, 62, 79, 14);
 		frmVrti.getContentPane().add(lblIme);
@@ -108,8 +124,8 @@ public class EvidentiranjeDjeteta {
 		
 		
 		comboBoxGrupa = new JComboBox();
+		comboBoxGrupa.setBounds(166, 445, 189, 20);
 		comboBoxGrupa.setEditable(true);
-		comboBoxGrupa.setBounds(166, 405, 189, 20);
 		frmVrti.getContentPane().add(comboBoxGrupa);
 		
 		
@@ -138,8 +154,8 @@ public class EvidentiranjeDjeteta {
 		frmVrti.getContentPane().add(btnIzmijeni);
 		
 		textFieldPrezimeRoditelja = new JTextField();
-		textFieldPrezimeRoditelja.setColumns(10);
 		textFieldPrezimeRoditelja.setBounds(166, 216, 189, 20);
+		textFieldPrezimeRoditelja.setColumns(10);
 		frmVrti.getContentPane().add(textFieldPrezimeRoditelja);
 		
 		JLabel lblAdresaStanovanja = new JLabel("Adresa stanovanja:");
@@ -147,8 +163,8 @@ public class EvidentiranjeDjeteta {
 		frmVrti.getContentPane().add(lblAdresaStanovanja);
 		
 		textFieldAdresaStanovanja = new JTextField();
-		textFieldAdresaStanovanja.setColumns(10);
 		textFieldAdresaStanovanja.setBounds(166, 259, 189, 20);
+		textFieldAdresaStanovanja.setColumns(10);
 		frmVrti.getContentPane().add(textFieldAdresaStanovanja);
 		
 		JLabel lblBrojTelefonaStaratelja = new JLabel("Broj telefona staratelja:");
@@ -156,33 +172,17 @@ public class EvidentiranjeDjeteta {
 		frmVrti.getContentPane().add(lblBrojTelefonaStaratelja);
 		
 		textFieldBrojTelefona = new JTextField();
-		textFieldBrojTelefona.setColumns(10);
 		textFieldBrojTelefona.setBounds(166, 297, 189, 20);
+		textFieldBrojTelefona.setColumns(10);
 		frmVrti.getContentPane().add(textFieldBrojTelefona);
 		
 		JLabel lblGrupa = new JLabel("Grupa:");
-		lblGrupa.setBounds(88, 408, 46, 14);
+		lblGrupa.setBounds(84, 449, 46, 14);
 		frmVrti.getContentPane().add(lblGrupa);
 		
 		JLabel lblAktivnosti = new JLabel("Aktivnosti:");
 		lblAktivnosti.setBounds(71, 346, 79, 14);
 		frmVrti.getContentPane().add(lblAktivnosti);
-		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Engleski jezik");
-		chckbxNewCheckBox.setBounds(153, 342, 149, 23);
-		frmVrti.getContentPane().add(chckbxNewCheckBox);
-		
-		JCheckBox chckbxNjemackiJezik = new JCheckBox("Njema\u010Dki jezik");
-		chckbxNjemackiJezik.setBounds(327, 342, 139, 23);
-		frmVrti.getContentPane().add(chckbxNjemackiJezik);
-		
-		JCheckBox chckbxPenjanjePoStijenama = new JCheckBox("Penjanje po stijenama");
-		chckbxPenjanjePoStijenama.setBounds(153, 375, 162, 23);
-		frmVrti.getContentPane().add(chckbxPenjanjePoStijenama);
-		
-		JCheckBox chckbxRuskiJezik = new JCheckBox("Ruski jezik");
-		chckbxRuskiJezik.setBounds(327, 375, 97, 23);
-		frmVrti.getContentPane().add(chckbxRuskiJezik);
 		
 		JLabel lblDatumUpisaU = new JLabel("Datum upisa u vrti\u0107:");
 		lblDatumUpisaU.setBounds(22, 484, 128, 14);
@@ -197,13 +197,13 @@ public class EvidentiranjeDjeteta {
 		frmVrti.getContentPane().add(lblNapomena);
 		
 		textFieldDatumUpisa = new JTextField();
-		textFieldDatumUpisa.setColumns(10);
 		textFieldDatumUpisa.setBounds(166, 481, 189, 20);
+		textFieldDatumUpisa.setColumns(10);
 		frmVrti.getContentPane().add(textFieldDatumUpisa);
 		
 		textFieldDatumIsteka = new JTextField();
-		textFieldDatumIsteka.setColumns(10);
 		textFieldDatumIsteka.setBounds(166, 517, 189, 20);
+		textFieldDatumIsteka.setColumns(10);
 		frmVrti.getContentPane().add(textFieldDatumIsteka);
 		
 		JTextPane textPane = new JTextPane();
@@ -222,11 +222,22 @@ public class EvidentiranjeDjeteta {
 		label_1.setBounds(365, 520, 79, 14);
 		frmVrti.getContentPane().add(label_1);
 		
+		panel = new JPanel();
+		panel.setBounds(166, 328, 215, 106);
+		frmVrti.getContentPane().add(panel);
+		panel.setLayout(new GridLayout(0, 2, 10, 10));
+		
+		JScrollPane scrollPane = new JScrollPane(panel);
+		scrollPane.setSize(234, 110);
+		scrollPane.setLocation(147, 328);
+		frmVrti.getContentPane().add(scrollPane);
+		
 		
 		btnIzmijeni.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				// validacije
 				if(textFieldImeDjeteta.getText().length() < 4) {
 					JOptionPane.showMessageDialog(null, "Ime mora sadržavati barem 3 slova.");
 					return;
@@ -265,12 +276,12 @@ public class EvidentiranjeDjeteta {
 				DijeteServis ds = new DijeteServis(s);
 				
 				// jer u bazu upisuje kao yyyy-mm-dd
-				String[] s = textFieldDatumRodjenjaDjeteta.getText().split("-");
-				
+				String[] s1 = textFieldDatumRodjenjaDjeteta.getText().split("-");
+				// kreiranje djeteta
 				Dijete d = new Dijete();
 				d.setIme(textFieldImeDjeteta.getText());
 				d.setPrezime(textFieldPrezimeDjeteta.getText());
-				d.setDatumRodjenja(s[2]+"-"+s[1]+"-"+s[0]); // yyyy-mm-dd
+				d.setDatumRodjenja(s1[2]+"-"+s1[1]+"-"+s1[0]); // yyyy-mm-dd
 				d.setAdresaPrebivalista(textFieldAdresaStanovanja.getText());
 				d.setImeRoditelja(textFieldImeRoditelja.getText());
 				d.setBrojTelefona(textFieldBrojTelefona.getText());
@@ -284,14 +295,33 @@ public class EvidentiranjeDjeteta {
 					JOptionPane.showMessageDialog(null, "Datum upisa i/ili istika nisu u ispravnom formatu");
 				}
 				
+				// odabir grupe iz comboBoxa
 				Grupa g = (Grupa)comboBoxGrupa.getSelectedItem();
 				d.setGrupa(g);
 				
+				// evidentiranje djeteta
 				ds.evidentiraj(d);
+				/*
+				//dodavanje aktivnosti za dijete
+				ArrayList<Dijete> svi = ds.svaDjeca();	// sva djeca da bi mogao pristupiti zadnjem dodanom		
+				
+				Set<Aktivnostidjeca> aktivnostidjecas = new HashSet<Aktivnostidjeca>();
+				for(int i=0; i<cb.size(); i++) {
+					if(cb.get(i).isSelected()) {
+						Aktivnost a = la.get(i);
+						Aktivnostidjeca akt = new Aktivnostidjeca();
+						akt.setAktivnost(a);
+						akt.setDijete(svi.get(svi.size()-1));
+						
+						aktivnostidjecas.add(akt);
+						
+						
+					}
+				}*/
 			}
 		});
 		postaviListu();
-
+		postaviAktivnosti();
 	}
 	
 	public void postaviListu() {
@@ -305,5 +335,15 @@ public class EvidentiranjeDjeteta {
 		}
 		
 		comboBoxGrupa.setModel(model);
+	}
+	
+	public void postaviAktivnosti() {
+		for(Aktivnost a: la) {
+			JCheckBox c = new JCheckBox(a.toString());
+			cb.add(c);
+            panel.add(c);
+            panel.revalidate();
+            panel.repaint();
+        }
 	}
 }

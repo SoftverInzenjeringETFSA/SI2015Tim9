@@ -96,5 +96,9 @@ public class Aktivnost implements java.io.Serializable {
 	public void setAktivnostidjecas(Set<Aktivnostidjeca> aktivnostidjecas) {
 		this.aktivnostidjecas = aktivnostidjecas;
 	}
+	
+	public String toString() { 
+	    return this.naziv;
+	} 
 
 }
