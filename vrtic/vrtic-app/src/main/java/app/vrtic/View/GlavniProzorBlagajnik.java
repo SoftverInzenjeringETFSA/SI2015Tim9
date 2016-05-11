@@ -12,8 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
-
-
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.JComboBox;
@@ -29,8 +28,11 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import app.vrtic.Model.Dijete;
+import app.vrtic.Model.Zaduzenja;
 import app.vrtic.Service.DijeteServis;
 import app.vrtic.Service.UplataServis;
+import app.vrtic.Service.ZaduzenjeServis;
+
 import javax.swing.SpinnerListModel;
 import javax.swing.SpinnerNumberModel;
 public class GlavniProzorBlagajnik {
@@ -41,6 +43,7 @@ public class GlavniProzorBlagajnik {
 	private JTextField textField;
    private DijeteServis ds;
    private UplataServis us;
+   private ZaduzenjeServis zs;
     private Session s;
 	/**
 	 * Launch the application.
@@ -66,6 +69,8 @@ public class GlavniProzorBlagajnik {
 		this.s = s;
 		this.ds = new DijeteServis(s);
 		this.us = new UplataServis(s);
+		this.zs = new ZaduzenjeServis(s);
+		//JOptionPane.showMessageDialog(null, ds.vratiCijenuSkolarine(1));
 		initialize();
 	}
 
@@ -130,6 +135,7 @@ public class GlavniProzorBlagajnik {
 		JLabel lblMjeseci = new JLabel("Mjeseci:");
 		lblMjeseci.setBounds(389, 11, 74, 14);
 		panel_5.add(lblMjeseci);
+		final ArrayList <JCheckBox> listaCheckboxova = new ArrayList <JCheckBox>();
 		
 		JCheckBox chckbxJanuar = new JCheckBox("Januar");
 		chckbxJanuar.setBounds(389, 31, 97, 23);
@@ -178,13 +184,29 @@ public class GlavniProzorBlagajnik {
 		JCheckBox chckbxDecembar = new JCheckBox("Decembar");
 		chckbxDecembar.setBounds(389, 311, 97, 23);
 		panel_5.add(chckbxDecembar);
+		listaCheckboxova.add(chckbxJanuar);
+		listaCheckboxova.add(chckbxFebruar);
+		listaCheckboxova.add(chckbxMart);
+		listaCheckboxova.add(chckbxApril);
+		listaCheckboxova.add(chckbxMaj);
+		listaCheckboxova.add(chckbxJuni);
+		listaCheckboxova.add(chckbxJuli);
+		listaCheckboxova.add(chckbxAugust);
+		listaCheckboxova.add(chckbxSeptembar);
+		listaCheckboxova.add(chckbxOktobar);
+		listaCheckboxova.add(chckbxNovembar);
+		listaCheckboxova.add(chckbxDecembar);
+		for(int i=0; i< listaCheckboxova.size(); i++){
+			listaCheckboxova.get(i).setVisible(false);
+			
+		}
 		
 		JSpinner spinner_2 = new JSpinner();
 		spinner_2.setModel(new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.DAY_OF_YEAR));
 		spinner_2.setBounds(135, 101, 134, 20);
 		panel_5.add(spinner_2);
 		
-		JSpinner spinner_3 = new JSpinner();
+		final JSpinner spinner_3 = new JSpinner();
 		spinner_3.setModel(new SpinnerNumberModel(new Integer(2016), new Integer(2000), null, new Integer(1)));
 		spinner_3.setBounds(135, 160, 134, 20);
 		
@@ -193,6 +215,18 @@ public class GlavniProzorBlagajnik {
 		spinner_3.setEditor(editor);
 		
 		panel_5.add(spinner_3);
+		
+		JButton btnPrikaziMjesece = new JButton("Prikazi mjesece");
+		btnPrikaziMjesece.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int godina = (Integer) spinner_3.getValue();
+				
+				for(int i=0; i< listaCheckboxova.size(); i++)
+					listaCheckboxova.get(i).setVisible(true);
+			}
+		});
+		btnPrikaziMjesece.setBounds(434, 7, 126, 23);
+		panel_5.add(btnPrikaziMjesece);
 		
 		JPanel panel_6 = new JPanel();
 		tabbedPane.addTab("Uplate koje kasne", null, panel_6, null);
@@ -206,17 +240,37 @@ public class GlavniProzorBlagajnik {
 		lblMjesec.setBounds(20, 11, 46, 14);
 		panel_6.add(lblMjesec);
 		
-		JComboBox comboBox = new JComboBox();
+		final JComboBox comboBox = new JComboBox();
 		comboBox.setMaximumRowCount(12);
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Januar", "Februar", "Mart", "April", "Maj", "Juni", "Juli", "August", "Septembar", "Oktobar", "Novembar", "Decembar"}));
 		comboBox.setBounds(70, 8, 100, 20);
 		panel_6.add(comboBox);
 		
-		JSpinner spinner_1 = new JSpinner();
+		final JSpinner spinner_1 = new JSpinner();
+		spinner_1.setModel(new SpinnerNumberModel(2016, 2000, 3000, 1));
 		spinner_1.setBounds(70, 34, 100, 20);
 		panel_6.add(spinner_1);
 		
 		JButton btnPrikai_1 = new JButton("Prika\u017Ei");
+		btnPrikai_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String mjesec = comboBox.getSelectedItem().toString();
+				int godina = (Integer) spinner_1.getValue();
+				ArrayList<Zaduzenja> listaZaduzenja = zs.vratiZaduzenjaPoGodiniIMjesecu(godina, mjesec);
+				Object[][] podaci = new Object[listaZaduzenja.size()][];
+				
+					for(int i=0; i<listaZaduzenja.size();i++)
+						//podaci[i]= new Object[]{listaZaduzenja.get(i).getMjesec(),listaZaduzenja.get(i).getGodina().toString()};
+				podaci[i] = new Object[]{zs.vratiPodatkeZaIzvjestajPrvaKolona((int)listaZaduzenja.get(i).getIdZaduzenja()),zs.vratiPodatkeZaIzvjestajDrugaKolona((int)listaZaduzenja.get(i).getIdZaduzenja())};
+				table_6.setModel(new DefaultTableModel(
+						podaci,
+						new String[] {
+							"Ime i prezime roditelja", "Broj telefona"
+						}
+					));
+				
+			}
+		});
 		btnPrikai_1.setBounds(194, 33, 100, 23);
 		panel_6.add(btnPrikai_1);
 		
@@ -227,19 +281,7 @@ public class GlavniProzorBlagajnik {
 		table_6 = new JTable();
 		table_6.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
+				
 			},
 			new String[] {
 				"Ime i prezime roditelja", "Broj telefona"
@@ -258,20 +300,7 @@ public class GlavniProzorBlagajnik {
 		table_5 = new JTable();
 		table_5.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
+				
 			},
 			new String[] {
 				"Ime i prezime roditelja", "Broj telefona", "Mjesec", "Godina", "Iznos"
@@ -283,11 +312,29 @@ public class GlavniProzorBlagajnik {
 		lblGodina.setBounds(20, 21, 54, 14);
 		panel_7.add(lblGodina);
 		
-		JSpinner spinner = new JSpinner();
+		final JSpinner spinner = new JSpinner();
 		spinner.setBounds(64, 18, 76, 20);
 		panel_7.add(spinner);
 		
 		JButton btnGeneriiIzvjetaj = new JButton("Generi\u0161i izvje\u0161taj");
+		btnGeneriiIzvjetaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int godina = (Integer) spinner.getValue();
+				ArrayList<Zaduzenja> listaZaduzenja = zs.vratiZaduzenjaPoGodini(godina);
+				Object[][] podaci = new Object[listaZaduzenja.size()][];
+				
+				for(int i=0; i<listaZaduzenja.size();i++)
+					//podaci[i]= new Object[]{listaZaduzenja.get(i).getMjesec(),listaZaduzenja.get(i).getGodina().toString()};
+			podaci[i] = new Object[]{zs.vratiPodatkeZaIzvjestajPrvaKolona((int)listaZaduzenja.get(i).getIdZaduzenja()),zs.vratiPodatkeZaIzvjestajDrugaKolona((int)listaZaduzenja.get(i).getIdZaduzenja()),listaZaduzenja.get(i).getMjesec(),godina,ds.vratiCijenuSkolarine(listaZaduzenja.get(i).getDijete().getIdDijete())};
+			
+				table_5.setModel(new DefaultTableModel(
+						podaci,
+						new String[] {
+								"Ime i prezime roditelja", "Broj telefona", "Mjesec", "Godina", "Iznos"
+						}
+					));	
+			}
+		});
 		btnGeneriiIzvjetaj.setBounds(186, 17, 489, 23);
 		panel_7.add(btnGeneriiIzvjetaj);
 		
