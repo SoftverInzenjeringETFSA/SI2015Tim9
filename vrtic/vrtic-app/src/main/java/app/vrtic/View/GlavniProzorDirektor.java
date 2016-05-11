@@ -370,6 +370,7 @@ public class GlavniProzorDirektor {
 				"Dan", "Grupa", "Aktivnost", "Vrijeme po\u010Detka", "Vrijeme zavr\u0161etka"
 			}
 		));
+		
 		scrollPane_4.setViewportView(table_4);
 		
 		
@@ -380,6 +381,7 @@ public class GlavniProzorDirektor {
 				
 				DodavanjeTermina novifrejm = new DodavanjeTermina(s);
 				novifrejm.OtvoriFormu();
+				
 			}
 		});
 		btnKreirajRaspored.setBounds(533, 158, 126, 23);
@@ -512,6 +514,8 @@ public class GlavniProzorDirektor {
 						"Dan", "Grupa", "Aktivnost", "Vrijeme po\u010Detka", "Vrijeme zavr\u0161etka"
 }
 			));
+		DefaultTableModel table4 = (DefaultTableModel) table_4.getModel();
+		table4.fireTableDataChanged();
 		
 		
 		}

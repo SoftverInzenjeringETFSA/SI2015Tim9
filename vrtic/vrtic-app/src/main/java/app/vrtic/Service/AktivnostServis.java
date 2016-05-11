@@ -27,6 +27,16 @@ public class AktivnostServis {
 	}
 	
 	
+	/*
+	public Aktivnost pretragaPoNazivu(String naziv)
+	{
+		Transaction transakcija = s.beginTransaction();
+		Aktivnost akt = (Aktivnost) s.get(Aktivnost.class, naziv);
+		transakcija.commit();
+		return akt;
+	}
+	
+	*/
 	//brisanje aktivnosti
 	public boolean ObrisiAktivnost(int id) {
 		Transaction trans = s.beginTransaction();

@@ -25,6 +25,8 @@ public class GrupaServis {
 		return gr;
 	}
 	
+	
+	
 	//brisanje grupe
 	public boolean ObrisiGrupu(int id){
 		Transaction transakcija = s.beginTransaction();
@@ -58,14 +60,12 @@ public class GrupaServis {
 	//pretraga grupe po imenu
 		
 	
-	public Grupa PretragaPoImenu(String imeGrupe) throws Exception
+	public Grupa PretragaPoImenu(String imeGrupe)
 	{
 		
-		List<Grupa> grupe = s.createCriteria(Grupa.class).add(Restrictions.like("naziv", imeGrupe)).list();
-		if(grupe.size() > 1) {
-			throw new Exception();
-		}
-		Grupa g = grupe.get(0);
-		return g;
+		Transaction transakcija = s.beginTransaction();
+		Grupa akt = (Grupa) s.get(Grupa.class, imeGrupe);
+		transakcija.commit();
+		return akt;
 	}
 }
