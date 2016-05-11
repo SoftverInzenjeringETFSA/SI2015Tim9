@@ -3,6 +3,7 @@ package app.vrtic.View;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -85,14 +86,32 @@ public class login {
 			public void actionPerformed(ActionEvent e)
 			{
 				Korisnik user = new Korisnik();
-				KorisnikServis userS = new KorisnikServis(s);
 				
+				KorisnikServis userS = new KorisnikServis(s);
 					String passText = new String(passwordField.getPassword());
 					if(userS.provjeriSifruKorisnika(textField.getText(), passText)){
-						GlavniProzorBlagajnik mainFormaBlagajnik = new GlavniProzorBlagajnik(s);
+						ArrayList<Korisnik> korisnici = userS.dajKorisnike();
+						for(int i=0; i<korisnici.size();i++){
+							if(korisnici.get(i).getKorisnickoIme().equals(textField.getText()))
+							{
+								user = korisnici.get(i);
+							}
+						}
+					if (user.getPrivilegije().equals("blagajnik")) {
+						GlavniProzorBlagajnik mainFormaBlagajnik = new GlavniProzorBlagajnik(s, user.getIdKorisnika());
 						mainFormaBlagajnik.OtvoriFormu();
-						//Ovim cemo sakriti login, pa nam moze posluziti kao glavna forma
+						// Ovim cemo sakriti login, pa nam moze posluziti kao
+						// glavna forma
 						frmVrti.setVisible(false);
+					}
+					else if (user.getPrivilegije().equals("direktor")) {
+						GlavniProzorDirektor mainForma = new GlavniProzorDirektor(s, user.getIdKorisnika());
+						mainForma.OtvoriFormu();
+						// Ovim cemo sakriti login, pa nam moze posluziti kao
+						// glavna forma
+						frmVrti.setVisible(false);
+					}
+					else JOptionPane.showMessageDialog(null, "Greška!");
 					}
 					else JOptionPane.showMessageDialog(null, "Neispravna šifra!");
 				

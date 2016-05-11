@@ -2,10 +2,12 @@ package app.vrtic.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import app.vrtic.Model.Aktivnostidjeca;
 import app.vrtic.Model.Dijete;
 
 
@@ -75,6 +77,15 @@ public class DijeteServis {
 	
 	}
 	
+	public double vratiCijenuSkolarine(int idDjeteta){
+		double suma=0;
+		Dijete d=nadji(idDjeteta);
+		Set<Aktivnostidjeca>skupMedjutabela = d.getAktivnostidjecas();	
+		Aktivnostidjeca[]medju = skupMedjutabela.toArray(new Aktivnostidjeca[skupMedjutabela.size()]);
+	    for(int i=0; i<medju.length;i++)
+		suma+=medju[i].getAktivnost().getCijena();
+	    return suma;
+	}
 	
 
 }
