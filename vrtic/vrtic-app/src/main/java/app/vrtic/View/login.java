@@ -14,6 +14,9 @@ import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
+import app.vrtic.Model.Korisnik;
+import app.vrtic.Service.KorisnikServis;
+
 public class login {
 	public JDialog dijalog;
 	final static Logger logger = Logger.getLogger(login.class);
@@ -21,6 +24,7 @@ public class login {
 	private JTextField textField;
 	private JPasswordField passwordField;
 	private Session s;
+	
 
 	/**
 	 * Launch the application.
@@ -80,11 +84,24 @@ public class login {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				Korisnik user = new Korisnik();
+				KorisnikServis userS = new KorisnikServis(s);
+				
+					String passText = new String(passwordField.getPassword());
+					if(userS.provjeriSifruKorisnika(textField.getText(), passText)){
+						GlavniProzorBlagajnik mainFormaBlagajnik = new GlavniProzorBlagajnik(s);
+						mainFormaBlagajnik.OtvoriFormu();
+						//Ovim cemo sakriti login, pa nam moze posluziti kao glavna forma
+						frmVrti.setVisible(false);
+					}
+					else JOptionPane.showMessageDialog(null, "Neispravna šifra!");
+				
+				
 				
 				// ovaj dio Ä‡e za sad biti hardcode da bi se moglo sve otvarati
 				// kad se doda baza i korisnici izmjeniti ovo !!!
 				// !!!
-				if(textField.getText().equals("direktor"))
+				/*if(textField.getText().equals("direktor"))
 				{
 					GlavniProzorDirektor mainFormaDirektor = new GlavniProzorDirektor(s);
 					mainFormaDirektor.OtvoriFormu();
@@ -102,12 +119,15 @@ public class login {
 				else {
 					JOptionPane.showMessageDialog(null, "Unesi direktor ili blagajnik, u zavisnosti sta ti treba");
 				}
+				*/
 				
 							
 			}
 
 		});
 	}
+	
+	
 }
 
 

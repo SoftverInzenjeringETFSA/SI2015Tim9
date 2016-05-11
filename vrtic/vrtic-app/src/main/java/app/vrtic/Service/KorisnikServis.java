@@ -76,7 +76,7 @@ public class KorisnikServis {
 		List<Korisnik> k=dajKorisnike();
 		for(int i=0;i<k.size();i++)
 		{
-			if(k.get(i).getKorisnickoIme()==username && k.get(i).getSifra()==sifra) {
+			if(k.get(i).getKorisnickoIme().equals(username) && k.get(i).getSifra().equals(sifra)) {
 				return true;
 			}
 		}
