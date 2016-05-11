@@ -59,9 +59,9 @@ public class EvidentiranjeDjeteta {
 	private JPanel panel;
 	private JScrollPane scrollPane;
 	
-	private ArrayList<JCheckBox> cb; // lista checkBox aktivnosti
-	public AktivnostServis as;
-	public ArrayList<Aktivnost> la; // lista svih aktivnosti
+	private ArrayList<JCheckBox> cbLista; // lista checkBox aktivnosti
+	public AktivnostServis aktivnostServis;
+	public ArrayList<Aktivnost> listaAktivnosti; // lista svih aktivnosti
 	
 	public SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -87,9 +87,9 @@ public class EvidentiranjeDjeteta {
 	 */
 	public EvidentiranjeDjeteta(Session s) {
 		this.s = s;
-		this.cb = new ArrayList<JCheckBox>();
-		this.as = new AktivnostServis(s);
-		this.la = as.SveAktivnosti();
+		this.cbLista = new ArrayList<JCheckBox>();
+		this.aktivnostServis = new AktivnostServis(s);
+		this.listaAktivnosti = aktivnostServis.SveAktivnosti();
 		initialize();
 	}
 
@@ -301,23 +301,31 @@ public class EvidentiranjeDjeteta {
 				
 				// evidentiranje djeteta
 				ds.evidentiraj(d);
-				/*
-				//dodavanje aktivnosti za dijete
-				ArrayList<Dijete> svi = ds.svaDjeca();	// sva djeca da bi mogao pristupiti zadnjem dodanom		
 				
-				Set<Aktivnostidjeca> aktivnostidjecas = new HashSet<Aktivnostidjeca>();
-				for(int i=0; i<cb.size(); i++) {
-					if(cb.get(i).isSelected()) {
-						Aktivnost a = la.get(i);
+				
+				//dodavanje aktivnosti za dijete
+				ArrayList<Dijete> svaDjeca = ds.svaDjeca();	// sva djeca da bi mogao pristupiti zadnjem dodanom		
+				Dijete zadnje = svaDjeca.get(svaDjeca.size()-1);
+				
+				//Set<Aktivnostidjeca> aktivnostidjecas = new HashSet<Aktivnostidjeca>();
+				for(int i=0; i<cbLista.size(); i++) {
+					if(cbLista.get(i).isSelected()) {
+						Aktivnost a = listaAktivnosti.get(i); // selektovana aktivnost
+						
 						Aktivnostidjeca akt = new Aktivnostidjeca();
+						AktivnostDjecaServis adServis = new AktivnostDjecaServis(s);
+						
 						akt.setAktivnost(a);
-						akt.setDijete(svi.get(svi.size()-1));
+						akt.setDijete(zadnje);
 						
-						aktivnostidjecas.add(akt);
+						adServis.dodajAktivnostDijete(akt);
 						
-						
+						//aktivnostidjecas.add(akt);
+						//aktivnostServis.izmijeniAktivnost(a);
 					}
-				}*/
+				}
+				//zadnje.setAktivnostidjecas(aktivnostidjecas);
+			//	ds.izmijeni(zadnje);
 			}
 		});
 		postaviListu();
@@ -338,9 +346,9 @@ public class EvidentiranjeDjeteta {
 	}
 	
 	public void postaviAktivnosti() {
-		for(Aktivnost a: la) {
+		for(Aktivnost a: listaAktivnosti) {
 			JCheckBox c = new JCheckBox(a.toString());
-			cb.add(c);
+			cbLista.add(c);
             panel.add(c);
             panel.revalidate();
             panel.repaint();

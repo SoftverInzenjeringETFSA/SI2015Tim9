@@ -35,6 +35,7 @@ public class DijeteServis {
 		novo.setPrezimeRoditelja(a.getPrezimeRoditelja());
 		novo.setDatumUpisa(a.getDatumUpisa());
 		novo.setDatumIsteka(a.getDatumIsteka());
+		novo.setAktivnostidjecas(a.getAktivnostidjecas());
 		
 		
 		s.save(novo);
