@@ -97,11 +97,11 @@ public class login {
 					else JOptionPane.showMessageDialog(null, "Neispravna šifra!");
 				
 				
-				
+				/*
 				// ovaj dio Ä‡e za sad biti hardcode da bi se moglo sve otvarati
 				// kad se doda baza i korisnici izmjeniti ovo !!!
 				// !!!
-				/*if(textField.getText().equals("direktor"))
+				if(textField.getText().equals("direktor"))
 				{
 					GlavniProzorDirektor mainFormaDirektor = new GlavniProzorDirektor(s);
 					mainFormaDirektor.OtvoriFormu();
