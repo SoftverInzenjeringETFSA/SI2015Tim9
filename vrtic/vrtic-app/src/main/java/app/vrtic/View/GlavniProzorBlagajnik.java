@@ -2,6 +2,7 @@ package app.vrtic.View;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -14,6 +15,7 @@ import javax.swing.JLabel;
 
 
 import javax.swing.JSpinner;
+import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
@@ -27,13 +29,18 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import app.vrtic.Model.Dijete;
+import app.vrtic.Service.DijeteServis;
+import app.vrtic.Service.UplataServis;
+import javax.swing.SpinnerListModel;
+import javax.swing.SpinnerNumberModel;
 public class GlavniProzorBlagajnik {
 	final static Logger logger = Logger.getLogger(login.class);
 	private JFrame frmVrti;
 	private JTable table_5;
 	private JTable table_6;
 	private JTextField textField;
-   // private DijeteServis ds;
+   private DijeteServis ds;
+   private UplataServis us;
     private Session s;
 	/**
 	 * Launch the application.
@@ -57,6 +64,8 @@ public class GlavniProzorBlagajnik {
 	 */
 	public GlavniProzorBlagajnik(Session s) {
 		this.s = s;
+		this.ds = new DijeteServis(s);
+		this.us = new UplataServis(s);
 		initialize();
 	}
 
@@ -113,20 +122,10 @@ public class GlavniProzorBlagajnik {
 		
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setBounds(135, 46, 248, 20);
-		/* ArrayList<Dijete> djeca = ds.dajDjecu();
+		ArrayList<Dijete> djeca = ds.svaDjeca();
 		for(int i=0;i< djeca.size();i++)
-		comboBox_1.addItem(djeca.get(i));*/
+		comboBox_1.addItem(djeca.get(i));
 		panel_5.add(comboBox_1);
-		
-		JSpinner spinner_3 = new JSpinner();
-		spinner_3.setBounds(135, 101, 134, 20);
-		spinner_3.setModel(new SpinnerDateModel(new Date(1461794400000L), null, null, Calendar.DAY_OF_YEAR));
-		panel_5.add(spinner_3);
-		
-		JSpinner spinner_2 = new JSpinner();
-		spinner_2.setModel(new SpinnerDateModel(new Date(1463954400000L), null, null, Calendar.YEAR));
-		spinner_2.setBounds(135, 160, 134, 20);
-		panel_5.add(spinner_2);
 		
 		JLabel lblMjeseci = new JLabel("Mjeseci:");
 		lblMjeseci.setBounds(389, 11, 74, 14);
@@ -179,6 +178,21 @@ public class GlavniProzorBlagajnik {
 		JCheckBox chckbxDecembar = new JCheckBox("Decembar");
 		chckbxDecembar.setBounds(389, 311, 97, 23);
 		panel_5.add(chckbxDecembar);
+		
+		JSpinner spinner_2 = new JSpinner();
+		spinner_2.setModel(new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.DAY_OF_YEAR));
+		spinner_2.setBounds(135, 101, 134, 20);
+		panel_5.add(spinner_2);
+		
+		JSpinner spinner_3 = new JSpinner();
+		spinner_3.setModel(new SpinnerNumberModel(new Integer(2016), new Integer(2000), null, new Integer(1)));
+		spinner_3.setBounds(135, 160, 134, 20);
+		
+		JSpinner.NumberEditor editor = new JSpinner.NumberEditor(spinner_3,"#");
+		
+		spinner_3.setEditor(editor);
+		
+		panel_5.add(spinner_3);
 		
 		JPanel panel_6 = new JPanel();
 		tabbedPane.addTab("Uplate koje kasne", null, panel_6, null);
