@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 public class GrupaServis {
 	private Session s;
@@ -19,7 +20,7 @@ public class GrupaServis {
 	//pretraga po ID-u
 	public Grupa PretragaPoIDu(int id){
 		Transaction transakcija = s.beginTransaction();
-		Grupa gr = (Grupa) s.get(Grupa.class, id);
+		Grupa gr = s.get(Grupa.class, id);
 		transakcija.commit();
 		return gr;
 	}
@@ -27,7 +28,7 @@ public class GrupaServis {
 	//brisanje grupe
 	public boolean ObrisiGrupu(int id){
 		Transaction transakcija = s.beginTransaction();
-		Grupa gr = (Grupa) s.get(Grupa.class, id);
+		Grupa gr = s.get(Grupa.class, id);
 		if(gr != null)
 			s.delete(gr);
 		transakcija.commit();
@@ -54,6 +55,17 @@ public class GrupaServis {
 		List<Grupa> t = s.createCriteria(Grupa.class).list();
 		return new ArrayList<Grupa>(t);
 	}
+	//pretraga grupe po imenu
+		
 	
-	
+	public Grupa PretragaPoImenu(String imeGrupe) throws Exception
+	{
+		
+		List<Grupa> grupe = s.createCriteria(Grupa.class).add(Restrictions.like("naziv", imeGrupe)).list();
+		if(grupe.size() > 1) {
+			throw new Exception();
+		}
+		Grupa g = grupe.get(0);
+		return g;
+	}
 }
