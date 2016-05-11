@@ -1,5 +1,8 @@
 package app.vrtic.View;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
@@ -11,6 +14,15 @@ import javax.swing.table.DefaultTableModel;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
+import app.vrtic.Model.Aktivnost;
+import app.vrtic.Model.Dijete;
+import app.vrtic.Model.Grupa;
+import app.vrtic.Model.Termin;
+import app.vrtic.Service.AktivnostServis;
+import app.vrtic.Service.DijeteServis;
+import app.vrtic.Service.GrupaServis;
+import app.vrtic.Service.TerminServis;
+
 
 public class PrikazGrupe {
 	final static Logger logger = Logger.getLogger(login.class);
@@ -19,8 +31,7 @@ public class PrikazGrupe {
 	private JTextField textField;
 	private JTable table;
 	private JTable table_1;
-
-	/**
+	private Grupa g = new Grupa();	/**
 	 * Launch the application.
 	 */
 	public void OtvoriFormu() {
@@ -49,6 +60,9 @@ public class PrikazGrupe {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		GrupaServis gs = new GrupaServis(this.s);
+		Grupa g = gs.sveGrupe().get(0);
+		AktivnostServis as = new AktivnostServis(this.s);
 		frmVrti = new JFrame();
 		frmVrti.setTitle("Vrti\u0107");
 		frmVrti.setBounds(100, 100, 657, 345);
@@ -63,23 +77,20 @@ public class PrikazGrupe {
 		
 		textField = new JTextField();
 		textField.setEditable(false);
-		textField.setBounds(63, 33, 24, 20);
+		textField.setBounds(63, 33, 91, 20);
 		frmVrti.getContentPane().add(textField);
 		textField.setColumns(10);
+		textField.setText(g.getNaziv());
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(26, 75, 469, 121);
+		scrollPane.setBounds(26, 75, 469, 93);
 		frmVrti.getContentPane().add(scrollPane);
 		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
+				
 			},
 			new String[] {
 				"Ime djeteta", "Prezime djeteta"
@@ -110,17 +121,88 @@ public class PrikazGrupe {
 		lblStatistikaAktivnosti.setBounds(26, 199, 155, 14);
 		frmVrti.getContentPane().add(lblStatistikaAktivnosti);
 		
-		JButton btnPrikai = new JButton("Prika\u017Ei");
-		btnPrikai.setBounds(505, 105, 126, 23);
-		frmVrti.getContentPane().add(btnPrikai);
-		
 		JButton btnIzmijeni = new JButton("Izmijeni");
-		btnIzmijeni.setBounds(505, 139, 126, 23);
+		btnIzmijeni.setBounds(505, 90, 126, 23);
 		frmVrti.getContentPane().add(btnIzmijeni);
+		btnIzmijeni.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s);
+					novifrejm.OtvoriFormu();
+					frmVrti.dispose();
+										
+			}
+
+		});
 		
 		JButton btnObrii = new JButton("Obri\u0161i");
-		btnObrii.setBounds(505, 173, 126, 23);
+		btnObrii.setBounds(505, 134, 126, 23);
 		frmVrti.getContentPane().add(btnObrii);
+		btnObrii.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s);
+					novifrejm.OtvoriFormu();
+					frmVrti.dispose();
+										
+			}
+
+		});
+		
+		
+		
+		TabelaDjeca(g.getNaziv());
+		StatistikaAktivnosti(as);
 	}
+	
+	public void TabelaDjeca(String grupa){
+		
+		
+		DijeteServis servis = new DijeteServis(this.s);
+		ArrayList<Dijete> djeca = servis.svaDjeca();
+		Object[][] data= new Object[djeca.size()][];
+		for(int i = 0; i<djeca.size();i++) {
+			if(grupa.equals(djeca.get(i).getGrupa().getNaziv())){
+				data[i]= new Object[]{djeca.get(i).getIme(), djeca.get(i).getIme()};
+		
+		table.setModel(new DefaultTableModel(
+				data,
+				new String[] {
+						"Ime djeteta", "Prezime djeteta"
+}
+			));
+			}
+		}
+		DefaultTableModel tableFire = (DefaultTableModel) table.getModel();
+		tableFire.fireTableDataChanged();
+		
+		
+		
+		}
+	
+public void StatistikaAktivnosti(AktivnostServis as){
+		
+		
+		ArrayList<Aktivnost> aktiv = as.SveAktivnosti();
+		Object[][] data= new Object[aktiv.size()][];
+		for(int i = 0; i<aktiv.size();i++) {
+			
+				data[i]= new Object[]{aktiv.get(i).getNaziv(), aktiv.get(i).getBrojDjece().toString()};
+		
+				table_1.setModel(new DefaultTableModel(
+				data,
+				new String[] {
+						"Naziv aktivnosti", "Broj djece"
+}
+			));
+			}
+		
+		DefaultTableModel tableFire = (DefaultTableModel) table_1.getModel();
+		tableFire.fireTableDataChanged();
+		
+		
+		}
 
 }

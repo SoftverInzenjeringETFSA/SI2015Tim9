@@ -1,6 +1,7 @@
 INSERT INTO `aktivnost` (`idAktivnosti`, `Naziv`, `BrojDjece`, `cijena`) VALUES (NULL, 'Engelski', '25', '10'), (NULL, 'Talijanski', '20', '15');
 INSERT INTO `grupa` (`idGrupe`, `naziv`, `RedniBroj`, `Kapacitet`) VALUES (NULL, 'Prva grupa', '1', '30'), (NULL, 'Druga', '2', '30');
-INSERT INTO `dijete` (`idDijete`, `Ime`, `Prezime`, `DatumRodjenja`, `AdresaPrebivalista`, `ImeRoditelja`, `BrojTelefona`, `PrezimeRoditelja`, `DatumUpisa`, `DatumIsteka`, `idGrupe`) VALUES (NULL, 'Adnan', 'Kičin', '1992-09-10', 'Podmostovska bb', 'Hamzalija', '062403784', 'Kičin', '2016-05-11', '2016-10-26', NULL);
+INSERT INTO `dijete` (`idDijete`, `Ime`, `Prezime`, `DatumRodjenja`, `AdresaPrebivalista`, `ImeRoditelja`, `BrojTelefona`, `PrezimeRoditelja`, `DatumUpisa`, `DatumIsteka`, `idGrupe`) VALUES (NULL, 'Adnan', 'Kičin', '1992-09-10', 'Podmostovska bb', 'Hamzalija', '062403784', 'Kičin', '2016-05-11', '2016-10-26', 1);
+INSERT INTO `dijete` (`idDijete`, `Ime`, `Prezime`, `DatumRodjenja`, `AdresaPrebivalista`, `ImeRoditelja`, `BrojTelefona`, `PrezimeRoditelja`, `DatumUpisa`, `DatumIsteka`, `idGrupe`) VALUES (NULL, 'Haris', 'Mušović', '1992-09-10', 'Podmostovska bb', 'Harisov Otac', '062403784', 'Mušović', '2016-05-11', '2016-10-26', 1);
 INSERT INTO `korisnik` (`idKorisnika`, `Ime`, `Prezime`, `KorisnickoIme`, `Sifra`, `Privilegije`, `BrojTelefona`) VALUES (NULL, 'Lejla', 'Nukić', 'lejlejlej', 'lejlejlej', 'blagajnik', '062222333');
 INSERT INTO `termin` (`idTermin`, `idAktivnosti`, `idGrupe`, `vrijemePocetka`, `vrijemeZavrsetka`, `dan`) VALUES (NULL, '1', '2', '12:00', '13:00', 'utorak');
 INSERT INTO `uplata` (`idUplate`, `DatumUplate`, `VisinaUplate`, `idDijete`, `zaMjesec`, `zaGodinu`) VALUES (NULL, '2016-05-11', '200', '1', '5', '2015');
