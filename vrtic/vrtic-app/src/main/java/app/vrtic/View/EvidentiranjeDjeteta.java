@@ -312,20 +312,20 @@ public class EvidentiranjeDjeteta {
 					if(cbLista.get(i).isSelected()) {
 						Aktivnost a = listaAktivnosti.get(i); // selektovana aktivnost
 						
+						AktivnostidjecaId aaaa = new AktivnostidjecaId();
 						Aktivnostidjeca akt = new Aktivnostidjeca();
 						AktivnostDjecaServis adServis = new AktivnostDjecaServis(s);
 						
+						aaaa.setIdDijete(zadnje.getIdDijete());
+						aaaa.setIdAktivnosti(a.getIdAktivnosti());
+						
 						akt.setAktivnost(a);
 						akt.setDijete(zadnje);
+						akt.setId(aaaa);
 						
 						adServis.dodajAktivnostDijete(akt);
-						
-						//aktivnostidjecas.add(akt);
-						//aktivnostServis.izmijeniAktivnost(a);
 					}
 				}
-				//zadnje.setAktivnostidjecas(aktivnostidjecas);
-			//	ds.izmijeni(zadnje);
 			}
 		});
 		postaviListu();

@@ -20,6 +20,7 @@ public class AktivnostDjecaServis {
 
 		Aktivnostidjeca akt = new Aktivnostidjeca();
 		
+		akt.setId(t.getId());
 		akt.setDijete(t.getDijete());
 		akt.setAktivnost(t.getAktivnost());
 
