@@ -143,20 +143,45 @@ public class DodavanjeTermina {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				//Grupa g = new Grupa();
+				//Aktivnost a = new Aktivnost();
+				GrupaServis gs = new GrupaServis(s);
+				AktivnostServis as = new AktivnostServis(s);
+				ArrayList<Aktivnost> akt = as.SveAktivnosti();
+				ArrayList<Grupa> grupe = gs.sveGrupe();
+				
+				
 				Termin NoviTermin = new Termin();	
 				NoviTermin.setDan(comboBox_1.getSelectedItem().toString());
-			//	NoviTermin.setGrupa(grupeComboBox.getSelectedItem().toString());
-				//NoviTermin.setVrijemePocetka(t.getVrijemePocetka());
-		//		NoviTermin.setVrijemeZavrsetka(t.getVrijemeZavrsetka());
-			//	NoviTermin.setAktivnost(comboBox.getSelectedItem().toString());
+				String imeGrupe = grupeComboBox.getSelectedItem().toString();
+				String imeAktivnosti = comboBox.getSelectedItem().toString();
+				for(int i=0; i<akt.size();i++)
+				{
+					if(imeAktivnosti.equals(akt.get(i).getNaziv())){
+						NoviTermin.setAktivnost(akt.get(i));
+					}
+						
+				}
 				
+				for(int i=0; i<grupe.size();i++)
+				{
+					if(imeGrupe.equals(grupe.get(i).getNaziv())){
+						NoviTermin.setGrupa(grupe.get(i));
+					}
+						
+				}
+			//    NoviTermin.setGrupa(gs.PretragaPoImenu(grupeComboBox.getSelectedItem().toString()));
+			//    NoviTermin.setAktivnost(as.pretragaPoNazivu(comboBox.getSelectedItem().toString()));
+				NoviTermin.setVrijemePocetka(formattedTextField.getText());
+				NoviTermin.setVrijemeZavrsetka(formattedTextField.getText());
+				TerminServis ts = new TerminServis(s);
+				ts.dodajTermin(NoviTermin);
 				
-				
-				
+					
 				
 				formattedTextField.setText("");
 				formattedTextField_1.setText("");
-										
+									
 			}
 
 		});
@@ -189,7 +214,5 @@ public class DodavanjeTermina {
 		
 	}
 	
-	public void dodajTermin(){
-		
-	}
+	
 }
