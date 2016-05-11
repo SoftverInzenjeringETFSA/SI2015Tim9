@@ -3,6 +3,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -10,15 +11,25 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
+import app.vrtic.Model.Aktivnost;
+import app.vrtic.Model.Dijete;
+import app.vrtic.Model.Grupa;
 import app.vrtic.Model.Korisnik;
 import app.vrtic.Model.Termin;
+import app.vrtic.Model.Vaspitac;
+import app.vrtic.Service.AktivnostServis;
+import app.vrtic.Service.DijeteServis;
+import app.vrtic.Service.GrupaServis;
 import app.vrtic.Service.KorisnikServis;
 import app.vrtic.Service.TerminServis;
+import app.vrtic.Service.VaspitacServis;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -26,17 +37,23 @@ import javax.swing.AbstractListModel;
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class GlavniProzorDirektor {
 
 	private JFrame frmVrti;
-	private JTable table;
+	private JTable table_0;
 	private JTable table_1;
 	private JTable table_2;
 	private JTable table_3;
 	private JTable table_4;
 	private JTable table_5;
 	private JTable table_6;
+	private JList listGrupe;
+	private boolean pokretanje = false; 
 	final static Logger logger = Logger.getLogger(login.class);
 	private Session s;
 	int id;
@@ -85,16 +102,60 @@ public class GlavniProzorDirektor {
 		tabbedPane.setBounds(10, 42, 702, 239);
 		frmVrti.getContentPane().add(tabbedPane);
 		
+		// on load i ovdje će se pozivat sve funkcije koje ce recimo ucitavat 
+		// stvari iz baze u tabelu u odredjenom tabu
+		tabbedPane.addChangeListener(new ChangeListener() {
+
+            public void stateChanged(ChangeEvent e) {
+                if (e.getSource() instanceof JTabbedPane) {
+                    JTabbedPane pane = (JTabbedPane) e.getSource();
+                    // korisnik
+                    if(pane.getSelectedIndex()==0 && !pokretanje) {
+                    	// popuniTabeluKorisnici();
+                    }
+                    // djeca
+                    else if(pane.getSelectedIndex()==1) {
+                    	popuniTabeluDjeca();
+                    }
+                    // grupe
+                    else if(pane.getSelectedIndex()==2) {
+                    	postaviListuGrupa();
+                    }
+                    // aktivnosti
+                    else if(pane.getSelectedIndex()==3) {
+                    	popuniTabeluAktivnosti();
+                    }
+                    // vaspitaci
+                    else if(pane.getSelectedIndex()==4) {
+                    	popuniTabeluVaspitaci();
+                    }
+                    // raspored
+                    else if(pane.getSelectedIndex()==5) {
+                    	refreshujRaspored();
+                    }
+                    // uplate koje kase
+                    else if(pane.getSelectedIndex()==6) {
+                    	
+                    }
+                    // pregled svih uplata
+                    else {
+                    	
+                    }
+                    
+                }
+            }
+        });
+		
 		JPanel panel = new JPanel();
-		tabbedPane.addTab("Korisnici", null, panel, null);
+		tabbedPane.addTab("Korisnici", panel);
 		panel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 11, 452, 122);
 		panel.add(scrollPane);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
+		table_0 = new JTable();
+		table_0.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null},
 				{null, null},
@@ -107,9 +168,9 @@ public class GlavniProzorDirektor {
 				"Naziv korisnika", "Privilegija"
 			}
 		));
-		table.getColumnModel().getColumn(0).setPreferredWidth(96);
-		table.getColumnModel().getColumn(1).setPreferredWidth(93);
-		scrollPane.setViewportView(table);
+		table_0.getColumnModel().getColumn(0).setPreferredWidth(96);
+		table_0.getColumnModel().getColumn(1).setPreferredWidth(93);
+		scrollPane.setViewportView(table_0);
 		
 		JButton btnPrikazi = new JButton("Prika\u017Ei");
 		btnPrikazi.setBounds(564, 14, 123, 23);
@@ -188,6 +249,7 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+					// dodati kod za prosljedjivanje IDDjeteta
 					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s);
 					novifrejm.OtvoriFormu();
 										
@@ -221,8 +283,8 @@ public class GlavniProzorDirektor {
 		lblSpisakGrupa.setBounds(47, 11, 76, 14);
 		panel_2.add(lblSpisakGrupa);
 		
-		JList list = new JList();
-		list.setModel(new AbstractListModel() {
+		listGrupe = new JList();
+		listGrupe.setModel(new AbstractListModel() {
 			String[] values = new String[] {"Grupa 1", "Grupa 2", "Grupa 3", "Grupa 4", "Grupa 5"};
 			public int getSize() {
 				return values.length;
@@ -231,8 +293,8 @@ public class GlavniProzorDirektor {
 				return values[index];
 			}
 		});
-		list.setBounds(47, 36, 140, 96);
-		panel_2.add(list);
+		listGrupe.setBounds(47, 36, 140, 96);
+		panel_2.add(listGrupe);
 		
 		JButton btnObrisiGrupu = new JButton("Obri\u0161i");
 		btnObrisiGrupu.setBounds(561, 33, 126, 23);
@@ -504,9 +566,100 @@ public class GlavniProzorDirektor {
 
 		});
 		
-		refreshujRaspored();
+		popuniTabeluKorisnici();
 		
 	}
+	
+	public void popuniTabeluKorisnici(){
+		KorisnikServis korisnikServis = new KorisnikServis(s);
+		ArrayList<Korisnik> korisnici = korisnikServis.dajKorisnike();
+		
+		Object[][] data= new Object[korisnici.size()][];
+		for(int i = 0; i<korisnici.size();i++) {
+			String naziv = naziv = (String) korisnici.get(i).getIme() + " " + korisnici.get(i).getPrezime();
+			String privilegija = "NULL";
+			if(!korisnici.get(i).getPrivilegije().equals(null))
+				privilegija = (String) korisnici.get(i).getPrivilegije();
+			
+			data[i]= new Object[]{naziv, privilegija};
+		}
+		table_0.setModel(new DefaultTableModel(data, new String[] { "Naziv korisnika", "Privilegija" }));
+		DefaultTableModel table0 = (DefaultTableModel) table_0.getModel();
+		table0.fireTableDataChanged();
+		
+		}
+	
+	public void popuniTabeluDjeca(){
+		DijeteServis dijeteServis = new DijeteServis(s);
+		ArrayList<Dijete> djeca = dijeteServis.svaDjeca();
+
+		Object[][] data= new Object[djeca.size()][];
+		for(int i = 0; i<djeca.size();i++) { 
+			if(djeca.get(i).getGrupa()!=null) { 
+				data[i]= new Object[]{(String)djeca.get(i).getIme(), (String)djeca.get(i).getPrezime(), (String) djeca.get(i).getGrupa().toString()};
+			}
+			else { 
+				data[i]= new Object[]{(String)djeca.get(i).getIme(), (String)djeca.get(i).getPrezime(), "NULL"};
+			}
+		}
+		table_1.setModel(new DefaultTableModel(data, new String[] {"Ime djeteta", "Prezime djeteta", "Grupa"}));
+		DefaultTableModel table1 = (DefaultTableModel) table_1.getModel();
+		table1.fireTableDataChanged();
+		
+		
+		}
+	
+	public void postaviListuGrupa() {
+		GrupaServis gs = new GrupaServis(s);
+		List<Grupa> grupe = gs.sveGrupe();
+		
+		DefaultListModel model=new DefaultListModel();
+		
+		for(Grupa g : grupe){
+			model.addElement(g);
+		}
+		
+		listGrupe.setModel(model);
+	}
+	
+	public void popuniTabeluAktivnosti(){
+		AktivnostServis aktivnostServis = new AktivnostServis(s);
+		ArrayList<Aktivnost> aktivnosti = aktivnostServis.SveAktivnosti();
+		
+		Object[][] data= new Object[aktivnosti.size()][];
+		for(int i = 0; i<aktivnosti.size();i++) {
+			String naziv = naziv = (String) aktivnosti.get(i).getNaziv();
+			String broj = (String) aktivnosti.get(i).getBrojDjece().toString() ;
+			
+			data[i]= new Object[]{naziv, broj};
+		}
+		table_2.setModel(new DefaultTableModel(data, new String[] { "Naziv aktivnosti", "Broj djece" }));
+		DefaultTableModel table2 = (DefaultTableModel) table_2.getModel();
+		table2.fireTableDataChanged();
+		
+		}
+	
+	public void popuniTabeluVaspitaci(){
+		VaspitacServis vaspitacServis = new VaspitacServis(s);
+		ArrayList<Vaspitac> vaspitaci = vaspitacServis.sviVaspitaci();
+		
+		Object[][] data= new Object[vaspitaci.size()][];
+		for(int i = 0; i<vaspitaci.size();i++) {
+			String ime = (String) vaspitaci.get(i).getIme();
+			String prezime = (String) vaspitaci.get(i).getPrezime();
+			String grupa = "NULL";
+			
+			if(vaspitaci.get(i).getGrupa()!=null)
+				grupa = (String) vaspitaci.get(i).getGrupa().getNaziv();
+			data[i]= new Object[]{ime, prezime, grupa};
+		}
+		table_3.setModel(new DefaultTableModel(data, new String[] { "Ime", "Prezime", "Grupa" }));
+		DefaultTableModel table3 = (DefaultTableModel) table_3.getModel();
+		table3.fireTableDataChanged();
+		
+		}
+	
+	
 	public void refreshujRaspored(){
 		TerminServis servistermin = new TerminServis(this.s);
 		ArrayList<Termin> termini = servistermin.SviTermini();
