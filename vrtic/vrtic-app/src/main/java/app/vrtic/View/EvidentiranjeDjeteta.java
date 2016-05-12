@@ -125,7 +125,7 @@ public class EvidentiranjeDjeteta {
 		
 		comboBoxGrupa = new JComboBox();
 		comboBoxGrupa.setBounds(166, 445, 189, 20);
-		comboBoxGrupa.setEditable(true);
+		comboBoxGrupa.setEditable(false);
 		frmVrti.getContentPane().add(comboBoxGrupa);
 		
 		

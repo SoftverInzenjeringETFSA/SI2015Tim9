@@ -172,6 +172,7 @@ public class GlavniProzorDirektor {
 		));
 		table_0.getColumnModel().getColumn(0).setPreferredWidth(96);
 		table_0.getColumnModel().getColumn(1).setPreferredWidth(93);
+		table_0.setDefaultEditor(Object.class, null);
 		scrollPane.setViewportView(table_0);
 		
 		JButton btnPrikazi = new JButton("Prika\u017Ei");
@@ -251,6 +252,7 @@ public class GlavniProzorDirektor {
 				"Ime djeteta", "Prezime djeteta", "Grupa"
 			}
 		));
+		table_1.setDefaultEditor(Object.class, null);
 		scrollPane_1.setViewportView(table_1);
 		
 		JButton btnIzmijeniPodatke = new JButton("Izmijeni podatke");
@@ -260,22 +262,18 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				/*
-					int selektovani = table_1.getSelectedRow();
-					// ako je nešto selektvano
-					if(selektovani != -1) {
+				int selektovani = table_1.getSelectedRow();
+				// ako je nešto selektvano
+				if(selektovani != -1) {
 					DijeteServis ds = new DijeteServis(s);
 					List<Dijete> svaDjeca = ds.svaDjeca();
 					int idSelektovanog = svaDjeca.get(selektovani).getIdDijete();
 					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s, idSelektovanog);
-				*/
-					// dodati kod za prosljedjivanje IDDjeteta
-					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s);
 					novifrejm.OtvoriFormu();
-										
+				}
 			}
-
 		});
+		
 		
 		JButton btnEvidentirajDijete = new JButton("Evidentiraj dijete");
 		btnEvidentirajDijete.setBounds(265, 164, 147, 23);
@@ -377,6 +375,7 @@ public class GlavniProzorDirektor {
 		));
 		table_2.getColumnModel().getColumn(0).setPreferredWidth(92);
 		table_2.getColumnModel().getColumn(1).setPreferredWidth(96);
+		table_2.setDefaultEditor(Object.class, null);
 		scrollPane_2.setViewportView(table_2);
 		
 		JButton btnObrisiAktivnost = new JButton("Obri\u0161i aktivnost");
@@ -420,6 +419,7 @@ public class GlavniProzorDirektor {
 				"Ime", "Prezime", "Grupa"
 			}
 		));
+		table_3.setDefaultEditor(Object.class, null);
 		scrollPane_3.setViewportView(table_3);
 		
 		JButton btnDodajVaspitaca = new JButton("Dodaj vaspita\u010Da");
@@ -463,7 +463,7 @@ public class GlavniProzorDirektor {
 				"Dan", "Grupa", "Aktivnost", "Vrijeme po\u010Detka", "Vrijeme zavr\u0161etka"
 			}
 		));
-		
+		table_4.setDefaultEditor(Object.class, null);
 		scrollPane_4.setViewportView(table_4);
 		
 		
@@ -524,6 +524,7 @@ public class GlavniProzorDirektor {
 				"Ime i prezime roditelja", "Broj telefona"
 			}
 		));
+		table_6.setDefaultEditor(Object.class, null);
 		scrollPane_6.setViewportView(table_6);
 		
 		JPanel panel_7 = new JPanel();
@@ -549,6 +550,7 @@ public class GlavniProzorDirektor {
 				"Ime i prezime roditelja", "Broj telefona", "Mjesec", "Godina", "Iznos"
 			}
 		));
+		table_5.setDefaultEditor(Object.class, null);
 		scrollPane_5.setViewportView(table_5);
 		
 		JLabel lblGodina = new JLabel("Godina:");

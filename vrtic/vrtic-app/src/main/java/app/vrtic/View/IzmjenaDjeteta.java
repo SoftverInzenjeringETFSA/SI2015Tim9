@@ -1,9 +1,11 @@
 package app.vrtic.View;
 
 import java.awt.EventQueue;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -11,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
@@ -19,8 +23,10 @@ import javax.swing.JTextPane;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
+import app.vrtic.Model.Aktivnost;
 import app.vrtic.Model.Dijete;
 import app.vrtic.Model.Grupa;
+import app.vrtic.Service.AktivnostServis;
 import app.vrtic.Service.DijeteServis;
 import app.vrtic.Service.GrupaServis;
 
@@ -38,6 +44,13 @@ private JTextField textFieldDatumIsteka;
 private JComboBox comboBox;
 final static Logger logger = Logger.getLogger(login.class);
 private JTextField textFieldDatumRodjenja;
+private JPanel panel;
+private JScrollPane scrollPane;
+
+private ArrayList<JCheckBox> cbLista; // lista checkBox aktivnosti
+public AktivnostServis aktivnostServis;
+public ArrayList<Aktivnost> listaAktivnosti; 
+
 
 private int idDjeteta;
 public SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -48,7 +61,7 @@ public SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					IzmjenaDjeteta window = new IzmjenaDjeteta(s); //dodatiID
+					IzmjenaDjeteta window = new IzmjenaDjeteta(s, idDjeteta); //dodatiID
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -62,9 +75,12 @@ public SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 	 * Create the application.
 	 */
 	// treba dodati ID
-	public IzmjenaDjeteta(Session s) {
+	public IzmjenaDjeteta(Session s, int id) {
 		this.s = s;
-		//this.idDjeteta = id;
+		this.idDjeteta = id;
+		this.cbLista = new ArrayList<JCheckBox>();
+		this.aktivnostServis = new AktivnostServis(s);
+		this.listaAktivnosti = aktivnostServis.SveAktivnosti();
 		initialize();
 	}
 	
@@ -109,7 +125,7 @@ public SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		comboBox = new JComboBox();
 		comboBox.setEditable(true);
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Grupa 1", "Grupa 2", "Grupa 3", "Grupa 4", "Grupa 5"}));
-		comboBox.setBounds(166, 405, 189, 20);
+		comboBox.setBounds(166, 445, 189, 20);
 		frmVrti.getContentPane().add(comboBox);
 		
 		textFieldIme = new JTextField();
@@ -166,22 +182,6 @@ public SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		JLabel lblAktivnosti = new JLabel("Aktivnosti:");
 		lblAktivnosti.setBounds(71, 346, 79, 14);
 		frmVrti.getContentPane().add(lblAktivnosti);
-		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Engleski jezik");
-		chckbxNewCheckBox.setBounds(153, 342, 149, 23);
-		frmVrti.getContentPane().add(chckbxNewCheckBox);
-		
-		JCheckBox chckbxNjemackiJezik = new JCheckBox("Njema\u010Dki jezik");
-		chckbxNjemackiJezik.setBounds(327, 342, 139, 23);
-		frmVrti.getContentPane().add(chckbxNjemackiJezik);
-		
-		JCheckBox chckbxPenjanjePoStijenama = new JCheckBox("Penjanje po stijenama");
-		chckbxPenjanjePoStijenama.setBounds(153, 375, 162, 23);
-		frmVrti.getContentPane().add(chckbxPenjanjePoStijenama);
-		
-		JCheckBox chckbxRuskiJezik = new JCheckBox("Ruski jezik");
-		chckbxRuskiJezik.setBounds(327, 375, 97, 23);
-		frmVrti.getContentPane().add(chckbxRuskiJezik);
 		
 		JLabel lblDatumUpisaU = new JLabel("Datum upisa u vrti\u0107:");
 		lblDatumUpisaU.setBounds(22, 484, 128, 14);
@@ -277,15 +277,26 @@ public SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			}
 		});
 		
+		panel = new JPanel();
+		panel.setBounds(166, 328, 215, 106);
+		frmVrti.getContentPane().add(panel);
+		panel.setLayout(new GridLayout(0, 2, 10, 10));
+		
+		JScrollPane scrollPane = new JScrollPane(panel);
+		scrollPane.setSize(234, 110);
+		scrollPane.setLocation(147, 328);
+		frmVrti.getContentPane().add(scrollPane);
+		
 		postaviListu();
-		//popuniFormu(idDjeteta);
+		popuniFormu(idDjeteta);
+		postaviAktivnosti(idDjeteta);
 	}
 	
 	
-	/*public void popuniFormu(idDjeteta) {
+	public void popuniFormu(int idDjeteta) {
 		DijeteServis ds = new DijeteServis(s);
 	
-		Dijete d = ds.nadji(id);
+		Dijete d = ds.nadji(idDjeteta);
 		
 		// sad je 1994-01-11
 		String[] s = d.getDatumRodjenja().split("-");
@@ -301,7 +312,7 @@ public SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		comboBox.setSelectedItem(d.getGrupa());
 
 	}
-	*/
+	
 	public void postaviListu() {
 		GrupaServis gs = new GrupaServis(s);
 		List<Grupa> grupe = gs.sveGrupe();
@@ -314,4 +325,21 @@ public SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		
 		comboBox.setModel(model);
 	}
+	
+	public void postaviAktivnosti(int id) {
+		DijeteServis ds = new DijeteServis(s);
+		Dijete d = ds.nadji(id);
+		
+		
+		for(Aktivnost a: listaAktivnosti) {
+			JCheckBox c = new JCheckBox(a.toString());
+			cbLista.add(c);
+			
+            panel.add(c);
+            panel.revalidate();
+            panel.repaint();
+        }
+	}
+	
+	
 }
