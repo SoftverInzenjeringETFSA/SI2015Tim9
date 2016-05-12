@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -34,10 +35,10 @@ public class PrikazGrupe {
 	final static Logger logger = Logger.getLogger(login.class);
 	private Session s;
 	private JFrame frmVrti;
-	private JTextField textField;
-	private JTable table;
+	private JTextField imeGrupeDynamic;
+	private JTable tabelaDijete;
 	private JTable table_1;
-	private Grupa g = new Grupa();
+	private Grupa g2 = new Grupa();
 	private int idGrupe;
 	/**
 	 * Launch the application.
@@ -69,12 +70,14 @@ public class PrikazGrupe {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		GrupaServis gs = new GrupaServis(this.s);
-		Grupa g = gs.sveGrupe().get(0);
+		final GrupaServis gs = new GrupaServis(this.s);
+		Grupa g = gs.PretragaPoIDu(idGrupe);
 		AktivnostServis as = new AktivnostServis(this.s);
+		final DijeteServis ds = new DijeteServis(this.s);
 		frmVrti = new JFrame();
+		frmVrti.setResizable(false);
 		frmVrti.setTitle("Vrti\u0107");
-		frmVrti.setBounds(100, 100, 657, 345);
+		frmVrti.setBounds(100, 100, 657, 369);
 		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);
 		
@@ -84,19 +87,19 @@ public class PrikazGrupe {
 		lblGrupa.setBounds(26, 36, 46, 14);
 		frmVrti.getContentPane().add(lblGrupa);
 		
-		textField = new JTextField();
-		textField.setEditable(false);
-		textField.setBounds(63, 33, 91, 20);
-		frmVrti.getContentPane().add(textField);
-		textField.setColumns(10);
-		textField.setText(g.getNaziv());
+		imeGrupeDynamic = new JTextField();
+		imeGrupeDynamic.setEditable(false);
+		imeGrupeDynamic.setBounds(63, 33, 91, 20);
+		frmVrti.getContentPane().add(imeGrupeDynamic);
+		imeGrupeDynamic.setColumns(10);
+		imeGrupeDynamic.setText(g.getNaziv());
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(26, 75, 469, 93);
 		frmVrti.getContentPane().add(scrollPane);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
+		tabelaDijete = new JTable();
+		tabelaDijete.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null},
 				
@@ -105,11 +108,11 @@ public class PrikazGrupe {
 				"Ime djeteta", "Prezime djeteta"
 			}
 		));
-		scrollPane.setViewportView(table);
+		scrollPane.setViewportView(tabelaDijete);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(26, 224, 469, 75);
-		frmVrti.getContentPane().add(scrollPane_1);
+		JScrollPane tabelaAktivnosti = new JScrollPane();
+		tabelaAktivnosti.setBounds(26, 224, 469, 75);
+		frmVrti.getContentPane().add(tabelaAktivnosti);
 		
 		table_1 = new JTable();
 		table_1.setModel(new DefaultTableModel(
@@ -124,71 +127,85 @@ public class PrikazGrupe {
 		));
 		table_1.getColumnModel().getColumn(0).setPreferredWidth(101);
 		table_1.getColumnModel().getColumn(1).setPreferredWidth(91);
-		scrollPane_1.setViewportView(table_1);
+		tabelaAktivnosti.setViewportView(table_1);
 		
 		JLabel lblStatistikaAktivnosti = new JLabel("Statistika aktivnosti:");
 		lblStatistikaAktivnosti.setBounds(26, 199, 155, 14);
 		frmVrti.getContentPane().add(lblStatistikaAktivnosti);
 		
+		
+		ArrayList<Integer> djecijiID = TabelaDjeca(g.getNaziv());
+		final ArrayList<Integer> djecijiID2 = djecijiID;
 		JButton btnIzmijeni = new JButton("Izmijeni");
 		btnIzmijeni.setBounds(505, 90, 126, 23);
 		frmVrti.getContentPane().add(btnIzmijeni);
 		btnIzmijeni.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
-			{/*
-					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s);
+			{
+					
+					int ID = djecijiID2.get(tabelaDijete.getSelectedRow());
+					
+					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s, ID);
 					novifrejm.OtvoriFormu();
 					frmVrti.dispose();
-				*/						
+									
 			}
 
 		});
-		
-		JButton btnObrii = new JButton("Obri\u0161i");
-		btnObrii.setBounds(505, 134, 126, 23);
-		frmVrti.getContentPane().add(btnObrii);
-		btnObrii.addActionListener(new ActionListener()
+		g2=g;
+		JButton btnObrisi = new JButton("Obri\u0161i");
+		btnObrisi.setBounds(505, 134, 126, 23);
+		frmVrti.getContentPane().add(btnObrisi);
+		btnObrisi.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				// obrisati ovaj dio
-				/*
-					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s);
-					novifrejm.OtvoriFormu();
-					frmVrti.dispose();
-				*/						
+				int ID = djecijiID2.get(tabelaDijete.getSelectedRow());	
+				Dijete d = ds.nadji(ID);
+				
+				d.setGrupa(gs.sveGrupe().get(4));
+				ds.izmijeni(d);
+				frmVrti.invalidate();
+				frmVrti.validate();
+				frmVrti.repaint();
 			}
 
 		});
 		
 		
 		
-		TabelaDjeca(g.getNaziv());
+		
 		StatistikaAktivnosti(as);
 	}
 	
-	public void TabelaDjeca(String grupa){
+	public ArrayList<Integer> TabelaDjeca(String grupa){
 		
 		
 		DijeteServis servis = new DijeteServis(this.s);
 		ArrayList<Dijete> djeca = servis.svaDjeca();
+		ArrayList<Integer> djecaTeGrupe = new ArrayList<Integer>(0);
 		Object[][] data= new Object[djeca.size()][];
+		int preskocio=0;
 		for(int i = 0; i<djeca.size();i++) {
 			if(grupa.equals(djeca.get(i).getGrupa().getNaziv())){
-				data[i]= new Object[]{djeca.get(i).getIme(), djeca.get(i).getIme()};
+				djecaTeGrupe.add(djeca.get(i).getIdDijete());
+				data[i-preskocio]= new Object[]{djeca.get(i).getIme(), djeca.get(i).getPrezime()};
 		
-		table.setModel(new DefaultTableModel(
+		tabelaDijete.setModel(new DefaultTableModel(
 				data,
 				new String[] {
 						"Ime djeteta", "Prezime djeteta"
 }
 			));
-			}
-		}
-		DefaultTableModel tableFire = (DefaultTableModel) table.getModel();
-		tableFire.fireTableDataChanged();
 		
+			}
+			preskocio++;
+		}
+		
+		DefaultTableModel tableFire = (DefaultTableModel) tabelaDijete.getModel();
+		tableFire.fireTableDataChanged();
+		return djecaTeGrupe;
 		
 		
 		}

@@ -1,21 +1,39 @@
 package app.vrtic.View;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
+import app.vrtic.Model.Aktivnost;
+import app.vrtic.Model.Grupa;
+import app.vrtic.Model.Vaspitac;
+import app.vrtic.Service.AktivnostServis;
+import app.vrtic.Service.GrupaServis;
+import app.vrtic.Service.VaspitacServis;
+
+import javax.swing.SpinnerNumberModel;
+//import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
+
 public class DodavanjeGrupe {
     
 	private JFrame frmVrti;
 	private Session s;
-	private JTextField textField;
+	private JTextField nazivGrupe;
 	final static Logger logger = Logger.getLogger(login.class);
 	/**
 	 * Launch the application.
@@ -46,7 +64,9 @@ public class DodavanjeGrupe {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		final GrupaServis gs= new GrupaServis(this.s);
 		frmVrti = new JFrame();
+		frmVrti.setResizable(false);
 		frmVrti.setTitle("Vrti\u0107");
 		frmVrti.setBounds(100, 100, 503, 355);
 		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -55,48 +75,106 @@ public class DodavanjeGrupe {
 	
 		
 		JLabel lblNazivGrupe = new JLabel("Naziv grupe:");
-		lblNazivGrupe.setBounds(36, 61, 72, 14);
+		lblNazivGrupe.setBounds(99, 66, 72, 14);
 		frmVrti.getContentPane().add(lblNazivGrupe);
 		
 		JLabel lblRedniBrojGrupe = new JLabel("Redni broj grupe:");
-		lblRedniBrojGrupe.setBounds(10, 99, 118, 14);
+		lblRedniBrojGrupe.setBounds(73, 104, 118, 14);
 		frmVrti.getContentPane().add(lblRedniBrojGrupe);
 		
 		JLabel lblKapacitetGrupe = new JLabel("Kapacitet grupe:");
-		lblKapacitetGrupe.setBounds(10, 130, 118, 14);
+		lblKapacitetGrupe.setBounds(73, 135, 118, 14);
 		frmVrti.getContentPane().add(lblKapacitetGrupe);
 		
 		JLabel lblVaspita = new JLabel("Vaspita\u010D 1:");
-		lblVaspita.setBounds(36, 169, 92, 14);
+		lblVaspita.setBounds(99, 174, 92, 14);
 		frmVrti.getContentPane().add(lblVaspita);
 		
 		JLabel lblVaspita_1 = new JLabel("Vaspita\u010D 2:");
-		lblVaspita_1.setBounds(36, 209, 92, 14);
+		lblVaspita_1.setBounds(99, 214, 92, 14);
 		frmVrti.getContentPane().add(lblVaspita_1);
+		
+		final JComboBox vaspitac1 = new JComboBox();
+		vaspitac1.setToolTipText("Odabir prvog vaspita\u010Da za ovu grupu");
+		vaspitac1.setBounds(217, 174, 173, 20);
+		frmVrti.getContentPane().add(vaspitac1);
+		
+		final JComboBox vaspitac2 = new JComboBox();
+		vaspitac2.setToolTipText("Odabir drugog vaspita\u010Da za ovu grupu");
+		vaspitac2.setBounds(217, 211, 173, 20);
+		frmVrti.getContentPane().add(vaspitac2);
+		
+		final JSpinner kapacitetGrupe = new JSpinner();
+		kapacitetGrupe.setToolTipText("Kapacitet grupe");
+		kapacitetGrupe.setModel(new SpinnerNumberModel(20, 5, 40, 1));
+		kapacitetGrupe.setBounds(217, 132, 92, 20);
+		frmVrti.getContentPane().add(kapacitetGrupe);
+		
+		final JSpinner redniBrojGrupe = new JSpinner();
+		redniBrojGrupe.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+		redniBrojGrupe.setBounds(217, 101, 92, 20);
+		frmVrti.getContentPane().add(redniBrojGrupe);
+		
+		nazivGrupe = new JTextField();
+		nazivGrupe.setBounds(217, 63, 173, 20);
+		frmVrti.getContentPane().add(nazivGrupe);
+		nazivGrupe.setColumns(10);
+		
 		
 		JButton btnDodajGrupu = new JButton("Dodaj grupu");
 		btnDodajGrupu.setBounds(351, 282, 126, 23);
 		frmVrti.getContentPane().add(btnDodajGrupu);
+		btnDodajGrupu.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+					Grupa g = new Grupa();
+					Vaspitac v1 = new Vaspitac();
+					Vaspitac v2 = new Vaspitac();
+					g.setNaziv(nazivGrupe.getText());
+					g.setKapacitet((Integer)kapacitetGrupe.getValue());
+					g.setRedniBroj((Integer)redniBrojGrupe.getValue());
+					VaspitacServis vaspitaci = new VaspitacServis(s);
+					Set<Vaspitac> vas = new HashSet<Vaspitac>();
+					ArrayList<Vaspitac> vasp = vaspitaci.sviVaspitaci();
+					for(Vaspitac v: vasp){
+						if(vaspitac1.getSelectedItem().toString().contains(v.getIme())){
+							vas.add(v);
+						}
+						else if(vaspitac2.getSelectedItem().toString().contains(v.getIme())){
+							vas.add(v);
+						}
+						
+					}
+					g.setVaspitacs(vas);
+					gs.dodajGrupu(g);
+					final JDialog dialog = new JDialog();
+					dialog.setAlwaysOnTop(true);    
+					JOptionPane.showMessageDialog(dialog, "Uspješno ste dodali novu grupu!");
+					frmVrti.dispose();
+					
+										
+			}
+
+		});
+		sviVaspitaci(vaspitac1);
+		sviVaspitaci(vaspitac2);
+		//frmVrti.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblNazivGrupe, nazivGrupe, lblRedniBrojGrupe, redniBrojGrupe, lblKapacitetGrupe, kapacitetGrupe, lblVaspita, vaspitac1, lblVaspita_1, vaspitac2, btnDodajGrupu}));
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(154, 169, 173, 20);
-		frmVrti.getContentPane().add(comboBox);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(154, 206, 173, 20);
-		frmVrti.getContentPane().add(comboBox_1);
+	}
+	
+	public void sviVaspitaci(JComboBox jcb){
+		VaspitacServis vaspitaci = new VaspitacServis(this.s);
+		ArrayList<Vaspitac> vas = vaspitaci.sviVaspitaci();
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setBounds(154, 127, 92, 20);
-		frmVrti.getContentPane().add(spinner);
+		for(int i = 0; i<vas.size();i++){
+			String str = vas.get(i).getIme();
+			str = str.concat(" ");
+			str = str.concat(vas.get(i).getPrezime());
+			jcb.addItem(str);
+			
+		}
 		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setBounds(154, 96, 92, 20);
-		frmVrti.getContentPane().add(spinner_1);
-		
-		textField = new JTextField();
-		textField.setBounds(154, 58, 173, 20);
-		frmVrti.getContentPane().add(textField);
-		textField.setColumns(10);
 	}
 }
