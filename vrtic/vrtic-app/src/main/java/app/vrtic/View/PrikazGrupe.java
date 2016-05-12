@@ -37,14 +37,16 @@ public class PrikazGrupe {
 	private JTextField textField;
 	private JTable table;
 	private JTable table_1;
-	private Grupa g = new Grupa();	/**
+	private Grupa g = new Grupa();
+	private int idGrupe;
+	/**
 	 * Launch the application.
 	 */
 	public void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PrikazGrupe window = new PrikazGrupe(s);
+					PrikazGrupe window = new PrikazGrupe(s, idGrupe);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -57,8 +59,9 @@ public class PrikazGrupe {
 	/**
 	 * Create the application.
 	 */
-	public PrikazGrupe(Session s) {
+	public PrikazGrupe(Session s, int id) {
 		this.s = s;
+		this.idGrupe = id;
 		initialize();
 	}
 
@@ -149,10 +152,12 @@ public class PrikazGrupe {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				// obrisati ovaj dio
+				/*
 					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s);
 					novifrejm.OtvoriFormu();
 					frmVrti.dispose();
-										
+				*/						
 			}
 
 		});

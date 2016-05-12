@@ -249,6 +249,15 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				/*
+					int selektovani = table_1.getSelectedRow();
+					// ako je nešto selektvano
+					if(selektovani != -1) {
+					DijeteServis ds = new DijeteServis(s);
+					List<Dijete> svaDjeca = ds.svaDjeca();
+					int idSelektovanog = svaDjeca.get(selektovani).getIdDijete();
+					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s, idSelektovanog);
+				*/
 					// dodati kod za prosljedjivanje IDDjeteta
 					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s);
 					novifrejm.OtvoriFormu();
@@ -307,9 +316,14 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-					PrikazGrupe novifrejm = new PrikazGrupe(s);
+				int selektovani = listGrupe.getSelectedIndex();
+				if(selektovani!=-1) {
+					GrupaServis gs = new GrupaServis(s);
+					List<Grupa> sveGrupe = gs.sveGrupe();
+					int idSelektovanog = sveGrupe.get(selektovani).getIdGrupe();
+					PrikazGrupe novifrejm = new PrikazGrupe(s, idSelektovanog);
 					novifrejm.OtvoriFormu();
-										
+				}
 			}
 
 		});
