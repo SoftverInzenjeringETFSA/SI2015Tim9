@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -107,13 +108,13 @@ public class DodavanjeTermina {
 		lblVrijemeZavretkaAktivnosti.setBounds(10, 205, 183, 14);
 		frmVrti.getContentPane().add(lblVrijemeZavretkaAktivnosti);
 		
-		final JFormattedTextField formattedTextField = new JFormattedTextField();
-		formattedTextField.setBounds(198, 166, 72, 20);
-		frmVrti.getContentPane().add(formattedTextField);
+		final JFormattedTextField VrijemePocetka = new JFormattedTextField();
+		VrijemePocetka.setBounds(198, 166, 72, 20);
+		frmVrti.getContentPane().add(VrijemePocetka);
 		
-		final JFormattedTextField formattedTextField_1 = new JFormattedTextField();
-		formattedTextField_1.setBounds(198, 202, 72, 20);
-		frmVrti.getContentPane().add(formattedTextField_1);
+		final JFormattedTextField VrijemeZavrsetka = new JFormattedTextField();
+		VrijemeZavrsetka.setBounds(198, 202, 72, 20);
+		frmVrti.getContentPane().add(VrijemeZavrsetka);
 		
 		JLabel lblSatiMinuta = new JLabel("sati : minuta");
 		lblSatiMinuta.setBounds(280, 169, 72, 14);
@@ -172,15 +173,16 @@ public class DodavanjeTermina {
 				}
 			//    NoviTermin.setGrupa(gs.PretragaPoImenu(grupeComboBox.getSelectedItem().toString()));
 			//    NoviTermin.setAktivnost(as.pretragaPoNazivu(comboBox.getSelectedItem().toString()));
-				NoviTermin.setVrijemePocetka(formattedTextField.getText());
-				NoviTermin.setVrijemeZavrsetka(formattedTextField.getText());
+				if(DaLiJeIspravnoVrijeme(VrijemePocetka.getText())==false || DaLiJeIspravnoVrijeme(VrijemeZavrsetka.getText())==false) JOptionPane.showMessageDialog(null, "Neispravan format vremena!");
+				NoviTermin.setVrijemePocetka(VrijemePocetka.getText());
+				NoviTermin.setVrijemeZavrsetka(VrijemeZavrsetka.getText());
 				TerminServis ts = new TerminServis(s);
-				ts.dodajTermin(NoviTermin);
+				if(DaLiJeIspravnoVrijeme(VrijemePocetka.getText()) && DaLiJeIspravnoVrijeme(VrijemeZavrsetka.getText())){
+					ts.dodajTermin(NoviTermin);
 				
-					
-				
-				formattedTextField.setText("");
-				formattedTextField_1.setText("");
+				VrijemePocetka.setText("");
+				VrijemeZavrsetka.setText("");
+				}
 									
 			}
 
@@ -213,6 +215,18 @@ public class DodavanjeTermina {
 		}
 		
 	}
+	
+	public boolean DaLiJeIspravnoVrijeme(String str){
+		if(str.length() != 5){
+			return false;
+		}
+		if((str.charAt(0)=='0' || str.charAt(0)=='1') && (str.charAt(1)>47 && str.charAt(1)<58) && str.charAt(2)==':' && ((str.charAt(3)>47 || str.charAt(3)<54) && (str.charAt(4)>47 && str.charAt(4)<58)))
+		return true;
+		else if((str.charAt(0)=='2') && (str.charAt(1)>47 && str.charAt(1)<52) && str.charAt(2)==':' && ((str.charAt(3)>47 || str.charAt(3)<54) && (str.charAt(4)>47 && str.charAt(4)<58)))
+			return true;
+		else return false;
+	}
+	
 	
 		
 }
