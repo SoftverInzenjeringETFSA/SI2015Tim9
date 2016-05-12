@@ -84,19 +84,10 @@ public class KorisnikServis {
 	}
 
 	public boolean promjeniSifru(Korisnik k,String novaSifra){
-		//if(provjeriSifruKorisnika(k.getKorisnickoIme(),k.)){
-			//kod za updateovanje sifre
-			/*
-			 * s.flush();
-			s.clear();
-			Transaction t = s.beginTransaction();
-			Korisnik k=
-			s.update(k);
-			t.commit();
-			s.flush();
-			return true;
-			 * */
-	//	}
+		if(provjeriSifruKorisnika(k.getKorisnickoIme(),k.getSifra())){
+			k.setSifra(novaSifra);
+			izmjeniKorisnika(k);		
+		}
 		return true;
 	}
 
