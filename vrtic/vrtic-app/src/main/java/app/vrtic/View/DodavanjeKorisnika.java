@@ -16,6 +16,8 @@ import app.vrtic.Model.Korisnik;
 import app.vrtic.Service.KorisnikServis;
 
 import java.awt.event.ActionListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 
 public class DodavanjeKorisnika {
@@ -130,8 +132,10 @@ public class DodavanjeKorisnika {
 					}
 					else if(comboBox.getSelectedIndex()==1){
 						k.setPrivilegije("blagajnik");
-					}				
+					}						
 					ks.kreirajKorisnika(k);
+					comboBox.setSelectedIndex(0);
+					ocistiKontrole();
 					JOptionPane.showMessageDialog(null,
 						    "Uspješno ste dodali novog korisnika",
 						    "Obavještenje",
@@ -167,11 +171,34 @@ public class DodavanjeKorisnika {
 			porukaValidacija="Unesite korisnièko ime korisnika!";
 		else if(textField_3.getText().equals(""))
 			porukaValidacija="Unesite broj telefona korisnika!";
+		else if(!validirajBrojTelefona(textField_3.getText()).equals(""))
+			porukaValidacija=validirajBrojTelefona(textField_3.getText());
 		else if(textField_4.getText().equals(""))
 			porukaValidacija="Unesite korisnièku šifru korisnika!";
 		else if (comboBox.getSelectedIndex()==-1){
 			porukaValidacija="Odaberite privilegiju korisnika!";
 		}
+		else if(textField_2.getText().length()<5 ||textField_2.getText().length()>10)
+			porukaValidacija="Korisnièko ime mora sadržavati više od 5 a manje od 10 znakova!";
 		return porukaValidacija;		
 	}
+
+	private  String validirajBrojTelefona(String str)
+	{
+		String poruka="";
+	     Pattern p = Pattern.compile("[0-9]{9,10}");
+	     Matcher m = p.matcher(str);
+	     if(!m.matches())
+	    poruka="Broj telefona bi se trebao sastojati od 9 ili 10 cifara";	 
+	     return poruka;
+	 }
+
+	private void ocistiKontrole(){
+		textField.setText("");
+		textField_1.setText("");
+		textField_2.setText("");
+		textField_3.setText("");
+		textField_4.setText("");	
+	}
+	
 }

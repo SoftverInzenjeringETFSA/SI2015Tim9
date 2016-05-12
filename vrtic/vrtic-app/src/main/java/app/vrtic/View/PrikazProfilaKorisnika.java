@@ -8,7 +8,6 @@ import app.vrtic.Model.Korisnik;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 
@@ -22,6 +21,7 @@ public class PrikazProfilaKorisnika {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	final static Logger logger = Logger.getLogger(login.class);
+	private JTextField textField_4;
 	/**
 	 * Launch the application.
 	 */
@@ -80,15 +80,6 @@ public class PrikazProfilaKorisnika {
 		lblUloga.setBounds(94, 219, 46, 14);
 		frmVrti.getContentPane().add(lblUloga);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Pravnik/Direktor", "Blagajnik"}));
-		comboBox.setBounds(166, 216, 149, 20);
-		frmVrti.getContentPane().add(comboBox);
-		
-		if(k.getPrivilegije().equals("direktor")) 
-			comboBox.setSelectedIndex(0);
-		else if(k.getPrivilegije().equals("blagajnik")) 
-			comboBox.setSelectedIndex(1);
 		
 		textField = new JTextField();
 		textField.setEditable(false);
@@ -117,5 +108,16 @@ public class PrikazProfilaKorisnika {
 		frmVrti.getContentPane().add(textField_3);
 		textField_3.setColumns(10);
 		textField_3.setText(k.getBrojTelefona());
+		
+		textField_4 = new JTextField();
+		textField_4.setText((String) null);
+		textField_4.setEditable(false);
+		textField_4.setColumns(10);
+		textField_4.setBounds(166, 216, 149, 20);
+		frmVrti.getContentPane().add(textField_4);
+		if(k.getPrivilegije().equals("direktor")) 
+			textField_4.setText("direktor");
+		else if(k.getPrivilegije().equals("blagajnik")) 
+			textField_4.setText("blagajnik");
 	}
 }

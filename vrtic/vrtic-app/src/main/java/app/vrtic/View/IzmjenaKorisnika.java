@@ -16,6 +16,8 @@ import org.hibernate.Session;
 import app.vrtic.Model.Korisnik;
 import app.vrtic.Service.KorisnikServis;
 import java.awt.event.ActionListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 
 public class IzmjenaKorisnika {
@@ -67,14 +69,6 @@ public class IzmjenaKorisnika {
 		frmVrti.setBounds(100, 100, 474, 323);
 		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);
-		
-		JButton btnOdjava = new JButton("Odjava");
-		btnOdjava.setBounds(322, 11, 126, 23);
-		frmVrti.getContentPane().add(btnOdjava);
-		
-		JButton btnNewButton = new JButton("Promjena \u0161ifre");
-		btnNewButton.setBounds(189, 11, 126, 23);
-		frmVrti.getContentPane().add(btnNewButton);
 		
 		JLabel lblIme = new JLabel("Ime:");
 		lblIme.setBounds(104, 62, 46, 14);
@@ -173,11 +167,25 @@ public class IzmjenaKorisnika {
 			porukaValidacija="Unesite korisnièko ime korisnika!";
 		else if(textField_3.getText().equals(""))
 			porukaValidacija="Unesite broj telefona korisnika!";
+		else if(!validirajBrojTelefona(textField_3.getText()).equals(""))
+			porukaValidacija=validirajBrojTelefona(textField_3.getText());
 		else if (comboBox.getSelectedIndex()==-1){
 			porukaValidacija="Odaberite privilegiju korisnika!";
 		}
+		else if(textField_2.getText().length()<5 ||textField_2.getText().length()>10)
+			porukaValidacija="Korisnièko ime mora sadržavati više od 5 a manje od 10 znakova!";
 		return porukaValidacija;		
 	}
+	
+	private  String validirajBrojTelefona(String str)
+	{
+		String poruka="";
+	     Pattern p = Pattern.compile("[0-9]{9,10}");
+	     Matcher m = p.matcher(str);
+	     if(!m.matches())
+	    poruka="Broj telefona bi se trebao sastojati od 9 ili 10 cifara";	 
+	     return poruka;
+	 }
 
 }
 

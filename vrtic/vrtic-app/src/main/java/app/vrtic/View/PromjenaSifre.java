@@ -70,26 +70,26 @@ public class PromjenaSifre {
 		JButton btnPrijava = new JButton("Promijeni \u0161ifru");
 		btnPrijava.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//dodati uslov da provjerava sifru ulogovanog korisnika sa unesenom sifrom
-				/*if(!passwordField.getText().equals(passwordField_1.getText())){
-					JOptionPane.showMessageDialog(null,
-						    "Nova šifra i ponovljena nova šifra nisu jednake!",
-						    "Warning",
-						    JOptionPane.WARNING_MESSAGE);
-				}	
-				else if(passwordField.equals("")
-						|| passwordField_1.equals("") || passwordField_2.equals("")){
+				//dodati uslov da provjerava sifru ulogovanog korisnika sa unesenom sifrom	
+				if(passwordField.getText().equals("")
+						|| passwordField_1.getText().equals("") || passwordField_2.getText().equals("")){
 					JOptionPane.showMessageDialog(null,
 						    "Sva polja nisu popunjena!",
 						    "Warning",
 						    JOptionPane.WARNING_MESSAGE);
 				}
-				else*/
+				else if(!passwordField.getText().equals(passwordField_1.getText())){
+					JOptionPane.showMessageDialog(null,
+						    "Nova šifra i ponovljena nova šifra nisu jednake!",
+						    "Warning",
+						    JOptionPane.WARNING_MESSAGE);
+				}
+				//else
 					//if(passwordField.getText().equals(passwordField_1.getText())&& !passwordField.equals("")
 						//&& !passwordField_1.equals("")&&!passwordField_2.equals("")){
 						ks.promjeniSifru(k, passwordField.getText());
 					JOptionPane.showMessageDialog(null,
-							ks.promjeniSifru(k, passwordField.getText()),
+							"Sifra je uspješno promjenjena!",
 					    "Obavještenje",
 					    JOptionPane.PLAIN_MESSAGE);
 				//}
