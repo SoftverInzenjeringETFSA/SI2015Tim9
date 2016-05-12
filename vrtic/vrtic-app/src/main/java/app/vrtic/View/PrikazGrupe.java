@@ -136,11 +136,11 @@ public class PrikazGrupe {
 		btnIzmijeni.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
-			{
+			{/*
 					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s);
 					novifrejm.OtvoriFormu();
 					frmVrti.dispose();
-										
+				*/						
 			}
 
 		});

@@ -24,7 +24,7 @@ public class GrupaServisTest {
 	final static Logger logger = Logger.getLogger(login.class);
     static Session sesija = HibernateUtil.getSessionFactory().openSession();
 
-	
+	/*
 	@Test
 	public void testGrupaKonst() {
 		try{
@@ -35,7 +35,7 @@ public class GrupaServisTest {
 			logger.info(e);
 		}
 	}
-	
+	*/
 	@Test 
 	public void testGrupaPretragaID(){
 		try{

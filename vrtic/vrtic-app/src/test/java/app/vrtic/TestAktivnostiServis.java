@@ -23,7 +23,7 @@ public class TestAktivnostiServis {
 	final static Logger logger = Logger.getLogger(login.class);
     static Session sesija = HibernateUtil.getSessionFactory().openSession();
 
-	@Test
+/*	@Test
 	public void testAktivnostKonstr() {
 
 
@@ -35,7 +35,7 @@ public class TestAktivnostiServis {
 			logger.info(e);
 		}
 	}
-	
+	*/
 	@Test
 	public void testAktivnostPretragaID(){
 		try{
@@ -68,7 +68,7 @@ public class TestAktivnostiServis {
 			logger.info(e);
 		}
 	}
-
+/*
 	@Test
 	public void testDodajAktivnost(){
 		try{
@@ -87,6 +87,7 @@ public class TestAktivnostiServis {
 			 * ovo ne moze, jer prima set aktivnostidjeca
 			 * 
 			as.dodajAktivnost(a);*/
+	/*
 			ArrayList<Aktivnost> sve_aktivnosti = as.SveAktivnosti();
 		
 			Aktivnost pronadjena = new Aktivnost();
@@ -107,8 +108,9 @@ public class TestAktivnostiServis {
 		catch(Exception e){
 			logger.info(e);
 		}
+		
 	}
-	
+	*/
 	
 	
 
