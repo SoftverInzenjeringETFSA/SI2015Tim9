@@ -59,6 +59,15 @@ public class ZaduzenjeServis {
 		return new ArrayList<Zaduzenja>(listaZaduzenja);
 	}
 	
+    public ArrayList<Zaduzenja> vratiZaduzenjaZaGodinu(Dijete d,int godina){
+    	Criteria c = s.createCriteria(Zaduzenja.class);
+    	c.add(Restrictions.eq("godina", godina));
+    	c.add(Restrictions.eq("dijete",d));
+    	List <Zaduzenja> listaZaduzenja = (List <Zaduzenja>) c.list();
+    	return new ArrayList<Zaduzenja>(listaZaduzenja);
+    	
+    }
+	
 	public ArrayList<Zaduzenja> vratiZaduzenjaPoGodiniIMjesecu(int godina,String mjesec){
 		Criteria c = s.createCriteria(Zaduzenja.class);
 		c.add(Restrictions.eq("godina",godina));
@@ -67,20 +76,20 @@ public class ZaduzenjeServis {
 		return new ArrayList<Zaduzenja>(listaZaduzenja);
 	}
 	
-	public Zaduzenja vratiSlogZaduzenje(int idDjeteta,int godina,String mjesec){
+	public Zaduzenja vratiSlogZaduzenje(Dijete d,int godina,String mjesec){
 		Criteria c = s.createCriteria(Zaduzenja.class);
 		c.add(Restrictions.eq("godina",godina));
 		c.add(Restrictions.eq("mjesec",mjesec));
-		c.add(Restrictions.eq("idDijete",idDjeteta));
+		c.add(Restrictions.eq("dijete",d));
 		return (Zaduzenja) c.uniqueResult();
 		
 	}
 	
 	
-	public boolean obrisiZaduzenje(int idDjeteta,int godina,String mjesec){
-		Dijete d = ds.nadji(idDjeteta);
+	public boolean obrisiZaduzenje(Dijete d,int godina,String mjesec){
+		//Dijete d = ds.nadji(idDjeteta);
 		Transaction t = s.beginTransaction();
-		Zaduzenja z = vratiSlogZaduzenje(idDjeteta,godina,mjesec);
+		Zaduzenja z = vratiSlogZaduzenje(d,godina,mjesec);
 		if (z != null)
 			s.delete(z);
 		t.commit();

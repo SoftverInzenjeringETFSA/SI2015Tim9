@@ -29,6 +29,7 @@ import org.hibernate.Session;
 
 import app.vrtic.Model.Dijete;
 import app.vrtic.Model.Korisnik;
+import app.vrtic.Model.Uplata;
 import app.vrtic.Model.Zaduzenja;
 import app.vrtic.Service.DijeteServis;
 import app.vrtic.Service.KorisnikServis;
@@ -42,13 +43,13 @@ public class GlavniProzorBlagajnik {
 	private JFrame frmVrti;
 	private JTable table_5;
 	private JTable table_6;
-	private JTextField textField;
    private DijeteServis ds;
    private UplataServis us;
    private ZaduzenjeServis zs;
     private Session s;
 	int id;
 	Korisnik user = new Korisnik();
+	private JTextField textField_1;
 	/**
 	 * Launch the application.
 	 */
@@ -113,8 +114,24 @@ public class GlavniProzorBlagajnik {
 		JLabel lblIznos = new JLabel("Iznos:");
 		lblIznos.setBounds(61, 219, 46, 14);
 		panel_5.add(lblIznos);
+		final ArrayList <JCheckBox> listaCheckboxova = new ArrayList <JCheckBox>();
+		final JComboBox comboBox_1 = new JComboBox();
+		final JSpinner spinner_3 = new JSpinner();
+		final JSpinner spinner_2 = new JSpinner();
+		
 		
 		JButton btnIzracunaj = new JButton("Izra\u010Dunaj");
+		btnIzracunaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int brojac=0;
+				for(int i = 0;i<listaCheckboxova.size();i++){
+					if(listaCheckboxova.get(i).isSelected()) brojac++;
+				}
+				double izraz = ds.vratiCijenuSkolarine(((Dijete)comboBox_1.getSelectedItem()).getIdDijete())*brojac;
+				textField_1.setText(Double.toString(izraz));
+				
+			}
+		});
 		btnIzracunaj.setBounds(135, 215, 89, 23);
 		panel_5.add(btnIzracunaj);
 		
@@ -122,16 +139,59 @@ public class GlavniProzorBlagajnik {
 		lblKm.setBounds(272, 219, 46, 14);
 		panel_5.add(lblKm);
 		
-		textField = new JTextField();
-		textField.setBounds(223, 216, 39, 20);
-		panel_5.add(textField);
-		textField.setColumns(10);
-		
 		JButton btnPotvrdi = new JButton("Potvrdi");
+		btnPotvrdi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				//Kod za brisanje zaduzenja
+				int godina = (Integer) spinner_3.getValue();
+				String mjesec=null;
+				for(int i=0;i<listaCheckboxova.size();i++){
+					if(listaCheckboxova.get(i).isSelected()) mjesec = listaCheckboxova.get(i).getText();
+				zs.obrisiZaduzenje(((Dijete)comboBox_1.getSelectedItem()), godina, mjesec);
+				}
+				//Kod za evidentiranje uplate
+				for(int i=0;i<listaCheckboxova.size();i++){
+					
+				if(listaCheckboxova.get(i).isSelected()) {
+					mjesec = listaCheckboxova.get(i).getText();
+				
+				Uplata u = new Uplata();
+				int rBrMjeseca=0;
+				if(mjesec.equals("januar")) rBrMjeseca=1;
+				else if(mjesec.equals("februar")) rBrMjeseca=2;
+				else if(mjesec.equals("mart"))rBrMjeseca=3;
+				else if(mjesec.equals("april")) rBrMjeseca=4;
+				else if(mjesec.equals("maj")) rBrMjeseca=5;
+				else if(mjesec.equals("juni")) rBrMjeseca=6;
+				else if(mjesec.equals("juli")) rBrMjeseca=7;
+				else if(mjesec.equals("august")) rBrMjeseca=8;
+				else if(mjesec.equals("septembar")) rBrMjeseca=9;
+				else if(mjesec.equals("oktobar")) rBrMjeseca=10;
+				else if(mjesec.equals("novembar")) rBrMjeseca=11;
+				else if(mjesec.equals("decembar")) rBrMjeseca=12;
+			   u.setDatumUplate((Date) spinner_2.getValue());
+			   u.setDijete((Dijete)comboBox_1.getSelectedItem());
+			   u.setVisinaUplate(Double.parseDouble(textField_1.getText()));
+			   u.setZaGodinu(godina);
+			   u.setZaMjesec(rBrMjeseca);
+				us.evidentirajUplatu(u);
+				}
+				}
+				//Kod za ciscenje forme
+				for(int i=0; i< listaCheckboxova.size(); i++){
+					listaCheckboxova.get(i).setVisible(false);
+					listaCheckboxova.get(i).setText("");
+					listaCheckboxova.get(i).setSelected(false);
+					textField_1.setText("");
+				}
+				
+				}
+		});
 		btnPotvrdi.setBounds(135, 311, 127, 23);
 		panel_5.add(btnPotvrdi);
 		
-		JComboBox comboBox_1 = new JComboBox();
+		
 		comboBox_1.setBounds(135, 46, 248, 20);
 		ArrayList<Dijete> djeca = ds.svaDjeca();
 		for(int i=0;i< djeca.size();i++){
@@ -142,7 +202,7 @@ public class GlavniProzorBlagajnik {
 		JLabel lblMjeseci = new JLabel("Mjeseci:");
 		lblMjeseci.setBounds(389, 11, 74, 14);
 		panel_5.add(lblMjeseci);
-		final ArrayList <JCheckBox> listaCheckboxova = new ArrayList <JCheckBox>();
+		
 		
 		JCheckBox chckbxJanuar = new JCheckBox("Januar");
 		chckbxJanuar.setBounds(389, 31, 97, 23);
@@ -208,12 +268,12 @@ public class GlavniProzorBlagajnik {
 			
 		}
 		
-		JSpinner spinner_2 = new JSpinner();
+	
 		spinner_2.setModel(new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.DAY_OF_YEAR));
 		spinner_2.setBounds(135, 101, 134, 20);
 		panel_5.add(spinner_2);
 		
-		final JSpinner spinner_3 = new JSpinner();
+		
 		spinner_3.setModel(new SpinnerNumberModel(new Integer(2016), new Integer(2000), null, new Integer(1)));
 		spinner_3.setBounds(135, 160, 134, 20);
 		
@@ -226,14 +286,30 @@ public class GlavniProzorBlagajnik {
 		JButton btnPrikaziMjesece = new JButton("Prikazi mjesece");
 		btnPrikaziMjesece.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int godina = (Integer) spinner_3.getValue();
 				
-				for(int i=0; i< listaCheckboxova.size(); i++)
+				for(int i=0; i< listaCheckboxova.size(); i++){
+					listaCheckboxova.get(i).setVisible(false);
+					listaCheckboxova.get(i).setText("");
+					listaCheckboxova.get(i).setSelected(false);
+					textField_1.setText("");
+				}
+				
+				int godina = (Integer) spinner_3.getValue();
+				ArrayList<Zaduzenja> godisnjaZaduzenja = zs.vratiZaduzenjaZaGodinu(((Dijete)comboBox_1.getSelectedItem()), godina);
+				for(int i=0; i< godisnjaZaduzenja.size(); i++){
+					
+					listaCheckboxova.get(i).setText(godisnjaZaduzenja.get(i).getMjesec());
 					listaCheckboxova.get(i).setVisible(true);
+					}
 			}
 		});
 		btnPrikaziMjesece.setBounds(434, 7, 126, 23);
 		panel_5.add(btnPrikaziMjesece);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(223, 216, 46, 20);
+		panel_5.add(textField_1);
+		textField_1.setColumns(10);
 		
 		JPanel panel_6 = new JPanel();
 		tabbedPane.addTab("Uplate koje kasne", null, panel_6, null);
