@@ -253,7 +253,7 @@ public SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 				// jer u bazu upisuje kao yyyy-mm-dd
 				String[] s = textFieldDatumRodjenja.getText().split("-");
 				
-				Dijete d = new Dijete();
+				Dijete d = ds.nadji(idDjeteta);
 				d.setIme(textFieldIme.getText());
 				d.setPrezime(textFieldPrezime.getText());
 				d.setDatumRodjenja(s[2]+"-"+s[1]+"-"+s[0]); // yyyy-mm-dd
@@ -299,16 +299,18 @@ public SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		Dijete d = ds.nadji(idDjeteta);
 		
 		// sad je 1994-01-11
-		String[] s = d.getDatumRodjenja().split("-");
-		
+		String[] s1 = d.getDatumRodjenja().split("-");
+		String[] s2 = d.getDatumUpisa().toString().split("-");
+		String[] s3 = d.getDatumIsteka().toString().split("-");
 		textFieldIme.setText(d.getIme());
 		textFieldPrezime.setText(d.getPrezime());
-		textFieldDatumRodjenja.setText(s[2]+"-"+s[1]+"-"+s[0]); // 11-01-1994
+		textFieldDatumRodjenja.setText(s1[2]+"-"+s1[1]+"-"+s1[0]); // 11-01-1994
 		textFieldAdresa.setText(d.getAdresaPrebivalista());
 		textFieldImeRoditelja.setText(d.getImeRoditelja());
 		textFieldPrezimeRoditelja.setText(d.getPrezimeRoditelja());
 		textFieldBroj.setText(d.getBrojTelefona());
-		
+		textFieldDatumUpisa.setText(s2[2]+"-"+s2[1]+"-"+s2[0]);
+		textFieldDatumIsteka.setText(s3[2]+"-"+s3[1]+"-"+s3[0]);
 		comboBox.setSelectedItem(d.getGrupa());
 
 	}

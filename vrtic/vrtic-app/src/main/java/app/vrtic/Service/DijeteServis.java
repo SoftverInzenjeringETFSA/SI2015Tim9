@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 
 import app.vrtic.Model.Aktivnostidjeca;
 import app.vrtic.Model.Dijete;
+import app.vrtic.Model.Korisnik;
 
 
 
@@ -46,10 +47,8 @@ public class DijeteServis {
 	
 	public boolean obrisi(int id) {
 		Transaction t = s.beginTransaction();
-		
-		Dijete d = (Dijete) s.get(Dijete.class, id);
-		if (d != null)
-			s.delete(d);
+		Dijete k=(Dijete) s.get(Dijete.class,id);
+		if(k!=null)s.delete(k);
 		t.commit();
 		return true;
 	}
@@ -62,13 +61,15 @@ public class DijeteServis {
 		return akt;
 	}
 	
-	public Dijete izmijeni(Dijete d){
+	public boolean izmijeni(Dijete d){
 		Transaction t = s.beginTransaction();
-		s.merge(d);
+		if(d!=null)
+			s.update(d);
 		t.commit();
-		long l=d.getIdDijete();
-		int id=(int) l;
-		return nadji(id);
+		s.flush();
+		s.clear();
+		return true;
+		
 	}
 	
 	
@@ -77,6 +78,8 @@ public class DijeteServis {
 		return new ArrayList<Dijete>(djeca);
 	
 	}
+	
+	
 	
 	public double vratiCijenuSkolarine(int idDjeteta){
 		double suma=0;

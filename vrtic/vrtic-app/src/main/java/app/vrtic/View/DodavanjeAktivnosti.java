@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -75,13 +76,34 @@ public class DodavanjeAktivnosti {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+					if(textField.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Niste unijeli naziv aktivnosti.");
+						return;
+					}
+					try {
+						if(textField_1.getText().isEmpty() || Integer.parseInt(textField_1.getText()) <0) {
+							JOptionPane.showMessageDialog(null, "Niste unijeli validnu cijenu aktivnosti.");
+							return;
+						}
+					     
+					}
+					catch (NumberFormatException e1) {
+						JOptionPane.showMessageDialog(null, "Niste unijeli validnu cijenu aktivnosti.");
+						return;
+					}
+					
 				    Aktivnost a = new Aktivnost();
 					AktivnostServis akts = new AktivnostServis(s);
 					a.setNaziv(textField.getText());
 					a.setCijena(Integer.valueOf(textField_1.getText()));
-					a.setBrojDjece(30);
+					a.setBrojDjece(0);
 					boolean uspjesnoDodavanje = akts.dodajAktivnost(a);
-					frmVrti.dispose();
+					if(uspjesnoDodavanje) { 
+						JOptionPane.showMessageDialog(null, "Uspješno ste dodali novu aktivnost"); 
+						textField.setText(null);
+						textField_1.setText(null);
+					}
+//					frmVrti.dispose();
 										
 			}
 

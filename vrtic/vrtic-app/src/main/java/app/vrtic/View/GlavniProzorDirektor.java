@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -20,6 +21,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import app.vrtic.Model.Aktivnost;
+import app.vrtic.Model.Aktivnostidjeca;
 import app.vrtic.Model.Dijete;
 import app.vrtic.Model.Grupa;
 import app.vrtic.Model.Korisnik;
@@ -31,11 +33,13 @@ import app.vrtic.Service.DijeteServis;
 import app.vrtic.Service.GrupaServis;
 import app.vrtic.Service.KorisnikServis;
 import app.vrtic.Service.TerminServis;
+import app.vrtic.Service.UplataServis;
 import app.vrtic.Service.VaspitacServis;
 import app.vrtic.Service.ZaduzenjeServis;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.AbstractListModel;
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
@@ -60,9 +64,12 @@ public class GlavniProzorDirektor {
 	final static Logger logger = Logger.getLogger(login.class);
 	private Session s;
 	int id;
-	Korisnik user = new Korisnik();
-	KorisnikServis serviskorisnik;
-	private ZaduzenjeServis zs;
+	
+	private Korisnik user = new Korisnik();
+	private KorisnikServis serviskorisnik;
+	private DijeteServis dijeteServis;
+	private ZaduzenjeServis zaduzenjeServis;
+	private AktivnostServis aktivnostServis;
 	
 	/**
 	 * Launch the application.
@@ -88,8 +95,10 @@ public class GlavniProzorDirektor {
 		KorisnikServis us = new KorisnikServis(s);
 		user = us.dajKorisnika(id);
 		this.s = s;
-		this.zs = new ZaduzenjeServis(s);
-		serviskorisnik= new KorisnikServis(this.s);
+		this.zaduzenjeServis = new ZaduzenjeServis(s);
+		this.aktivnostServis = new AktivnostServis(s);
+		this.dijeteServis = new DijeteServis(s);
+		this.serviskorisnik= new KorisnikServis(this.s);
 		initialize();
 	}
 
@@ -142,7 +151,7 @@ public class GlavniProzorDirektor {
                     }
                     // uplate koje kase
                     else if(pane.getSelectedIndex()==6) {
-                    	
+                    	// nista :D
                     }
                     // pregled svih uplata
                     else {
@@ -270,8 +279,8 @@ public class GlavniProzorDirektor {
 				int selektovani = table_1.getSelectedRow();
 				// ako je nešto selektvano
 				if(selektovani != -1) {
-					DijeteServis ds = new DijeteServis(s);
-					List<Dijete> svaDjeca = ds.svaDjeca();
+					
+					List<Dijete> svaDjeca = dijeteServis.svaDjeca();
 					int idSelektovanog = svaDjeca.get(selektovani).getIdDijete();
 					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s, idSelektovanog);
 					novifrejm.OtvoriFormu();
@@ -295,6 +304,24 @@ public class GlavniProzorDirektor {
 		});
 		
 		JButton btnObrisiDijete = new JButton("Obri\u0161i dijete");
+		btnObrisiDijete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int selektovani = table_1.getSelectedRow();
+				// ako je nešto selektvano
+				if(selektovani != -1) {
+					List<Dijete> svaDjeca = dijeteServis.svaDjeca();
+					int idSelektovanog = svaDjeca.get(selektovani).getIdDijete();
+					
+					Dijete d = dijeteServis.nadji(idSelektovanog);
+					
+					
+					//Aktivnostidjeca[]medju = skupMedjutabela.toArray(new Aktivnostidjeca[skupMedjutabela.size()]);
+					
+					dijeteServis.obrisi(idSelektovanog);
+					popuniTabeluDjeca();
+				}
+			}
+		});
 		btnObrisiDijete.setBounds(488, 164, 126, 23);
 		panel_1.add(btnObrisiDijete);
 		
@@ -386,8 +413,7 @@ public class GlavniProzorDirektor {
 		JButton btnObrisiAktivnost = new JButton("Obri\u0161i aktivnost");
 		btnObrisiAktivnost.setBounds(550, 162, 126, 23);
 		panel_3.add(btnObrisiAktivnost);
-		
-		
+
 		JButton btnDodajAktivnost = new JButton("Dodaj aktivnost");
 		btnDodajAktivnost.setBounds(414, 162, 126, 23);
 		panel_3.add(btnDodajAktivnost);
@@ -436,7 +462,6 @@ public class GlavniProzorDirektor {
 			{
 					DodavanjeVaspitaca novifrejm = new DodavanjeVaspitaca(s);
 					novifrejm.OtvoriFormu();
-										
 			}
 
 		});
@@ -514,12 +539,12 @@ public class GlavniProzorDirektor {
 			public void actionPerformed(ActionEvent arg0) {
 				String mjesec = comboBox.getSelectedItem().toString();
 				int godina = (Integer) spinner_1.getValue();
-				ArrayList<Zaduzenja> listaZaduzenja = zs.vratiZaduzenjaPoGodiniIMjesecu(godina, mjesec);
+				ArrayList<Zaduzenja> listaZaduzenja = zaduzenjeServis.vratiZaduzenjaPoGodiniIMjesecu(godina, mjesec);
 				Object[][] podaci = new Object[listaZaduzenja.size()][];
 				
 					for(int i=0; i<listaZaduzenja.size();i++){
 						//podaci[i]= new Object[]{listaZaduzenja.get(i).getMjesec(),listaZaduzenja.get(i).getGodina().toString()};
-				podaci[i] = new Object[]{zs.vratiPodatkeZaIzvjestajPrvaKolona((int)listaZaduzenja.get(i).getIdZaduzenja()),zs.vratiPodatkeZaIzvjestajDrugaKolona((int)listaZaduzenja.get(i).getIdZaduzenja())};
+				podaci[i] = new Object[]{zaduzenjeServis.vratiPodatkeZaIzvjestajPrvaKolona((int)listaZaduzenja.get(i).getIdZaduzenja()),zaduzenjeServis.vratiPodatkeZaIzvjestajDrugaKolona((int)listaZaduzenja.get(i).getIdZaduzenja())};
 					}
 				table_6.setModel(new DefaultTableModel(
 						podaci,
@@ -584,13 +609,33 @@ public class GlavniProzorDirektor {
 		lblGodina.setBounds(20, 21, 54, 14);
 		panel_7.add(lblGodina);
 		
-		JSpinner spinner = new JSpinner();
+		final JSpinner spinner = new JSpinner();
+		spinner.setModel(new SpinnerNumberModel(2016, 2000, 3000, 1));
 		spinner.setBounds(64, 18, 76, 20);
 		panel_7.add(spinner);
 		
 		JButton btnGeneriiIzvjetaj = new JButton("Generi\u0161i izvje\u0161taj");
 		btnGeneriiIzvjetaj.setBounds(186, 17, 489, 23);
 		panel_7.add(btnGeneriiIzvjetaj);
+		
+		btnGeneriiIzvjetaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int godina = (Integer) spinner.getValue();
+				ArrayList<Zaduzenja> listaZaduzenja = zaduzenjeServis.vratiZaduzenjaPoGodini(godina);
+				Object[][] podaci = new Object[listaZaduzenja.size()][];
+				
+				for(int i=0; i<listaZaduzenja.size();i++)
+					//podaci[i]= new Object[]{listaZaduzenja.get(i).getMjesec(),listaZaduzenja.get(i).getGodina().toString()};
+			podaci[i] = new Object[]{zaduzenjeServis.vratiPodatkeZaIzvjestajPrvaKolona((int)listaZaduzenja.get(i).getIdZaduzenja()),zaduzenjeServis.vratiPodatkeZaIzvjestajDrugaKolona((int)listaZaduzenja.get(i).getIdZaduzenja()),listaZaduzenja.get(i).getMjesec(), godina, dijeteServis.vratiCijenuSkolarine(listaZaduzenja.get(i).getDijete().getIdDijete())};
+			
+				table_5.setModel(new DefaultTableModel(
+						podaci,
+						new String[] {
+								"Ime i prezime roditelja", "Broj telefona", "Mjesec", "Godina", "Iznos"
+						}
+					));	
+			}
+		});
 		
 		JButton btnOdjava = new JButton("Odjava");
 		btnOdjava.setBounds(581, 8, 126, 23);
@@ -632,7 +677,7 @@ public class GlavniProzorDirektor {
 		Object[][] data= new Object[korisnici.size()][];
 		for(int i = 0; i<korisnici.size();i++) {
 			String naziv = naziv = (String) korisnici.get(i).getIme() + " " + korisnici.get(i).getPrezime();
-			String privilegija = "NULL";
+			String privilegija = "Nema privilegije";
 			if(!korisnici.get(i).getPrivilegije().equals(null))
 				privilegija = (String) korisnici.get(i).getPrivilegije();
 			
@@ -654,7 +699,7 @@ public class GlavniProzorDirektor {
 				data[i]= new Object[]{(String)djeca.get(i).getIme(), (String)djeca.get(i).getPrezime(), (String) djeca.get(i).getGrupa().toString()};
 			}
 			else { 
-				data[i]= new Object[]{(String)djeca.get(i).getIme(), (String)djeca.get(i).getPrezime(), "NULL"};
+				data[i]= new Object[]{(String)djeca.get(i).getIme(), (String)djeca.get(i).getPrezime(), "Nema grupe"};
 			}
 		}
 		table_1.setModel(new DefaultTableModel(data, new String[] {"Ime djeteta", "Prezime djeteta", "Grupa"}));
@@ -703,7 +748,7 @@ public class GlavniProzorDirektor {
 		for(int i = 0; i<vaspitaci.size();i++) {
 			String ime = (String) vaspitaci.get(i).getIme();
 			String prezime = (String) vaspitaci.get(i).getPrezime();
-			String grupa = "NULL";
+			String grupa = "Nema grupe";
 			
 			if(vaspitaci.get(i).getGrupa()!=null)
 				grupa = (String) vaspitaci.get(i).getGrupa().getNaziv();
