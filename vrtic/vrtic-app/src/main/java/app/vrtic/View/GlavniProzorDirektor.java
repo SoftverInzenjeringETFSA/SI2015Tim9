@@ -58,6 +58,7 @@ public class GlavniProzorDirektor {
 	private Session s;
 	int id;
 	Korisnik user = new Korisnik();
+	KorisnikServis serviskorisnik;
 	
 	/**
 	 * Launch the application.
@@ -83,6 +84,7 @@ public class GlavniProzorDirektor {
 		KorisnikServis us = new KorisnikServis(s);
 		user = us.dajKorisnika(id);
 		this.s = s;
+		serviskorisnik= new KorisnikServis(this.s);
 		initialize();
 	}
 
@@ -179,7 +181,8 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-					PrikazProfilaKorisnika novifrejm = new PrikazProfilaKorisnika(s);
+					Korisnik k = serviskorisnik.dajKorisnika((Integer)table_0.getModel().getValueAt(table_0.getSelectedRow(),2));
+					PrikazProfilaKorisnika novifrejm = new PrikazProfilaKorisnika(s,k);
 					novifrejm.OtvoriFormu();
 										
 			}
@@ -193,8 +196,9 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-					IzmjenaKorisnika novifrejm = new IzmjenaKorisnika(s);
-					novifrejm.OtvoriFormu();
+				Korisnik k=serviskorisnik.dajKorisnika((Integer)table_0.getModel().getValueAt(table_0.getSelectedRow(),2));
+				IzmjenaKorisnika novifrejm = new IzmjenaKorisnika(s,k);
+				novifrejm.OtvoriFormu();
 										
 			}
 
@@ -203,6 +207,12 @@ public class GlavniProzorDirektor {
 		JButton btnObrisi = new JButton("Obri\u0161i");
 		btnObrisi.setBounds(564, 101, 123, 23);
 		panel.add(btnObrisi);
+		btnObrisi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+	        serviskorisnik.izbrisiKorisnika((Integer)table_0.getModel().getValueAt(table_0.getSelectedRow(),2));
+	        refreshujKorisnike();
+			}
+		});
 		
 		JButton btnDodajKorisnika = new JButton("Dodaj korisnika");
 		btnDodajKorisnika.setBounds(564, 177, 123, 23);
@@ -213,6 +223,7 @@ public class GlavniProzorDirektor {
 			{
 					DodavanjeKorisnika novifrejm = new DodavanjeKorisnika(s);
 					novifrejm.OtvoriFormu();
+					refreshujKorisnike();
 										
 			}
 
@@ -573,14 +584,15 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-					PromjenaSifre novifrejm = new PromjenaSifre(s);
+					PromjenaSifre novifrejm = new PromjenaSifre(s, user);
 					novifrejm.OtvoriFormu();
 										
 			}
 
 		});
 		
-		popuniTabeluKorisnici();
+	//popuniTabeluKorisnici();
+		refreshujKorisnike();
 		
 	}
 	
@@ -634,6 +646,7 @@ public class GlavniProzorDirektor {
 		}
 		
 		listGrupe.setModel(model);
+
 	}
 	
 	public void popuniTabeluAktivnosti(){
@@ -692,6 +705,25 @@ public class GlavniProzorDirektor {
 		
 		
 		}
+
+
+	private void refreshujKorisnike(){	
+		ArrayList<Korisnik> korisnici= serviskorisnik.dajKorisnike();
+		Object [][] data= new Object[korisnici.size()][];
+		for(int i=0;i<korisnici.size();i++)
+			data[i]=new Object[]{(String)korisnici.get(i).getIme()+" "+(String)korisnici.get(i).getPrezime(),(String)korisnici.get(i).getPrivilegije(),(Integer)korisnici.get(i).getIdKorisnika()
+					};
+		table_0.setModel(new DefaultTableModel(
+				data,
+				new String[] {
+						"Naziv korisnika", "Privilegija","Id"
+				}
+			));
+		table_0.getColumnModel().removeColumn(table_0.getColumnModel().getColumn(2));
+		DefaultTableModel tableM = (DefaultTableModel) table_0.getModel();
+		tableM.fireTableDataChanged();
+	}
+	
 }
 
 

@@ -22,7 +22,7 @@ public class DodavanjeKorisnika {
 	private Korisnik k;
 	private KorisnikServis ks;
 	
-	private String porukaValidacija="";
+	private String porukaValidacija;
 	final static Logger logger = Logger.getLogger(login.class);
 	private Session s;
 	private JFrame frmVrti;
@@ -118,7 +118,7 @@ public class DodavanjeKorisnika {
 		JButton btnIzmijeni = new JButton("Dodaj korisnika");
 		btnIzmijeni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {				
-				if(validirajFormu(comboBox)!=""){
+				if(validirajFormu(comboBox).equals("")){
 					if(k==null)k= new Korisnik();
 					k.setIme(textField.getText());
 					k.setPrezime(textField_1.getText());
@@ -132,9 +132,16 @@ public class DodavanjeKorisnika {
 						k.setPrivilegije("blagajnik");
 					}				
 					ks.kreirajKorisnika(k);
+					JOptionPane.showMessageDialog(null,
+						    "Uspješno ste dodali novog korisnika",
+						    "Obavještenje",
+						    JOptionPane.PLAIN_MESSAGE);
 				}
-				else
-					JOptionPane.showMessageDialog(null,porukaValidacija);
+				else if (!validirajFormu(comboBox).equals(""))
+					JOptionPane.showMessageDialog(null,
+						    porukaValidacija,
+						    "Warning",
+						    JOptionPane.WARNING_MESSAGE);
 			}
 		});
 		btnIzmijeni.setBounds(322, 281, 126, 23);
@@ -151,15 +158,16 @@ public class DodavanjeKorisnika {
 	}
 	
 	private String validirajFormu(JComboBox comboBox){
-		if(textField.getText()=="")
+		porukaValidacija="";
+		if(textField.getText().equals(""))
 			porukaValidacija="Unesite ime korisnika!";
-		else if(textField_1.getText()=="")
+		else if(textField_1.getText().equals(""))
 			porukaValidacija="Unesite prezime korisnika!";
-		else if(textField_2.getText()=="")
+		else if(textField_2.getText().equals(""))
 			porukaValidacija="Unesite korisnièko ime korisnika!";
-		else if(textField_3.getText()=="")
+		else if(textField_3.getText().equals(""))
 			porukaValidacija="Unesite broj telefona korisnika!";
-		else if(textField_4.getText()=="")
+		else if(textField_4.getText().equals(""))
 			porukaValidacija="Unesite korisnièku šifru korisnika!";
 		else if (comboBox.getSelectedIndex()==-1){
 			porukaValidacija="Odaberite privilegiju korisnika!";

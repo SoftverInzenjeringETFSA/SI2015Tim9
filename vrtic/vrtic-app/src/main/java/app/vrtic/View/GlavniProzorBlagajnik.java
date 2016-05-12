@@ -443,7 +443,7 @@ public class GlavniProzorBlagajnik {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-					PromjenaSifre novifrejm = new PromjenaSifre(s);
+					PromjenaSifre novifrejm = new PromjenaSifre(s, user);
 					novifrejm.OtvoriFormu();
 										
 			}

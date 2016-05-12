@@ -3,11 +3,17 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+
+import app.vrtic.Model.Korisnik;
+import app.vrtic.Service.KorisnikServis;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 public class PromjenaSifre {
 
 	private JFrame frmVrti;
@@ -15,15 +21,19 @@ public class PromjenaSifre {
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_1;
 	private Session s;
+	KorisnikServis ks;
+	Korisnik k;
+	
 	final static Logger logger = Logger.getLogger(login.class);
 	/**
 	 * Launch the application.
 	 */
+
 	public void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PromjenaSifre window = new PromjenaSifre(s);
+					PromjenaSifre window = new PromjenaSifre(s,k);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -36,8 +46,10 @@ public class PromjenaSifre {
 	/**
 	 * Create the application.
 	 */
-	public PromjenaSifre(Session s) {
+	public PromjenaSifre(Session s,Korisnik kor) {
 		this.s = s;
+		ks=new KorisnikServis(this.s);
+		k=kor;
 		initialize();
 	}
 
@@ -56,6 +68,33 @@ public class PromjenaSifre {
 		frmVrti.getContentPane().add(lblKorisnickaSifra);
 		
 		JButton btnPrijava = new JButton("Promijeni \u0161ifru");
+		btnPrijava.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//dodati uslov da provjerava sifru ulogovanog korisnika sa unesenom sifrom
+				/*if(!passwordField.getText().equals(passwordField_1.getText())){
+					JOptionPane.showMessageDialog(null,
+						    "Nova šifra i ponovljena nova šifra nisu jednake!",
+						    "Warning",
+						    JOptionPane.WARNING_MESSAGE);
+				}	
+				else if(passwordField.equals("")
+						|| passwordField_1.equals("") || passwordField_2.equals("")){
+					JOptionPane.showMessageDialog(null,
+						    "Sva polja nisu popunjena!",
+						    "Warning",
+						    JOptionPane.WARNING_MESSAGE);
+				}
+				else*/
+					//if(passwordField.getText().equals(passwordField_1.getText())&& !passwordField.equals("")
+						//&& !passwordField_1.equals("")&&!passwordField_2.equals("")){
+						ks.promjeniSifru(k, passwordField.getText());
+					JOptionPane.showMessageDialog(null,
+							ks.promjeniSifru(k, passwordField.getText()),
+					    "Obavještenje",
+					    JOptionPane.PLAIN_MESSAGE);
+				//}
+			}
+		});
 		btnPrijava.setBounds(152, 190, 122, 23);
 		frmVrti.getContentPane().add(btnPrijava);
 		

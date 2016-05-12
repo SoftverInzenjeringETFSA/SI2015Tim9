@@ -3,6 +3,8 @@ import java.awt.EventQueue;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
+import app.vrtic.Model.Korisnik;
+
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -12,6 +14,8 @@ import javax.swing.JTextField;
 
 public class PrikazProfilaKorisnika {
     private Session s;
+    private Korisnik k;
+    
 	private JFrame frmVrti;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -25,7 +29,7 @@ public class PrikazProfilaKorisnika {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PrikazProfilaKorisnika window = new PrikazProfilaKorisnika(s);
+					PrikazProfilaKorisnika window = new PrikazProfilaKorisnika(s,k);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -38,8 +42,9 @@ public class PrikazProfilaKorisnika {
 	/**
 	 * Create the application.
 	 */
-	public PrikazProfilaKorisnika(Session s) {
+	public PrikazProfilaKorisnika(Session s, Korisnik kor) {
 		this.s = s;
+		this.k=kor;
 		initialize();
 	}
 
@@ -80,28 +85,37 @@ public class PrikazProfilaKorisnika {
 		comboBox.setBounds(166, 216, 149, 20);
 		frmVrti.getContentPane().add(comboBox);
 		
+		if(k.getPrivilegije().equals("direktor")) 
+			comboBox.setSelectedIndex(0);
+		else if(k.getPrivilegije().equals("blagajnik")) 
+			comboBox.setSelectedIndex(1);
+		
 		textField = new JTextField();
 		textField.setEditable(false);
 		textField.setBounds(166, 59, 149, 20);
 		frmVrti.getContentPane().add(textField);
 		textField.setColumns(10);
+		textField.setText(k.getIme());
 		
 		textField_1 = new JTextField();
 		textField_1.setEditable(false);
 		textField_1.setBounds(166, 97, 149, 20);
 		frmVrti.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
+		textField_1.setText(k.getPrezime());
 		
 		textField_2 = new JTextField();
 		textField_2.setEditable(false);
 		textField_2.setBounds(166, 134, 149, 20);
 		frmVrti.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
+		textField_2.setText(k.getKorisnickoIme());
 		
 		textField_3 = new JTextField();
 		textField_3.setEditable(false);
 		textField_3.setBounds(166, 169, 149, 20);
 		frmVrti.getContentPane().add(textField_3);
 		textField_3.setColumns(10);
+		textField_3.setText(k.getBrojTelefona());
 	}
 }

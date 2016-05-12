@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
@@ -12,9 +13,18 @@ import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
+import app.vrtic.Model.Korisnik;
+import app.vrtic.Service.KorisnikServis;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class IzmjenaKorisnika {
 
     private Session s;
+    private KorisnikServis korisnikServis;
+    private Korisnik k;
+    private String porukaValidacija;
+    
 	private JFrame frmVrti;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -28,7 +38,7 @@ public class IzmjenaKorisnika {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					IzmjenaKorisnika window = new IzmjenaKorisnika(s);
+					IzmjenaKorisnika window = new IzmjenaKorisnika(s,k);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -41,8 +51,10 @@ public class IzmjenaKorisnika {
 	/**
 	 * Create the application.
 	 */
-	public IzmjenaKorisnika(Session s) {
+	public IzmjenaKorisnika(Session s,Korisnik kor) {
 		this.s = s;
+		k=kor;
+		korisnikServis=new KorisnikServis(this.s);
 		initialize();
 	}
 
@@ -84,35 +96,87 @@ public class IzmjenaKorisnika {
 		lblUloga.setBounds(94, 219, 46, 14);
 		frmVrti.getContentPane().add(lblUloga);
 		
-		JComboBox comboBox = new JComboBox();
+		final JComboBox comboBox = new JComboBox();
 		comboBox.setEditable(true);
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Pravnik/Direktor", "Blagajnik"}));
 		comboBox.setBounds(166, 216, 149, 20);
 		frmVrti.getContentPane().add(comboBox);
 		
+		if(k.getPrivilegije().equals("direktor")) 
+			comboBox.setSelectedIndex(0);
+		else if(k.getPrivilegije().equals("blagajnik")) 
+			comboBox.setSelectedIndex(1);
+		
 		textField = new JTextField();
 		textField.setBounds(166, 59, 149, 20);
 		frmVrti.getContentPane().add(textField);
 		textField.setColumns(10);
+		textField.setText(k.getIme());
 		
 		textField_1 = new JTextField();
 		textField_1.setBounds(166, 97, 149, 20);
 		frmVrti.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
+		textField_1.setText(k.getPrezime());
 		
 		textField_2 = new JTextField();
 		textField_2.setBounds(166, 134, 149, 20);
 		frmVrti.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
+		textField_2.setText(k.getKorisnickoIme());
 		
 		textField_3 = new JTextField();
 		textField_3.setBounds(166, 169, 149, 20);
 		frmVrti.getContentPane().add(textField_3);
 		textField_3.setColumns(10);
+		textField_3.setText(k.getBrojTelefona());
 		
 		JButton btnIzmijeni = new JButton("Izmijeni");
+		btnIzmijeni.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(validirajFormu(comboBox).equals("")){
+					k.setIme(textField.getText());
+					k.setPrezime(textField_1.getText());
+					k.setKorisnickoIme(textField_2.getText());
+					k.setBrojTelefona(textField_3.getText());
+					
+					if(comboBox.getSelectedIndex()==0){
+						k.setPrivilegije("direktor");
+					}
+					else if(comboBox.getSelectedIndex()==1){
+						k.setPrivilegije("blagajnik");
+					}			
+					korisnikServis.izmjeniKorisnika(k);
+					JOptionPane.showMessageDialog(null,
+						    "Uspješno ste izmjenili korisnika",
+						    "Obavještenje",
+						    JOptionPane.PLAIN_MESSAGE);
+				}
+				else if (!validirajFormu(comboBox).equals(""))
+					JOptionPane.showMessageDialog(null,
+						    porukaValidacija,
+						    "Warning",
+						    JOptionPane.WARNING_MESSAGE);				
+			}
+		});
 		btnIzmijeni.setBounds(322, 250, 126, 23);
 		frmVrti.getContentPane().add(btnIzmijeni);
+	}
+	
+	private String validirajFormu(JComboBox comboBox){
+		porukaValidacija="";
+		if(textField.getText().equals(""))
+			porukaValidacija="Unesite ime korisnika!";
+		else if(textField_1.getText().equals(""))
+			porukaValidacija="Unesite prezime korisnika!";
+		else if(textField_2.getText().equals(""))
+			porukaValidacija="Unesite korisnièko ime korisnika!";
+		else if(textField_3.getText().equals(""))
+			porukaValidacija="Unesite broj telefona korisnika!";
+		else if (comboBox.getSelectedIndex()==-1){
+			porukaValidacija="Odaberite privilegiju korisnika!";
+		}
+		return porukaValidacija;		
 	}
 
 }
