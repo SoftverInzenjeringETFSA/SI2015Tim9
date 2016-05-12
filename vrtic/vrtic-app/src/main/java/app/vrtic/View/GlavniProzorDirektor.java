@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
@@ -24,12 +25,14 @@ import app.vrtic.Model.Grupa;
 import app.vrtic.Model.Korisnik;
 import app.vrtic.Model.Termin;
 import app.vrtic.Model.Vaspitac;
+import app.vrtic.Model.Zaduzenja;
 import app.vrtic.Service.AktivnostServis;
 import app.vrtic.Service.DijeteServis;
 import app.vrtic.Service.GrupaServis;
 import app.vrtic.Service.KorisnikServis;
 import app.vrtic.Service.TerminServis;
 import app.vrtic.Service.VaspitacServis;
+import app.vrtic.Service.ZaduzenjeServis;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -59,6 +62,7 @@ public class GlavniProzorDirektor {
 	int id;
 	Korisnik user = new Korisnik();
 	KorisnikServis serviskorisnik;
+	private ZaduzenjeServis zs;
 	
 	/**
 	 * Launch the application.
@@ -84,6 +88,7 @@ public class GlavniProzorDirektor {
 		KorisnikServis us = new KorisnikServis(s);
 		user = us.dajKorisnika(id);
 		this.s = s;
+		this.zs = new ZaduzenjeServis(s);
 		serviskorisnik= new KorisnikServis(this.s);
 		initialize();
 	}
@@ -492,17 +497,39 @@ public class GlavniProzorDirektor {
 		lblMjesec.setBounds(20, 11, 46, 14);
 		panel_6.add(lblMjesec);
 		
-		JComboBox comboBox = new JComboBox();
+		
+		final JComboBox comboBox = new JComboBox();
 		comboBox.setMaximumRowCount(12);
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Januar", "Februar", "Mart", "April", "Maj", "Juni", "Juli", "August", "Septembar", "Oktobar", "Novembar", "Decembar"}));
 		comboBox.setBounds(70, 8, 100, 20);
 		panel_6.add(comboBox);
 		
-		JSpinner spinner_1 = new JSpinner();
+		final JSpinner spinner_1 = new JSpinner();
+		spinner_1.setModel(new SpinnerNumberModel(2016, 2000, 3000, 1));
 		spinner_1.setBounds(70, 34, 100, 20);
 		panel_6.add(spinner_1);
 		
 		JButton btnPrikai_1 = new JButton("Prika\u017Ei");
+		btnPrikai_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String mjesec = comboBox.getSelectedItem().toString();
+				int godina = (Integer) spinner_1.getValue();
+				ArrayList<Zaduzenja> listaZaduzenja = zs.vratiZaduzenjaPoGodiniIMjesecu(godina, mjesec);
+				Object[][] podaci = new Object[listaZaduzenja.size()][];
+				
+					for(int i=0; i<listaZaduzenja.size();i++){
+						//podaci[i]= new Object[]{listaZaduzenja.get(i).getMjesec(),listaZaduzenja.get(i).getGodina().toString()};
+				podaci[i] = new Object[]{zs.vratiPodatkeZaIzvjestajPrvaKolona((int)listaZaduzenja.get(i).getIdZaduzenja()),zs.vratiPodatkeZaIzvjestajDrugaKolona((int)listaZaduzenja.get(i).getIdZaduzenja())};
+					}
+				table_6.setModel(new DefaultTableModel(
+						podaci,
+						new String[] {
+							"Ime i prezime roditelja", "Broj telefona"
+						}
+					));
+				
+			}
+		});
 		btnPrikai_1.setBounds(194, 33, 100, 23);
 		panel_6.add(btnPrikai_1);
 		
