@@ -467,6 +467,20 @@ public class GlavniProzorDirektor {
 		});
 		
 		JButton btnObrisiVaspitaca = new JButton("Obri\u0161i");
+		btnObrisiVaspitaca.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int selektovani = table_3.getSelectedRow();
+				if(selektovani!=-1) {
+					VaspitacServis vaspitacServis = new VaspitacServis(s);
+					List<Vaspitac> sviVaspitaci = vaspitacServis.sviVaspitaci();
+					int idSelektovanog = sviVaspitaci.get(selektovani).getIdVaspitac();
+					vaspitacServis.obrisi(idSelektovanog);
+					
+					JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali vaspitaca");
+					popuniTabeluVaspitaci();
+				}
+			}
+		});
 		btnObrisiVaspitaca.setBounds(413, 164, 126, 23);
 		panel_4.add(btnObrisiVaspitaca);
 		
