@@ -174,6 +174,7 @@ public class DodavanjeTermina {
 			//    NoviTermin.setGrupa(gs.PretragaPoImenu(grupeComboBox.getSelectedItem().toString()));
 			//    NoviTermin.setAktivnost(as.pretragaPoNazivu(comboBox.getSelectedItem().toString()));
 				if(DaLiJeIspravnoVrijeme(VrijemePocetka.getText())==false || DaLiJeIspravnoVrijeme(VrijemeZavrsetka.getText())==false) JOptionPane.showMessageDialog(null, "Neispravan format vremena!");
+				if(DaLiJeIspravnaSatnica(VrijemeZavrsetka.getText(), VrijemePocetka.getText())) JOptionPane.showMessageDialog(null, "Neispravna satnica!");
 				NoviTermin.setVrijemePocetka(VrijemePocetka.getText());
 				NoviTermin.setVrijemeZavrsetka(VrijemeZavrsetka.getText());
 				TerminServis ts = new TerminServis(s);
@@ -182,6 +183,7 @@ public class DodavanjeTermina {
 				
 				VrijemePocetka.setText("");
 				VrijemeZavrsetka.setText("");
+				JOptionPane.showMessageDialog(null, "Dodali ste novi termin u raspored!");
 				}
 									
 			}
@@ -220,11 +222,23 @@ public class DodavanjeTermina {
 		if(str.length() != 5){
 			return false;
 		}
-		if((str.charAt(0)=='0' || str.charAt(0)=='1') && (str.charAt(1)>47 && str.charAt(1)<58) && str.charAt(2)==':' && ((str.charAt(3)>47 || str.charAt(3)<54) && (str.charAt(4)>47 && str.charAt(4)<58)))
+		if((str.charAt(0)=='0' || str.charAt(0)=='1') && (str.charAt(1)>47 && str.charAt(1)<58) && str.charAt(2)==':' && ((str.charAt(3)>47 && str.charAt(3)<54) && (str.charAt(4)>47 && str.charAt(4)<58)))
 		return true;
-		else if((str.charAt(0)=='2') && (str.charAt(1)>47 && str.charAt(1)<52) && str.charAt(2)==':' && ((str.charAt(3)>47 || str.charAt(3)<54) && (str.charAt(4)>47 && str.charAt(4)<58)))
+		else if((str.charAt(0)=='2') && (str.charAt(1)>47 && str.charAt(1)<52) && str.charAt(2)==':' && ((str.charAt(3)>47 && str.charAt(3)<54) && (str.charAt(4)>47 && str.charAt(4)<58)))
 			return true;
 		else return false;
+	}
+	
+	public boolean DaLiJeIspravnaSatnica(String str1, String str2){
+		if(str1.charAt(0)>str2.charAt(0)) return false;
+		else if(str1.charAt(0)==str2.charAt(0)){
+			if(str1.charAt(1)>str2.charAt(1)) return false;
+		}
+		if(str1.charAt(3)>str2.charAt(3)) return false;
+		else if(str1.charAt(3) == str2.charAt(3)){
+			if(str1.charAt(4)>str2.charAt(4)) return false;
+		}
+		return true;
 	}
 	
 	
