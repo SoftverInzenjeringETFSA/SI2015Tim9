@@ -2,6 +2,10 @@ package app.vrtic.View;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -11,6 +15,8 @@ import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
@@ -201,8 +207,39 @@ public void StatistikaAktivnosti(AktivnostServis as){
 		
 		DefaultTableModel tableFire = (DefaultTableModel) table_1.getModel();
 		tableFire.fireTableDataChanged();
+	//	Export tabele
 		
-		
+		/*
+		File f = new File("D:\\\\adnan.xls");
+		try{
+			exportTable(table_1, f);
+		}
+		catch(Exception e){
+			logger.info(e);
+		}
+		*/
 		}
 
+// Export tabele
+/*
+public void exportTable(JTable jTable1,File file) throws IOException{
+    TableModel model=jTable1.getModel();
+    FileWriter out=new FileWriter(file);
+    BufferedWriter bw=new BufferedWriter(out);
+    for (int i=0;i<model.getColumnCount();i++){
+      bw.write(model.getColumnName(i)+"\t");
+    }
+    bw.write("\n");
+    for (int i=0;i<model.getRowCount();i++){
+      for (int j=0;j<model.getColumnCount();j++){
+        bw.write(model.getValueAt(i,j).toString()+"\t");
+      }
+      bw.write("\n");
+    }
+    bw.close();
+ System.out.print("Pisanje u " + file);
+
+
+}
+*/
 }
