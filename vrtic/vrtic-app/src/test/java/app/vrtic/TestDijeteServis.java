@@ -1,11 +1,13 @@
 package app.vrtic;
 
-import junit.framework.Test;
+import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 public class TestDijeteServis {
 
 	
-	
+	@Test
 	public void testDijeteServisKonst() {
 		
 	}
