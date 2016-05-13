@@ -128,30 +128,40 @@ public class IzmjenaKorisnika {
 		JButton btnIzmijeni = new JButton("Izmijeni");
 		btnIzmijeni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(validirajFormu(comboBox).equals("")){
-					k.setIme(textField.getText());
-					k.setPrezime(textField_1.getText());
-					k.setKorisnickoIme(textField_2.getText());
-					k.setBrojTelefona(textField_3.getText());
-					
-					if(comboBox.getSelectedIndex()==0){
-						k.setPrivilegije("direktor");
+				if(!(korisnikServis.provjeriDaLiPostojiIstiOsimUlogovanogKorisnika(textField_2.getText(),
+						k.getIdKorisnika()))){
+					if(validirajFormu(comboBox).equals("")){
+						k.setIme(textField.getText());
+						k.setPrezime(textField_1.getText());
+						k.setKorisnickoIme(textField_2.getText());
+						k.setBrojTelefona(textField_3.getText());
+						
+						if(comboBox.getSelectedIndex()==0){
+							k.setPrivilegije("direktor");
+						}
+						else if(comboBox.getSelectedIndex()==1){
+							k.setPrivilegije("blagajnik");
+						}			
+						korisnikServis.izmjeniKorisnika(k);
+						JOptionPane.showMessageDialog(null,
+							    "Uspješno ste izmjenili korisnika",
+							    "Obavještenje",
+							    JOptionPane.PLAIN_MESSAGE);
 					}
-					else if(comboBox.getSelectedIndex()==1){
-						k.setPrivilegije("blagajnik");
-					}			
-					korisnikServis.izmjeniKorisnika(k);
-					JOptionPane.showMessageDialog(null,
-						    "Uspješno ste izmjenili korisnika",
-						    "Obavještenje",
-						    JOptionPane.PLAIN_MESSAGE);
+					else if (!validirajFormu(comboBox).equals(""))
+						JOptionPane.showMessageDialog(null,
+							    porukaValidacija,
+							    "Warning",
+							    JOptionPane.WARNING_MESSAGE);				
 				}
-				else if (!validirajFormu(comboBox).equals(""))
+				else if(korisnikServis.provjeriDaLiPostojiIstiOsimUlogovanogKorisnika(textField_2.getText(),
+						k.getIdKorisnika())){
 					JOptionPane.showMessageDialog(null,
-						    porukaValidacija,
+						    "Korisnik sa unesenim korisnièkim imenom veæ postoji!",
 						    "Warning",
-						    JOptionPane.WARNING_MESSAGE);				
-			}
+						    JOptionPane.WARNING_MESSAGE);
+				}
+			}	
 		});
 		btnIzmijeni.setBounds(322, 250, 126, 23);
 		frmVrti.getContentPane().add(btnIzmijeni);
