@@ -134,7 +134,7 @@ public class PrikazGrupe {
 		frmVrti.getContentPane().add(lblStatistikaAktivnosti);
 		
 		
-		ArrayList<Integer> djecijiID = TabelaDjeca(g.getNaziv());
+		ArrayList<Integer> djecijiID = sveDjecaZaGrupu(g.getNaziv());
 		final ArrayList<Integer> djecijiID2 = djecijiID;
 		JButton btnIzmijeni = new JButton("Izmijeni");
 		btnIzmijeni.setBounds(505, 90, 126, 23);
@@ -162,53 +162,53 @@ public class PrikazGrupe {
 			public void actionPerformed(ActionEvent e)
 			{
 				int ID = djecijiID2.get(tabelaDijete.getSelectedRow());	
-				Dijete d = ds.nadji(ID);
+				ds.obrisi(ID);
+				ArrayList<Integer> djecijiID3 = sveDjecaZaGrupu(g2.getNaziv());
+				popuniTabeluDjece(djecijiID3);
 				
+				/*
+				Dijete d = ds.nadji(ID);
 				d.setGrupa(gs.sveGrupe().get(4));
 				ds.izmijeni(d);
 				frmVrti.invalidate();
 				frmVrti.validate();
 				frmVrti.repaint();
+				*/
 			}
 
 		});
 		
-		
-		
-		
+		popuniTabeluDjece(djecijiID);
 		StatistikaAktivnosti(as);
 	}
 	
-	public ArrayList<Integer> TabelaDjeca(String grupa){
-		
+	public ArrayList<Integer> sveDjecaZaGrupu(String grupa) {
 		
 		DijeteServis servis = new DijeteServis(this.s);
 		ArrayList<Dijete> djeca = servis.svaDjeca();
 		ArrayList<Integer> djecaTeGrupe = new ArrayList<Integer>(0);
-		Object[][] data= new Object[djeca.size()][];
-		int preskocio=0;
 		for(int i = 0; i<djeca.size();i++) {
-			if(grupa.equals(djeca.get(i).getGrupa().getNaziv())){
-				djecaTeGrupe.add(djeca.get(i).getIdDijete());
-				data[i-preskocio]= new Object[]{djeca.get(i).getIme(), djeca.get(i).getPrezime()};
-		
-		tabelaDijete.setModel(new DefaultTableModel(
-				data,
-				new String[] {
-						"Ime djeteta", "Prezime djeteta"
-}
-			));
-		
+			if(djeca.get(i).getGrupa() != null) {
+				if(grupa.equals(djeca.get(i).getGrupa().getNaziv())){
+					djecaTeGrupe.add(djeca.get(i).getIdDijete());	
+				}
 			}
-			preskocio++;
 		}
 		
+		return djecaTeGrupe;
+	}
+	
+	public void popuniTabeluDjece(ArrayList<Integer> djeca) {
+		Object[][] data= new Object[djeca.size()][];
+		for(int i = 0; i<djeca.size();i++) {
+			DijeteServis servis = new DijeteServis(this.s);
+			Dijete d = servis.nadji(djeca.get(i));
+			data[i]= new Object[]{d.getIme(), d.getPrezime()};
+		}
+		tabelaDijete.setModel(new DefaultTableModel(data, new String[] { "Ime djeteta", "Prezime djeteta" }));
 		DefaultTableModel tableFire = (DefaultTableModel) tabelaDijete.getModel();
 		tableFire.fireTableDataChanged();
-		return djecaTeGrupe;
-		
-		
-		}
+	}
 	
 public void StatistikaAktivnosti(AktivnostServis as){
 		

@@ -118,7 +118,7 @@ public class GlavniProzorDirektor {
 		tabbedPane.setBounds(10, 42, 702, 239);
 		frmVrti.getContentPane().add(tabbedPane);
 		
-		// on load i ovdje će se pozivat sve funkcije koje ce recimo ucitavat 
+		// on load i ovdje Ä‡e se pozivat sve funkcije koje ce recimo ucitavat 
 		// stvari iz baze u tabelu u odredjenom tabu
 		tabbedPane.addChangeListener(new ChangeListener() {
 
@@ -277,7 +277,7 @@ public class GlavniProzorDirektor {
 			public void actionPerformed(ActionEvent e)
 			{
 				int selektovani = table_1.getSelectedRow();
-				// ako je ne�to selektvano
+				// ako je nešto selektvano
 				if(selektovani != -1) {
 					
 					List<Dijete> svaDjeca = dijeteServis.svaDjeca();
@@ -306,8 +306,9 @@ public class GlavniProzorDirektor {
 		JButton btnObrisiDijete = new JButton("Obri\u0161i dijete");
 		btnObrisiDijete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/*
 				int selektovani = table_1.getSelectedRow();
-				// ako je ne�to selektvano
+				// ako je nešto selektvano
 				if(selektovani != -1) {
 					List<Dijete> svaDjeca = dijeteServis.svaDjeca();
 					int idSelektovanog = svaDjeca.get(selektovani).getIdDijete();
@@ -320,6 +321,8 @@ public class GlavniProzorDirektor {
 					dijeteServis.obrisi(idSelektovanog);
 					popuniTabeluDjeca();
 				}
+				*/
+				JOptionPane.showMessageDialog(null, "Nije još implementirano (radi samo za djecu za koju nema aktivnosti)");
 			}
 		});
 		btnObrisiDijete.setBounds(488, 164, 126, 23);
@@ -347,6 +350,26 @@ public class GlavniProzorDirektor {
 		panel_2.add(listGrupe);
 		
 		JButton btnObrisiGrupu = new JButton("Obri\u0161i");
+		btnObrisiGrupu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int selektovani = listGrupe.getSelectedIndex();
+				if(selektovani!=-1) {
+					GrupaServis grupaServis = new GrupaServis(s);
+					List<Grupa> sveGrupe = grupaServis.sveGrupe();
+					Grupa g = grupaServis.PretragaPoIDu(sveGrupe.get(selektovani).getIdGrupe());
+					ArrayList<Integer> djecaTeGrupe = sveDjecaZaGrupu(g.getNaziv());
+					for(int i=0; i<djecaTeGrupe.size(); i++) {
+						Dijete d = dijeteServis.nadji(djecaTeGrupe.get(i));
+						d.setGrupa(null);
+						dijeteServis.izmijeni(d);
+					}
+					grupaServis.ObrisiGrupu(sveGrupe.get(selektovani).getIdGrupe());
+				}
+				
+				JOptionPane.showMessageDialog(null, "Uspješno ste obrisali grupu");
+			}
+		});
 		btnObrisiGrupu.setBounds(561, 33, 126, 23);
 		panel_2.add(btnObrisiGrupu);
 		
@@ -411,6 +434,11 @@ public class GlavniProzorDirektor {
 		scrollPane_2.setViewportView(table_2);
 		
 		JButton btnObrisiAktivnost = new JButton("Obri\u0161i aktivnost");
+		btnObrisiAktivnost.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Nije još implementirano(isti slucaj kao kod brisanja djeteta)");
+			}
+		});
 		btnObrisiAktivnost.setBounds(550, 162, 126, 23);
 		panel_3.add(btnObrisiAktivnost);
 
@@ -812,6 +840,22 @@ public class GlavniProzorDirektor {
 		tableM.fireTableDataChanged();
 	}
 	
+	public ArrayList<Integer> sveDjecaZaGrupu(String grupa) {
+			
+			DijeteServis servis = new DijeteServis(this.s);
+			ArrayList<Dijete> djeca = servis.svaDjeca();
+			ArrayList<Integer> djecaTeGrupe = new ArrayList<Integer>(0);
+			for(int i = 0; i<djeca.size();i++) {
+				if(djeca.get(i).getGrupa() != null) {
+					if(grupa.equals(djeca.get(i).getGrupa().getNaziv())){
+						djecaTeGrupe.add(djeca.get(i).getIdDijete());	
+					}
+				}
+			}
+			
+			return djecaTeGrupe;
+		}
+		
 }
 
 
