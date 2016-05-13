@@ -129,27 +129,29 @@ public class DodavanjeGrupe {
 			public void actionPerformed(ActionEvent e)
 			{
 					Grupa g = new Grupa();
-					Vaspitac v1 = new Vaspitac();
-					Vaspitac v2 = new Vaspitac();
 					g.setNaziv(nazivGrupe.getText());
 					g.setKapacitet((Integer)kapacitetGrupe.getValue());
 					g.setRedniBroj((Integer)redniBrojGrupe.getValue());
 					VaspitacServis vaspitaci = new VaspitacServis(s);
-					Set<Vaspitac> vas = new HashSet<Vaspitac>();
+					Vaspitac v1, v2 = new Vaspitac();
 					ArrayList<Vaspitac> vasp = vaspitaci.sviVaspitaci();
-					for(Vaspitac v: vasp){
-						if(vaspitac1.getSelectedItem().toString().contains(v.getIme())){
-							vas.add(v);
-						}
-						else if(vaspitac2.getSelectedItem().toString().contains(v.getIme())){
-							vas.add(v);
-						}
-						
-					}
+					Set<Vaspitac> vas = new HashSet<Vaspitac>(0);
+					
+					
+						v1 = vasp.get(vaspitac1.getSelectedIndex());
+						v2 = vasp.get(vaspitac2.getSelectedIndex());
+							v1.setGrupa(g);
+							v2.setGrupa(g);
+						    vaspitaci.izmijeni(v1);
+							vaspitaci.izmijeni(v2);
+							vas.add(v1);
+							vas.add(v2);
+					
 					g.setVaspitacs(vas);
 					gs.dodajGrupu(g);
 					final JDialog dialog = new JDialog();
-					dialog.setAlwaysOnTop(true);    
+					frmVrti.setAlwaysOnTop(false);
+					dialog.setAlwaysOnTop(true);
 					JOptionPane.showMessageDialog(dialog, "Uspješno ste dodali novu grupu!");
 					frmVrti.dispose();
 					

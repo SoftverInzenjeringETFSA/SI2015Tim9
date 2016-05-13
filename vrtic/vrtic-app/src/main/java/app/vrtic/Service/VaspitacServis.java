@@ -51,13 +51,14 @@ import app.vrtic.Model.Vaspitac;
 		return v;
 	}
 	
-	public Vaspitac izmijeni(Vaspitac d){
+	public boolean izmijeni(Vaspitac d){
+		//s.flush();
+		//s.clear();
 		Transaction t = s.beginTransaction();
-		s.merge(d);
+		s.update(d);
 		t.commit();
-		long l=d.getIdVaspitac();
-		int id=(int) l;
-		return nadji(id);
+		s.flush();
+		return true;
 	}
 	
 	
