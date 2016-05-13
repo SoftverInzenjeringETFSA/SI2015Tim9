@@ -66,10 +66,10 @@ public class KorisnikServis {
 		for(int i=0;i<k.size();i++)
 		{
 			if(k.get(i).getKorisnickoIme()==username) {
-				return false;
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	public boolean provjeriSifruKorisnika(String username,String sifra){
@@ -84,10 +84,8 @@ public class KorisnikServis {
 	}
 
 	public boolean promjeniSifru(Korisnik k,String novaSifra){
-		if(provjeriSifruKorisnika(k.getKorisnickoIme(),k.getSifra())){
 			k.setSifra(novaSifra);
 			izmjeniKorisnika(k);		
-		}
 		return true;
 	}
 

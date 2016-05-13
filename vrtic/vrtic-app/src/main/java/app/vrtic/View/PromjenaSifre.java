@@ -48,8 +48,8 @@ public class PromjenaSifre {
 	 */
 	public PromjenaSifre(Session s,Korisnik kor) {
 		this.s = s;
-		ks=new KorisnikServis(this.s);
 		k=kor;
+		ks=new KorisnikServis(this.s);
 		initialize();
 	}
 
@@ -67,10 +67,15 @@ public class PromjenaSifre {
 		lblKorisnickaSifra.setBounds(83, 95, 110, 14);
 		frmVrti.getContentPane().add(lblKorisnickaSifra);
 		
+		final JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(318, 193, 56, 16);
+		frmVrti.getContentPane().add(lblNewLabel);
+		
 		JButton btnPrijava = new JButton("Promijeni \u0161ifru");
 		btnPrijava.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//dodati uslov da provjerava sifru ulogovanog korisnika sa unesenom sifrom	
+				//labela koja proslijeduje da li je ispravno proslijeden user sa glavne forme
+				lblNewLabel.setText(k.getKorisnickoIme());	
 				if(passwordField.getText().equals("")
 						|| passwordField_1.getText().equals("") || passwordField_2.getText().equals("")){
 					JOptionPane.showMessageDialog(null,
@@ -84,15 +89,26 @@ public class PromjenaSifre {
 						    "Warning",
 						    JOptionPane.WARNING_MESSAGE);
 				}
-				//else
-					//if(passwordField.getText().equals(passwordField_1.getText())&& !passwordField.equals("")
-						//&& !passwordField_1.equals("")&&!passwordField_2.equals("")){
-						ks.promjeniSifru(k, passwordField.getText());
+				else if(passwordField.getText().equals(passwordField_2.getText())){
+					JOptionPane.showMessageDialog(null,
+						    "Stara i nova šifra su jednake, molimo promjenite šifru!",
+						    "Warning",
+						    JOptionPane.WARNING_MESSAGE);
+				}
+				else if(!passwordField_2.getText().equals(k.getSifra())){
+					JOptionPane.showMessageDialog(null,
+						    "Unijeli ste pogrešnu staru šifru!",
+						    "Warning",
+						    JOptionPane.WARNING_MESSAGE);
+				}
+				else{
+				
+					/*	ks.promjeniSifru(k, passwordField.getText());
 					JOptionPane.showMessageDialog(null,
 							"Sifra je uspješno promjenjena!",
 					    "Obavještenje",
-					    JOptionPane.PLAIN_MESSAGE);
-				//}
+					    JOptionPane.PLAIN_MESSAGE);*/
+				}
 			}
 		});
 		btnPrijava.setBounds(152, 190, 122, 23);
@@ -103,7 +119,7 @@ public class PromjenaSifre {
 		frmVrti.getContentPane().add(lblStaraifra);
 		
 		JLabel lblPonovljenaNovaifra = new JLabel("Ponovljena nova \u0161ifra:");
-		lblPonovljenaNovaifra.setBounds(83, 135, 110, 14);
+		lblPonovljenaNovaifra.setBounds(23, 135, 146, 14);
 		frmVrti.getContentPane().add(lblPonovljenaNovaifra);
 		
 		passwordField_2 = new JPasswordField();
@@ -117,5 +133,6 @@ public class PromjenaSifre {
 		passwordField_1 = new JPasswordField();
 		passwordField_1.setBounds(203, 132, 122, 20);
 		frmVrti.getContentPane().add(passwordField_1);
+		
 	}
 }
