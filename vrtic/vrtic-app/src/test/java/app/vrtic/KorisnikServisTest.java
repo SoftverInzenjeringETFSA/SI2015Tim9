@@ -150,8 +150,8 @@ public class KorisnikServisTest {
     				"direktor", "225883" );
     		ks.kreirajKorisnika(k);
     		brisati.add(k);
-    		assertTrue(ks.provjeriSifruKorisnika(k.getKorisnickoIme(), k.getSifra()));
-    		
+    		boolean different =ks.provjeriSifruKorisnika(k.getKorisnickoIme(), k.getSifra());
+    		assertTrue(different);
     	}
     	catch(Exception e){
     		logger.info(e);
@@ -166,8 +166,8 @@ public class KorisnikServisTest {
     				"direktor", "225883" );
     		ks.kreirajKorisnika(k);
     		brisati.add(k);
-    		assertTrue(ks.provjeriSifruKorisnika(k.getKorisnickoIme(), k.getSifra()+"nije"));
-    		
+    		boolean different=ks.provjeriSifruKorisnika(k.getKorisnickoIme(), k.getSifra()+"nije");
+    		assertFalse(different);
     	}
     	catch(Exception e){
     		logger.info(e);
@@ -190,7 +190,9 @@ public class KorisnikServisTest {
     				provjera = k_var;
     			}
     		}
+    		
     		assertEquals("novasifra", provjera.getSifra());
+    		
     		}
     	catch(Exception e){
     		logger.info(e);
