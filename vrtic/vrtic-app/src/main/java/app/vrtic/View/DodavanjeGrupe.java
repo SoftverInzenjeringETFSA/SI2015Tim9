@@ -132,23 +132,28 @@ public class DodavanjeGrupe {
 					g.setNaziv(nazivGrupe.getText());
 					g.setKapacitet((Integer)kapacitetGrupe.getValue());
 					g.setRedniBroj((Integer)redniBrojGrupe.getValue());
-					VaspitacServis vaspitaci = new VaspitacServis(s);
-					Vaspitac v1, v2 = new Vaspitac();
-					ArrayList<Vaspitac> vasp = vaspitaci.sviVaspitaci();
-					Set<Vaspitac> vas = new HashSet<Vaspitac>(0);
-					
-					
-						v1 = vasp.get(vaspitac1.getSelectedIndex());
-						v2 = vasp.get(vaspitac2.getSelectedIndex());
-							v1.setGrupa(g);
-							v2.setGrupa(g);
-						    vaspitaci.izmijeni(v1);
-							vaspitaci.izmijeni(v2);
-							vas.add(v1);
-							vas.add(v2);
-					
-					g.setVaspitacs(vas);
 					gs.dodajGrupu(g);
+					
+					VaspitacServis vaspitacServis = new VaspitacServis(s);
+					ArrayList<Vaspitac> sviVaspitaci = vaspitacServis.sviVaspitaci();
+					int prviSelektovani = vaspitac1.getSelectedIndex();
+					int drugiSelektovani = vaspitac2.getSelectedIndex();
+					
+					ArrayList<Grupa> sveGrupe = gs.sveGrupe();	// sva djeca da bi mogao pristupiti zadnjem dodanom		
+					Grupa zadnja = sveGrupe.get(sveGrupe.size()-1);
+					
+					if(prviSelektovani!=-1) {
+						Vaspitac v = sviVaspitaci.get(prviSelektovani);
+						v.setGrupa(zadnja);
+						vaspitacServis.izmijeni(v);
+					}
+					
+					if(drugiSelektovani!=-1) {
+						Vaspitac v = sviVaspitaci.get(drugiSelektovani);
+						v.setGrupa(zadnja);
+						vaspitacServis.izmijeni(v);
+					}
+					
 					final JDialog dialog = new JDialog();
 					frmVrti.setAlwaysOnTop(false);
 					dialog.setAlwaysOnTop(true);
@@ -159,6 +164,7 @@ public class DodavanjeGrupe {
 			}
 
 		});
+
 		sviVaspitaci(vaspitac1);
 		sviVaspitaci(vaspitac2);
 		//frmVrti.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblNazivGrupe, nazivGrupe, lblRedniBrojGrupe, redniBrojGrupe, lblKapacitetGrupe, kapacitetGrupe, lblVaspita, vaspitac1, lblVaspita_1, vaspitac2, btnDodajGrupu}));

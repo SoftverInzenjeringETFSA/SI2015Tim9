@@ -43,6 +43,17 @@ import app.vrtic.Model.Vaspitac;
 		return true;
 	}
 	
+	public boolean izmijeni(Vaspitac d){
+		Transaction t = s.beginTransaction();
+		if(d!=null)
+			s.update(d);
+		t.commit();
+		s.flush();
+		s.clear();
+		return true;
+	}
+
+	
 	public Vaspitac nadji(int id)
 	{
 		Transaction t = s.beginTransaction();
@@ -50,16 +61,7 @@ import app.vrtic.Model.Vaspitac;
 		t.commit();
 		return v;
 	}
-	
-	public boolean izmijeni(Vaspitac d){
-		//s.flush();
-		//s.clear();
-		Transaction t = s.beginTransaction();
-		s.update(d);
-		t.commit();
-		s.flush();
-		return true;
-	}
+
 	
 	
 	public ArrayList<Vaspitac> sviVaspitaci(){

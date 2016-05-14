@@ -65,24 +65,12 @@ public class KorisnikServis {
 		List<Korisnik> k=dajKorisnike();
 		for(int i=0;i<k.size();i++)
 		{
-			if(k.get(i).getKorisnickoIme().equals(username)) {
+			if(k.get(i).getKorisnickoIme()==username) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	public boolean provjeriDaLiPostojiIstiOsimUlogovanogKorisnika(String username,Integer idUlogovanog){
-		List<Korisnik> k=dajKorisnike();
-		for(int i=0;i<k.size();i++)
-		{
-			if(k.get(i).getKorisnickoIme().equals(username) && k.get(i).getIdKorisnika()!=idUlogovanog) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
 
 	public boolean provjeriSifruKorisnika(String username,String sifra){
 		List<Korisnik> k=dajKorisnike();

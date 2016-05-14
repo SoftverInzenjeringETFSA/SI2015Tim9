@@ -76,8 +76,7 @@ public class PromjenaSifre {
 			public void actionPerformed(ActionEvent e) {
 				//labela koja proslijeduje da li je ispravno proslijeden user sa glavne forme
 				lblNewLabel.setText(k.getKorisnickoIme());	
-				if(passwordField.getText().equals("")
-						|| passwordField_1.getText().equals("") || passwordField_2.getText().equals("")){
+				if(passwordField.getText().equals("") || passwordField_1.getText().equals("") || passwordField_2.getText().equals("")){
 					JOptionPane.showMessageDialog(null,
 						    "Sva polja nisu popunjena!",
 						    "Warning",

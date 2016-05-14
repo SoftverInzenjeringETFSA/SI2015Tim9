@@ -44,13 +44,39 @@ public class DijeteServis {
 		System.out.println("Dijete evidentirano!");
 		return true;
 	}
-	
+	public int evidentirajSaId(Dijete a)
+	{
+		Transaction t = s.beginTransaction();
+		Dijete novo = new Dijete();
+		
+		novo.setGrupa(a.getGrupa());
+		novo.setIme(a.getIme());
+		novo.setPrezime(a.getPrezime());
+		novo.setDatumRodjenja(a.getDatumRodjenja());
+		novo.setAdresaPrebivalista(a.getAdresaPrebivalista());
+		novo.setImeRoditelja(a.getImeRoditelja());
+		novo.setBrojTelefona(a.getBrojTelefona());
+		novo.setPrezimeRoditelja(a.getPrezimeRoditelja());
+		novo.setDatumUpisa(a.getDatumUpisa());
+		novo.setDatumIsteka(a.getDatumIsteka());
+		//novo.setAktivnostidjecas(a.getAktivnostidjecas());
+		
+		
+		int id = (Integer)s.save(novo);
+		t.commit();
+		System.out.println("Dijete evidentirano!");
+		return id;
+	}
+
 	public boolean obrisi(int id) {
 		Transaction t = s.beginTransaction();
 		Dijete k=(Dijete) s.get(Dijete.class,id);
-		if(k!=null)s.delete(k);
-		t.commit();
-		return true;
+		if(k!=null ) { 
+			s.delete(k);
+			t.commit();
+			return true;
+		}
+		return false;
 	}
 	
 	public Dijete nadji(int id)
@@ -79,6 +105,11 @@ public class DijeteServis {
 	
 	}
 	
+	public List<Dijete> svaDjecaLista(){
+		List<Dijete> djeca = s.createCriteria(Dijete.class).list();
+		return djeca;
+	
+	}
 	
 	
 	public double vratiCijenuSkolarine(int idDjeteta){

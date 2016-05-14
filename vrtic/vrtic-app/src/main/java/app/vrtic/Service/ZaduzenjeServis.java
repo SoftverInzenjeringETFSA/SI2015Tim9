@@ -37,6 +37,39 @@ public class ZaduzenjeServis {
 		t.commit();
 		return true;
 		}
+	
+	public boolean generisiZaduzenjeZaPeriod(int idDjeteta,int mjesec,int godina){
+		String[] mjeseci = new String[] {"Januar","Februar","Mart","April","Maj","Juni","Juli","August","Septembar","Oktobar","Novembar","Decembar"};
+		Dijete d = ds.nadji(idDjeteta);
+		int brojMjeseci=0;
+		Transaction t = s.beginTransaction();
+		
+		for(int i=mjesec; i<12;i++){
+			//Transaction t = s.beginTransaction();
+			Zaduzenja z = new Zaduzenja();	
+			z.setDijete(d);
+			z.setMjesec(mjeseci[i]);
+			z.setGodina(godina+1900);
+			brojMjeseci++;
+			s.save(z);
+			//t.commit();
+		}	
+		
+			for(int i=0;i<12-brojMjeseci;i++){
+				//Transaction t = s.beginTransaction();
+				Zaduzenja z = new Zaduzenja();	
+				z.setDijete(d);		
+			z.setGodina(godina+1+1900);
+			z.setMjesec(mjeseci[i]);
+			s.save(z);
+			//t.commit();
+			}
+		
+		
+		t.commit();
+		return true;
+		}
+	
 	public ArrayList<Zaduzenja> vratiSvaZaduzenja(){
 		List<Zaduzenja> zaduzenja = s.createCriteria(Zaduzenja.class).list();
 		return new ArrayList<Zaduzenja>(zaduzenja);

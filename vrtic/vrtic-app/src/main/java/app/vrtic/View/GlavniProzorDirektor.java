@@ -16,6 +16,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -28,6 +29,7 @@ import app.vrtic.Model.Korisnik;
 import app.vrtic.Model.Termin;
 import app.vrtic.Model.Vaspitac;
 import app.vrtic.Model.Zaduzenja;
+import app.vrtic.Service.AktivnostDjecaServis;
 import app.vrtic.Service.AktivnostServis;
 import app.vrtic.Service.DijeteServis;
 import app.vrtic.Service.GrupaServis;
@@ -48,6 +50,10 @@ import javax.swing.DefaultListModel;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class GlavniProzorDirektor {
 
@@ -70,6 +76,8 @@ public class GlavniProzorDirektor {
 	private DijeteServis dijeteServis;
 	private ZaduzenjeServis zaduzenjeServis;
 	private AktivnostServis aktivnostServis;
+	//private GlavniProzorDirektor ref;
+	
 	
 	/**
 	 * Launch the application.
@@ -94,11 +102,13 @@ public class GlavniProzorDirektor {
 	public GlavniProzorDirektor(Session s, int id) {
 		KorisnikServis us = new KorisnikServis(s);
 		user = us.dajKorisnika(id);
+		//this.ref = this;
 		this.s = s;
 		this.zaduzenjeServis = new ZaduzenjeServis(s);
 		this.aktivnostServis = new AktivnostServis(s);
 		this.dijeteServis = new DijeteServis(s);
 		this.serviskorisnik= new KorisnikServis(this.s);
+	    
 		initialize();
 	}
 
@@ -106,6 +116,7 @@ public class GlavniProzorDirektor {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		final GlavniProzorDirektor ref = this;
 		frmVrti = new JFrame();
 		frmVrti.setTitle("Vrti\u0107");
 		frmVrti.setBounds(100, 100, 733, 331);
@@ -255,17 +266,16 @@ public class GlavniProzorDirektor {
 		table_1 = new JTable();
 		table_1.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
+				
 			},
 			new String[] {
 				"Ime djeteta", "Prezime djeteta", "Grupa"
 			}
 		));
+		
+		
+		
+		
 		table_1.setDefaultEditor(Object.class, null);
 		scrollPane_1.setViewportView(table_1);
 		
@@ -296,7 +306,7 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-					EvidentiranjeDjeteta novifrejm = new EvidentiranjeDjeteta(s);
+					EvidentiranjeDjeteta novifrejm = new EvidentiranjeDjeteta(s, ref);
 					novifrejm.OtvoriFormu();
 										
 			}
@@ -306,25 +316,32 @@ public class GlavniProzorDirektor {
 		JButton btnObrisiDijete = new JButton("Obri\u0161i dijete");
 		btnObrisiDijete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*
 				int selektovani = table_1.getSelectedRow();
-				// ako je nešto selektvano
+				// ako je ne�to selektvano
 				if(selektovani != -1) {
 					List<Dijete> svaDjeca = dijeteServis.svaDjeca();
-					int idSelektovanog = svaDjeca.get(selektovani).getIdDijete();
+					int idSelektovanogDjeteta = svaDjeca.get(selektovani).getIdDijete();
 					
-					Dijete d = dijeteServis.nadji(idSelektovanog);
+					AktivnostDjecaServis aktivnostDjecaServis = new AktivnostDjecaServis(s);
+					List<Aktivnostidjeca> sveAktivnostiDjeca = aktivnostDjecaServis.sveAktivnostiDjeca();
+					
+					Dijete selektovanoDijete = dijeteServis.nadji(idSelektovanogDjeteta);
+					
+					for(int i=0; i<sveAktivnostiDjeca.size(); i++) {
+						if(sveAktivnostiDjeca.get(i).getDijete().getIdDijete() == selektovanoDijete.getIdDijete()) {
+							aktivnostDjecaServis.obrisi(sveAktivnostiDjeca.get(i));
+						}
+					}
 					
 					
-					//Aktivnostidjeca[]medju = skupMedjutabela.toArray(new Aktivnostidjeca[skupMedjutabela.size()]);
-					
-					dijeteServis.obrisi(idSelektovanog);
+					dijeteServis.obrisi(idSelektovanogDjeteta);
 					popuniTabeluDjeca();
 				}
-				*/
-				JOptionPane.showMessageDialog(null, "Nije još implementirano (radi samo za djecu za koju nema aktivnosti)");
+				
+				JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali dijete.");
 			}
 		});
+
 		btnObrisiDijete.setBounds(488, 164, 126, 23);
 		panel_1.add(btnObrisiDijete);
 		
@@ -349,7 +366,8 @@ public class GlavniProzorDirektor {
 		listGrupe.setBounds(47, 36, 140, 96);
 		panel_2.add(listGrupe);
 		
-		JButton btnObrisiGrupu = new JButton("Obri\u0161i");
+
+JButton btnObrisiGrupu = new JButton("Obri\u0161i");
 		btnObrisiGrupu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -364,10 +382,20 @@ public class GlavniProzorDirektor {
 						d.setGrupa(null);
 						dijeteServis.izmijeni(d);
 					}
+					
+					VaspitacServis vaspitacServis = new VaspitacServis(s);
+					ArrayList<Integer> vaspitaciTeGrupe = sviVaspitaciZaGrupu(g.getNaziv());
+					for(int i=0; i<vaspitaciTeGrupe.size(); i++) {
+						Vaspitac v = vaspitacServis.nadji(vaspitaciTeGrupe.get(i));
+						v.setGrupa(null);
+						vaspitacServis.izmijeni(v);
+					}
+					
 					grupaServis.ObrisiGrupu(sveGrupe.get(selektovani).getIdGrupe());
+					postaviListuGrupa();
 				}
 				
-				JOptionPane.showMessageDialog(null, "Uspješno ste obrisali grupu");
+				JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali grupu");
 			}
 		});
 		btnObrisiGrupu.setBounds(561, 33, 126, 23);
@@ -436,9 +464,34 @@ public class GlavniProzorDirektor {
 		JButton btnObrisiAktivnost = new JButton("Obri\u0161i aktivnost");
 		btnObrisiAktivnost.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Nije još implementirano(isti slucaj kao kod brisanja djeteta)");
+				
+				int selektovani = table_2.getSelectedRow();
+				// ako je ne�to selektvano
+				if(selektovani != -1) {
+					List<Aktivnost> sveAktivnosti = aktivnostServis.SveAktivnosti();
+					int idSelektovaneAktivnosti = sveAktivnosti.get(selektovani).getIdAktivnosti();
+					
+					AktivnostDjecaServis aktivnostDjecaServis = new AktivnostDjecaServis(s);
+					List<Aktivnostidjeca> sveAktivnostiDjeca = aktivnostDjecaServis.sveAktivnostiDjeca();
+					
+					Aktivnost selektovanaAktivnost = aktivnostServis.pretragaPoIDu(idSelektovaneAktivnosti);
+					
+					for(int i=0; i<sveAktivnostiDjeca.size(); i++) {
+						if(sveAktivnostiDjeca.get(i).getAktivnost().getIdAktivnosti() == selektovanaAktivnost.getIdAktivnosti()) {
+							aktivnostDjecaServis.obrisi(sveAktivnostiDjeca.get(i));
+						}
+					}
+					
+					
+					aktivnostServis.ObrisiAktivnost(idSelektovaneAktivnosti);
+					popuniTabeluAktivnosti();
+				}
+				
+				JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali aktivnost.");
+				
 			}
 		});
+
 		btnObrisiAktivnost.setBounds(550, 162, 126, 23);
 		panel_3.add(btnObrisiAktivnost);
 
@@ -676,6 +729,18 @@ public class GlavniProzorDirektor {
 								"Ime i prezime roditelja", "Broj telefona", "Mjesec", "Godina", "Iznos"
 						}
 					));	
+			//generisanje izvjestaja
+				File f = new File("izvjestaj.xls");
+				try{
+					exportTable(table_5, f);
+					JOptionPane.showMessageDialog(null,"Generisali ste izvjestaj na Desktop Vaseg racunara");
+				}
+				catch(Exception e){
+					JOptionPane.showMessageDialog(null,"Doslo je do greske, izvjestaj nije generisan.");
+					
+					logger.info(e);
+				}
+			
 			}
 		});
 		
@@ -772,7 +837,7 @@ public class GlavniProzorDirektor {
 		Object[][] data= new Object[aktivnosti.size()][];
 		for(int i = 0; i<aktivnosti.size();i++) {
 			String naziv = naziv = (String) aktivnosti.get(i).getNaziv();
-			String broj = (String) aktivnosti.get(i).getBrojDjece().toString() ;
+			String broj = ""+(aktivnosti.get(i).getAktivnostidjecas().size());
 			
 			data[i]= new Object[]{naziv, broj};
 		}
@@ -855,6 +920,74 @@ public class GlavniProzorDirektor {
 			
 			return djecaTeGrupe;
 		}
+	
+	public void exportTable(JTable jTable1,File file) throws IOException{
+	    TableModel model = jTable1.getModel();
+	    FileWriter out = new FileWriter(file);
+	    BufferedWriter bw = new BufferedWriter(out);
+	    for (int i=0;i<model.getColumnCount();i++){
+	      bw.write(model.getColumnName(i)+"\t");
+	    }
+	    bw.write("\n");
+	    for (int i=0;i<model.getRowCount();i++){
+	      for (int j=0;j<model.getColumnCount();j++){
+	        bw.write(model.getValueAt(i,j).toString()+"\t");
+	      }
+	      bw.write("\n");
+	    }
+	    bw.close();
+	 System.out.print("Pisanje u " + file);
+
+
+	}
+	
+	public void refreshajTabeluDjece(){
+		ArrayList<Dijete> djeca = dijeteServis.svaDjeca();
+		Object[][] podaci = new Object[djeca.size()][];
+		
+		for(int i=0; i< djeca.size();i++){
+			
+			if(djeca.get(i).getGrupa()!=null){
+			
+                podaci[i] = new Object[]{(String)djeca.get(i).getIme(),
+						  (String)djeca.get(i).getPrezime(),
+						   (String)djeca.get(i).getGrupa().getNaziv()
+						   };	
+		}
+		
+		else {
+			
+			
+               podaci[i] = new Object[]{(String)djeca.get(i).getIme(),
+						  (String)djeca.get(i).getPrezime(),
+						   "Bez grupe"
+						   };	
+		}
+		}
+		table_1.setModel(new DefaultTableModel(
+				podaci,
+				new String[] {
+					"Ime djeteta", "Prezime djeteta", "Grupa"
+				}
+			));
+		
+	}
+	
+public ArrayList<Integer> sviVaspitaciZaGrupu(String grupa) {
+		
+		VaspitacServis servis = new VaspitacServis(this.s);
+		ArrayList<Vaspitac> sviVaspitaci = servis.sviVaspitaci();
+		ArrayList<Integer> vaspitaciTeGrupe = new ArrayList<Integer>(0);
+		for(int i = 0; i<sviVaspitaci.size();i++) {
+			if(sviVaspitaci.get(i).getGrupa() != null) {
+				if(grupa.equals(sviVaspitaci.get(i).getGrupa().getNaziv())){
+					vaspitaciTeGrupe.add(sviVaspitaci.get(i).getIdVaspitac());	
+				}
+			}
+		}
+		
+		return vaspitaciTeGrupe;
+	}
 		
 }
 

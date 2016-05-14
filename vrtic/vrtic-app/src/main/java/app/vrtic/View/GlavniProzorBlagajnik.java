@@ -26,6 +26,11 @@ import java.util.Calendar;
 import javax.swing.JCheckBox;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.BufferedWriter;
+import javax.swing.table.TableModel;
 
 import app.vrtic.Model.Dijete;
 import app.vrtic.Model.Korisnik;
@@ -307,6 +312,7 @@ public class GlavniProzorBlagajnik {
 		panel_5.add(btnPrikaziMjesece);
 		
 		textField_1 = new JTextField();
+		textField_1.setEditable(false);
 		textField_1.setBounds(223, 216, 46, 20);
 		panel_5.add(textField_1);
 		textField_1.setColumns(10);
@@ -331,7 +337,9 @@ public class GlavniProzorBlagajnik {
 		
 		final JSpinner spinner_1 = new JSpinner();
 		spinner_1.setModel(new SpinnerNumberModel(2016, 2000, 3000, 1));
+		JSpinner.NumberEditor editor1 = new JSpinner.NumberEditor(spinner_1,"#");
 		spinner_1.setBounds(70, 34, 100, 20);
+		spinner_1.setEditor(editor1);
 		panel_6.add(spinner_1);
 		
 		JButton btnPrikai_1 = new JButton("Prika\u017Ei");
@@ -363,6 +371,7 @@ public class GlavniProzorBlagajnik {
 		panel_6.add(scrollPane_6);
 		
 		table_6 = new JTable();
+		table_6.setEnabled(false);
 		table_6.setModel(new DefaultTableModel(
 			new Object[][] {
 				
@@ -382,6 +391,7 @@ public class GlavniProzorBlagajnik {
 		panel_7.add(scrollPane_5);
 		
 		table_5 = new JTable();
+		table_5.setEnabled(false);
 		table_5.setModel(new DefaultTableModel(
 			new Object[][] {
 				
@@ -397,7 +407,10 @@ public class GlavniProzorBlagajnik {
 		panel_7.add(lblGodina);
 		
 		final JSpinner spinner = new JSpinner();
+		spinner.setModel(new SpinnerNumberModel(new Integer(2016), new Integer(2000), null, new Integer(1)));
+		JSpinner.NumberEditor editor2 = new JSpinner.NumberEditor(spinner,"#");
 		spinner.setBounds(64, 18, 76, 20);
+		spinner.setEditor(editor2);
 		panel_7.add(spinner);
 		
 		JButton btnGeneriiIzvjetaj = new JButton("Generi\u0161i izvje\u0161taj");
@@ -417,7 +430,28 @@ public class GlavniProzorBlagajnik {
 								"Ime i prezime roditelja", "Broj telefona", "Mjesec", "Godina", "Iznos"
 						}
 					));	
-			}
+			
+				
+			//	Export tabele
+				
+				
+				File f = new File("izvjestaj.xls");
+				try{
+					exportTable(table_5, f);
+					JOptionPane.showMessageDialog(null,"Generisali ste izvjestaj na Desktop Vaseg racunara");
+				}
+				catch(Exception e){
+					JOptionPane.showMessageDialog(null,"Doslo je do greske, izvjestaj nije generisan.");
+					
+					logger.info(e);
+				}
+				
+				}
+
+		// Export tabele
+				
+			
+			
 		});
 		btnGeneriiIzvjetaj.setBounds(186, 17, 489, 23);
 		panel_7.add(btnGeneriiIzvjetaj);
@@ -450,4 +484,25 @@ public class GlavniProzorBlagajnik {
 
 		});
 	}
+
+public void exportTable(JTable jTable1,File file) throws IOException{
+    TableModel model = jTable1.getModel();
+    FileWriter out = new FileWriter(file);
+    BufferedWriter bw = new BufferedWriter(out);
+    for (int i=0;i<model.getColumnCount();i++){
+      bw.write(model.getColumnName(i)+"\t");
+    }
+    bw.write("\n");
+    for (int i=0;i<model.getRowCount();i++){
+      for (int j=0;j<model.getColumnCount();j++){
+        bw.write(model.getValueAt(i,j).toString()+"\t");
+      }
+      bw.write("\n");
+    }
+    bw.close();
+ System.out.print("Pisanje u " + file);
+
+
+}
+
 }

@@ -77,40 +77,6 @@ public class login {
 		passwordField = new JPasswordField();
 		passwordField.setBounds(203, 136, 121, 20);
 		frmVrti.getContentPane().add(passwordField);
-		passwordField.addActionListener(new ActionListener(){
-
-            public void actionPerformed(ActionEvent e){
-            	Korisnik user = new Korisnik();
-			
-			KorisnikServis userS = new KorisnikServis(s);
-				String passText = new String(passwordField.getPassword());
-				if(userS.provjeriSifruKorisnika(textField.getText(), passText)){
-					ArrayList<Korisnik> korisnici = userS.dajKorisnike();
-					for(int i=0; i<korisnici.size();i++){
-						if(korisnici.get(i).getKorisnickoIme().equals(textField.getText()))
-						{
-							user = korisnici.get(i);
-						}
-					}
-				if (user.getPrivilegije().equals("blagajnik")) {
-					GlavniProzorBlagajnik mainFormaBlagajnik = new GlavniProzorBlagajnik(s, user.getIdKorisnika());
-					mainFormaBlagajnik.OtvoriFormu();
-					
-					frmVrti.setVisible(false);
-				}
-				else if (user.getPrivilegije().equals("direktor")) {
-					GlavniProzorDirektor mainForma = new GlavniProzorDirektor(s, user.getIdKorisnika());
-					mainForma.OtvoriFormu();
-					
-					frmVrti.setVisible(false);
-				}
-				else JOptionPane.showMessageDialog(null, "Greška!");
-				}
-				else JOptionPane.showMessageDialog(null, "Neispravna šifra!");
-			
-		}
-
-	});
 		
 		JButton btnPrijava = new JButton("Prijava");
 		btnPrijava.setBounds(235, 184, 89, 23);
