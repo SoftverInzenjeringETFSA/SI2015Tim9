@@ -119,33 +119,41 @@ public class DodavanjeKorisnika {
 		
 		JButton btnIzmijeni = new JButton("Dodaj korisnika");
 		btnIzmijeni.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {				
-				if(validirajFormu(comboBox).equals("")){
-					if(k==null)k= new Korisnik();
-					k.setIme(textField.getText());
-					k.setPrezime(textField_1.getText());
-					k.setKorisnickoIme(textField_2.getText());
-					k.setBrojTelefona(textField_3.getText());
-					k.setSifra(textField_4.getText());
-					if(comboBox.getSelectedIndex()==0){
-						k.setPrivilegije("direktor");
+			public void actionPerformed(ActionEvent arg0) {	
+				if(!(ks.provjeriDaLiPostojiIstiKorisnik(textField_2.getText()))){
+					if(validirajFormu(comboBox).equals("")){
+						if(k==null)k= new Korisnik();
+						k.setIme(textField.getText());
+						k.setPrezime(textField_1.getText());
+						k.setKorisnickoIme(textField_2.getText());
+						k.setBrojTelefona(textField_3.getText());
+						k.setSifra(textField_4.getText());
+						if(comboBox.getSelectedIndex()==0){
+							k.setPrivilegije("direktor");
+						}
+						else if(comboBox.getSelectedIndex()==1){
+							k.setPrivilegije("blagajnik");
+						}						
+						ks.kreirajKorisnika(k);
+						comboBox.setSelectedIndex(0);
+						ocistiKontrole();
+						JOptionPane.showMessageDialog(null,
+							    "Uspješno ste dodali novog korisnika",
+							    "Obavještenje",
+							    JOptionPane.PLAIN_MESSAGE);
 					}
-					else if(comboBox.getSelectedIndex()==1){
-						k.setPrivilegije("blagajnik");
-					}						
-					ks.kreirajKorisnika(k);
-					comboBox.setSelectedIndex(0);
-					ocistiKontrole();
-					JOptionPane.showMessageDialog(null,
-						    "Uspješno ste dodali novog korisnika",
-						    "Obavještenje",
-						    JOptionPane.PLAIN_MESSAGE);
+					else if (!validirajFormu(comboBox).equals(""))
+						JOptionPane.showMessageDialog(null,
+							    porukaValidacija,
+							    "Warning",
+							    JOptionPane.WARNING_MESSAGE);
 				}
-				else if (!validirajFormu(comboBox).equals(""))
+				else if((ks.provjeriDaLiPostojiIstiKorisnik(textField_2.getText()))){
 					JOptionPane.showMessageDialog(null,
-						    porukaValidacija,
+						    "Korisnik sa unesenim korisnièkim imenom veæ postoji!",
 						    "Warning",
 						    JOptionPane.WARNING_MESSAGE);
+				}
 			}
 		});
 		btnIzmijeni.setBounds(322, 281, 126, 23);
@@ -159,6 +167,8 @@ public class DodavanjeKorisnika {
 		textField_4.setColumns(10);
 		textField_4.setBounds(166, 205, 149, 20);
 		frmVrti.getContentPane().add(textField_4);
+		
+
 	}
 	
 	private String validirajFormu(JComboBox comboBox){
@@ -200,5 +210,4 @@ public class DodavanjeKorisnika {
 		textField_3.setText("");
 		textField_4.setText("");	
 	}
-	
 }
