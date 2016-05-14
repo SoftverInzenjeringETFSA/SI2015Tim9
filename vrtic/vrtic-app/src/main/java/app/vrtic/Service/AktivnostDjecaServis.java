@@ -54,4 +54,14 @@ public class AktivnostDjecaServis {
 		System.out.println("Dodana aktivnost za dijete!");
 		return true;
 	}
+
+	//provjerava da li neko dijete pohada neku aktivnost
+	public boolean daLiDijetePohadaAktivnost(int idDjeteta){
+		ArrayList<Aktivnostidjeca> sveAD= sveAktivnostiDjeca();
+		for(int i=0;i<sveAD.size();i++){
+			if(sveAD.get(i).getDijete().getIdDijete()==idDjeteta)
+				return true;
+		}
+		return false;
+	}
 }
