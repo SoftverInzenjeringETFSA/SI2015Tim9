@@ -102,7 +102,7 @@ public class KorisnikServisTest {
     				"direktor", "225883" );
     		brisati.add(k);
     		ks.kreirajKorisnika(k);
-    		assertFalse(ks.provjeriDaLiPostojiIstiKorisnik(ks.dajKorisnika(1).getKorisnickoIme()));
+    		assertTrue(ks.provjeriDaLiPostojiIstiKorisnik(ks.dajKorisnika(1).getKorisnickoIme()));
     	}
     	catch(Exception e){
     		logger.info(e);
@@ -134,7 +134,7 @@ public class KorisnikServisTest {
     		lista_svih.clear();
     		lista_svih=ks.dajKorisnike();
     		for(Korisnik kor : lista_svih){
-    		assertTrue(ks.provjeriDaLiPostojiIstiKorisnik(kor.getKorisnickoIme()));
+    		assertFalse(ks.provjeriDaLiPostojiIstiKorisnik(kor.getKorisnickoIme()));
     		}
     	}
     	catch(Exception e){
@@ -202,6 +202,7 @@ public class KorisnikServisTest {
     public static void tearDown(){
     	for(Korisnik k:brisati){
     		ks.izbrisiKorisnika(k.getIdKorisnika());
+    		System.out.println(k.getIme());
     	}
     }
     
