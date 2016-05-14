@@ -367,7 +367,7 @@ public class GlavniProzorDirektor {
 		panel_2.add(listGrupe);
 		
 
-JButton btnObrisiGrupu = new JButton("Obri\u0161i");
+		JButton btnObrisiGrupu = new JButton("Obri\u0161i");
 		btnObrisiGrupu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				

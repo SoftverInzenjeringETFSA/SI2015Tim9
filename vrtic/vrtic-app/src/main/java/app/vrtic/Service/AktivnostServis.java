@@ -86,13 +86,14 @@ public class AktivnostServis {
 	public DefaultListModel<Aktivnost> sveAktivnostiLista(){
 	DefaultListModel<Aktivnost> model = new DefaultListModel<Aktivnost>();
 	ArrayList<Aktivnost> niz = (ArrayList) s.createCriteria(Aktivnost.class).list();
-	for(Aktivnost val : niz)
-		model.addElement(val);
+	for(Aktivnost val : niz)  {
+		model.addElement(val); 
+		}
 		return model;
 	}
 	
 	public ArrayList<Aktivnost> vratiAktivnostiDjeteta(Dijete d){
-		List<Aktivnost> spisakAktivnosti = null;
+		List<Aktivnost> spisakAktivnosti = new ArrayList<Aktivnost>();;
 		Set<Aktivnostidjeca>skupMedjutabela = d.getAktivnostidjecas();
 		Aktivnostidjeca[] medju = skupMedjutabela.toArray(new Aktivnostidjeca[skupMedjutabela.size()]);
 	    for(int i=0; i<medju.length;i++){
