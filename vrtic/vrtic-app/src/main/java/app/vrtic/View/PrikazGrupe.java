@@ -134,8 +134,8 @@ public class PrikazGrupe {
 		frmVrti.getContentPane().add(lblStatistikaAktivnosti);
 		
 		
-		ArrayList<Integer> djecijiID = sveDjecaZaGrupu(g.getNaziv());
-		final ArrayList<Integer> djecijiID2 = djecijiID;
+		final ArrayList<Integer> djecijiID = sveDjecaZaGrupu(g.getNaziv());
+		
 		JButton btnIzmijeni = new JButton("Izmijeni");
 		btnIzmijeni.setBounds(505, 90, 126, 23);
 		frmVrti.getContentPane().add(btnIzmijeni);
@@ -144,7 +144,7 @@ public class PrikazGrupe {
 			public void actionPerformed(ActionEvent e)
 			{
 					
-					int ID = djecijiID2.get(tabelaDijete.getSelectedRow());
+					int ID = djecijiID.get(tabelaDijete.getSelectedRow());
 					
 					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s, ID);
 					novifrejm.OtvoriFormu();
@@ -161,7 +161,7 @@ public class PrikazGrupe {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				int ID = djecijiID2.get(tabelaDijete.getSelectedRow());	
+				int ID = djecijiID.get(tabelaDijete.getSelectedRow());	
 				ds.obrisi(ID);
 				ArrayList<Integer> djecijiID3 = sveDjecaZaGrupu(g2.getNaziv());
 				popuniTabeluDjece(djecijiID3);
