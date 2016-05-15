@@ -126,7 +126,7 @@ public class DodavanjeKorisnika {
 					k.setPrezime(textField_1.getText());
 					k.setKorisnickoIme(textField_2.getText());
 					k.setBrojTelefona(textField_3.getText());
-					k.setSifra(textField_4.getText());
+					k.setSifra(ks.Plus4Hash(textField_4.getText()));
 					if(comboBox.getSelectedIndex()==0){
 						k.setPrivilegije("direktor");
 					}
