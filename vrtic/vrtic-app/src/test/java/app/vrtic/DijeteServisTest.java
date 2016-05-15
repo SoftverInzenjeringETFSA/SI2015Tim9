@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -37,93 +38,32 @@ public class DijeteServisTest {
 	final static Logger logger = Logger.getLogger(login.class);
     static Session sesija = HibernateUtil.getSessionFactory().openSession();
     DijeteServis ds = new DijeteServis(sesija);
-    @BeforeClass
-  	public static void setUpBeforeTest() throws Exception {
-  		
-  	    	AktivnostServis as = new AktivnostServis(sesija);
-  	    	DijeteServis ds = new DijeteServis(sesija);
-  	    	GrupaServis gs = new GrupaServis(sesija);
-  	    	KorisnikServis ks = new KorisnikServis(sesija);
-  	    	TerminServis ts = new TerminServis(sesija);
-  	    	UplataServis us = new UplataServis(sesija);
-  	    	VaspitacServis vs = new VaspitacServis(sesija);
-  	    	ZaduzenjeServis zs = new ZaduzenjeServis(sesija);
-  	    	Aktivnost a = new Aktivnost();
-  	    	Grupa g = new Grupa();
-  	    	Termin t = new Termin();
-  	    	Korisnik k = new Korisnik();
-  	    	Vaspitac v = new Vaspitac();
-  	    	Dijete d = new Dijete();
-  	    	Calendar c = Calendar.getInstance();
-  			Date datum = c.getTime();
-  	    	if(as.pretragaPoIDu(1) == null){
-  	    		
-  	    		a.setBrojDjece(10);
-  	    		a.setCijena(10);
-  	    		a.setIdAktivnosti(1);
-  	    		a.setNaziv("Aktivnost");
-  	    		
-  	    		as.dodajAktivnost(a);
-  	    	}
-  	    	if(gs.PretragaPoIDu(1) == null){
-  	    		
-  	    		g.setIdGrupe(1);
-  	    		g.setKapacitet(10);
-  	    		g.setNaziv("Grupa");
-  	    		g.setRedniBroj(2);
-  	    		
-  		    	gs.dodajGrupu(g);
-  		    	}
-  	    	if(ts.vratiTerminPoId(1) == null){
-  	    		t.setIdTermin(1);
-  	    		t.setAktivnost(a);
-  	    		t.setDan("Ponedjeljak");
-  	    		t.setGrupa(g);
-  		       	ts.dodajTermin(t);
-  		   
-  	    	}
-  	    	if(ks.dajKorisnika(1) == null){
-  	    		k.setBrojTelefona("033225883");
-  	    		k.setIdKorisnika(1);
-  	    		k.setIme("Korisnik");
-  	    		k.setKorisnickoIme("username");
-  	    		k.setPrezime("Prezime");
-  	    		k.setPrivilegije("direktor");
-  	    		k.setSifra("sifra");
-  	    	ks.kreirajKorisnika(k);
-  	    	}
-  	    	
-  	    	/*if(== null){
-  	    	us.evidentirajUplatu(u);
-  	    	}*/
-  	    	
-  	    	if(vs.nadji(1) == null){
-  	    		v.setAdresaPrebivalista("adresa");
-  	    		v.setBrojTelefona("033225883");
-  	    		v.setGrupa(g);
-  	    		v.setIdVaspitac(1);
-  	    		v.setIme("Ime");
-  	    		v.setPrezime("Prezime");
-  		    	vs.evidentiraj(v);
-  		    	}  
-  	    	if(ds.nadji(1) == null){
-  	    		d.setAdresaPrebivalista("Adresa");
-  	    		d.setBrojTelefona("033225883");
-  	    		d.setDatumIsteka(datum);
-  	    		d.setDatumRodjenja("2000-12-12");
-  	    		d.setDatumUpisa(datum);
-  	    		d.setGrupa(g);
-  	    		d.setIdDijete(1);
-  	    		d.setIme("Dijet");
-  	    		d.setImeRoditelja("roditelj");
-  	    		d.setPrezime("Prezime");
-  	    		d.setPrezimeRoditelja("Prezime");
-  	    		
-  		    	ds.evidentiraj(d);
-  		    	}
-  		    	
-  	  
-  	}
+    GrupaServis gs = new GrupaServis(sesija);
+    Grupa g = new Grupa();
+    @Before
+    public void setUp() throws Exception{
+    	boolean nasli = false;
+    	ArrayList<Dijete> svaDjeca = ds.svaDjeca();
+    	for(Dijete dijete:svaDjeca){
+    		if(dijete.getIdDijete()==1){
+    			nasli=true;
+    			break;
+    		}
+    	}
+    	if(!nasli){
+    	g.setIdGrupe(1);
+    	g.setKapacitet(12);
+    	g.setNaziv("Grupica");
+    	g.setRedniBroj(1);
+    	gs.dodajGrupu(g);
+    	}
+    	
+    	
+    	
+    	
+    	
+    	
+    }
 
 	@Test
 	public void testEvidentiraj() throws Exception {
@@ -137,7 +77,7 @@ public class DijeteServisTest {
 		d.setDatumIsteka(datum);
 		d.setDatumRodjenja("1999-02-02");
 		d.setDatumUpisa(datum);
-		d.setGrupa(gs.PretragaPoIDu(1));
+		d.setGrupa(g);
 		d.setIme("TestDijete");
 		d.setImeRoditelja("TestRoditelj");
 		d.setPrezime("testPrezime");
@@ -170,16 +110,13 @@ public class DijeteServisTest {
 	
 	public void ObrisiDijeteTest() throws Exception{
 		
-			Dijete obrisano = ds.nadji(2);
-			ds.obrisi(2);
-			Dijete naIndeksuTom = ds.nadji(2);
-			assertFalse(obrisano==naIndeksuTom);
-		
+					
 	}
 	
 	@Test
 	public void nadjiDijeteTest() throws Exception{
 //ovdje kreirati dijete pa ga provjeriti sa nadji
+		
 			assertEquals(ds.nadji(1).getIdDijete(), Integer.valueOf(1));
 		
 	}
