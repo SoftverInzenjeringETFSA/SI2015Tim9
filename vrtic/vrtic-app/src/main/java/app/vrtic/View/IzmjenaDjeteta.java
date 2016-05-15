@@ -227,37 +227,51 @@ private JTextField textField_6;
 			public void actionPerformed(ActionEvent e)
 			{
 				if(textField.getText().length() < 4) {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Ime mora sadržavati barem 3 slova.");
+					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
 				
 				if(textField_1.getText().length() < 4) {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Prezime mora sadržavati barem 3 slova.");
+					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
 				
 				Pattern datum  = Pattern.compile("^[0-3]?[0-9]-[0-3]?[0-9]-(?:[0-9]{2})?[0-9]{2}$");
 				if (!datum.matcher(textField_2.getText()).matches()) {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Datum rodjenja nije u ispravnom datumu.");
+					frmVrti.setAlwaysOnTop(true);
 			        return;
 			    }
 				if(textField_3.getText().length() < 4) {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Ime roditelja mora sadržavati barem 3 slova.");
+					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
 				
 				if(textField_4.getText().length() < 4) {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Prezime roditelja mora sadržavati barem 3 slova.");
+					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
 				
 				if(textField_5.getText().isEmpty()) {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Niste unijeli adresu");
+					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
 				
 				if(textField_6.getText().length() <= 8) {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Broj telefona nije u ispravnom formatu.");
+					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
 				
@@ -325,8 +339,10 @@ private JTextField textField_6;
 				roditelj.refreshajTabeluDjece();
 				//Ovdje ide kod za zaduzenja
 			zs.obrisiZaduzenjaZaPeriod(ds.nadji(idDjeteta),(Date) spinner_1.getValue(),stariDatumUgovora,(Date)spinner.getValue());
-				JOptionPane.showMessageDialog(null, "Uspjesno azurirani podaci za dijete.");
-				frmVrti.dispose();
+			frmVrti.setAlwaysOnTop(false);
+			JOptionPane.showMessageDialog(null, "Uspjesno azurirani podaci za dijete.");
+			frmVrti.setAlwaysOnTop(true);
+			frmVrti.dispose();
 			}
 		});
 		

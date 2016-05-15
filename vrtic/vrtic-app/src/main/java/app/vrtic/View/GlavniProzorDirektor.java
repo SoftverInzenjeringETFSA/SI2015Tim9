@@ -130,9 +130,6 @@ public class GlavniProzorDirektor {
 		tabbedPane.setBounds(10, 42, 702, 239);
 		frmVrti.getContentPane().add(tabbedPane);
 
-		// on load i ovdje Ä‡e se pozivat sve funkcije koje ce recimo
-		// ucitavat
-		// stvari iz baze u tabelu u odredjenom tabu
 		tabbedPane.addChangeListener(new ChangeListener() {
 
 			public void stateChanged(ChangeEvent e) {
@@ -158,13 +155,13 @@ public class GlavniProzorDirektor {
 					else if (pane.getSelectedIndex() == 4) {
 						popuniTabeluVaspitaci();
 					}
-					// raspored
+
 					else if (pane.getSelectedIndex() == 5) {
 						refreshujRaspored();
 					}
-					// uplate koje kase
+
 					else if (pane.getSelectedIndex() == 6) {
-						// nista :D
+
 					}
 					// pregled svih uplata
 					else {
@@ -184,6 +181,7 @@ public class GlavniProzorDirektor {
 		panel.add(scrollPane);
 
 		table_0 = new JTable();
+		table_0.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table_0.setModel(new DefaultTableModel(new Object[][] { { null, null }, { null, null }, { null, null },
 				{ null, null }, { null, null }, { null, null }, }, new String[] { "Naziv korisnika", "Privilegija" }));
 		table_0.getColumnModel().getColumn(0).setPreferredWidth(96);
@@ -196,13 +194,13 @@ public class GlavniProzorDirektor {
 		panel.add(btnPrikazi);
 		btnPrikazi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(table_0.getSelectedRow()!=-1) {
+				if (table_0.getSelectedRow() != -1) {
 					Korisnik k = serviskorisnik
-						.dajKorisnika((Integer) table_0.getModel().getValueAt(table_0.getSelectedRow(), 2));
+							.dajKorisnika((Integer) table_0.getModel().getValueAt(table_0.getSelectedRow(), 2));
 					PrikazProfilaKorisnika novifrejm = new PrikazProfilaKorisnika(s, k);
 					novifrejm.OtvoriFormu();
-				}
-				else JOptionPane.showMessageDialog(null, "Odaberite korisnika u tabeli kojeg je potrebno prikazati");
+				} else
+					JOptionPane.showMessageDialog(null, "Odaberite korisnika u tabeli kojeg je potrebno prikazati");
 			}
 
 		});
@@ -212,13 +210,13 @@ public class GlavniProzorDirektor {
 		panel.add(btnIzmijeni);
 		btnIzmijeni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(table_0.getSelectedRow()!=-1) {
+				if (table_0.getSelectedRow() != -1) {
 					Korisnik k = serviskorisnik
-						.dajKorisnika((Integer) table_0.getModel().getValueAt(table_0.getSelectedRow(), 2));
+							.dajKorisnika((Integer) table_0.getModel().getValueAt(table_0.getSelectedRow(), 2));
 					IzmjenaKorisnika novifrejm = new IzmjenaKorisnika(s, k);
 					novifrejm.OtvoriFormu();
-				}
-				else JOptionPane.showMessageDialog(null, "Odaberite korisnika u tabeli kojeg je potrebno izmjeniti");
+				} else
+					JOptionPane.showMessageDialog(null, "Odaberite korisnika u tabeli kojeg je potrebno izmjeniti");
 			}
 
 		});
@@ -228,12 +226,15 @@ public class GlavniProzorDirektor {
 		panel.add(btnObrisi);
 		btnObrisi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(table_0.getSelectedRow()!=-1) {
-					serviskorisnik.izbrisiKorisnika((Integer) table_0.getModel().getValueAt(table_0.getSelectedRow(), 2));
+				if (table_0.getSelectedRow() != -1) {
+					serviskorisnik
+							.izbrisiKorisnika((Integer) table_0.getModel().getValueAt(table_0.getSelectedRow(), 2));
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali korisnika");
+					frmVrti.setAlwaysOnTop(true);
 					refreshujKorisnike();
-				}
-				else JOptionPane.showMessageDialog(null, "Odaberite korisnika u tabeli kojeg je potrebno obrisati");
+				} else
+					JOptionPane.showMessageDialog(null, "Odaberite korisnika u tabeli kojeg je potrebno obrisati");
 			}
 		});
 
@@ -259,8 +260,10 @@ public class GlavniProzorDirektor {
 		panel_1.add(scrollPane_1);
 
 		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(new Object[][] {{ null, null, null, null }, { null, null, null, null }},
-				new String[] { "Ime djeteta", "Prezime djeteta", "Grupa", "ID" }));
+		table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table_1.setModel(
+				new DefaultTableModel(new Object[][] { { null, null, null, null }, { null, null, null, null } },
+						new String[] { "Ime djeteta", "Prezime djeteta", "Grupa", "ID" }));
 
 		table_1.setDefaultEditor(Object.class, null);
 		scrollPane_1.setViewportView(table_1);
@@ -314,11 +317,13 @@ public class GlavniProzorDirektor {
 					}
 
 					dijeteServis.obrisi(idSelektovanogDjeteta);
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali dijete.");
+					frmVrti.setAlwaysOnTop(true);
 					popuniTabeluDjeca();
-				}
-				else JOptionPane.showMessageDialog(null, "Niste odabrali dijete.");
-				
+				} else
+					JOptionPane.showMessageDialog(null, "Niste odabrali dijete.");
+
 			}
 		});
 
@@ -359,10 +364,12 @@ public class GlavniProzorDirektor {
 
 					grupaServis.ObrisiGrupu(sveGrupe.get(selektovani).getIdGrupe());
 					postaviListuGrupa();
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali grupu");
-				}
-				else JOptionPane.showMessageDialog(null, "Niste odabrali grupu");
-				
+					frmVrti.setAlwaysOnTop(true);
+				} else
+					JOptionPane.showMessageDialog(null, "Niste odabrali grupu");
+
 			}
 		});
 		btnObrisiGrupu.setBounds(561, 33, 126, 23);
@@ -380,8 +387,8 @@ public class GlavniProzorDirektor {
 					int idSelektovanog = sveGrupe.get(selektovani).getIdGrupe();
 					PrikazGrupe novifrejm = new PrikazGrupe(s, idSelektovanog);
 					novifrejm.OtvoriFormu();
-				}
-				else JOptionPane.showMessageDialog(null, "Niste odabrali grupu");
+				} else
+					JOptionPane.showMessageDialog(null, "Niste odabrali grupu");
 			}
 
 		});
@@ -389,25 +396,25 @@ public class GlavniProzorDirektor {
 		JButton btnDodajGrupu = new JButton("Dodaj grupu");
 		btnDodajGrupu.setBounds(561, 158, 126, 23);
 		panel_2.add(btnDodajGrupu);
-		
+
 		JScrollPane scrollPane_7 = new JScrollPane();
 		scrollPane_7.setBounds(42, 36, 151, 124);
 		panel_2.add(scrollPane_7);
-								
-										listGrupe = new JList();
-										scrollPane_7.setViewportView(listGrupe);
-										listGrupe.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-										listGrupe.setModel(new AbstractListModel() {
-											String[] values = new String[] { "Grupa 1", "Grupa 2", "Grupa 3", "Grupa 4", "Grupa 5" };
 
-											public int getSize() {
-												return values.length;
-											}
+		listGrupe = new JList();
+		scrollPane_7.setViewportView(listGrupe);
+		listGrupe.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listGrupe.setModel(new AbstractListModel() {
+			String[] values = new String[] { "Grupa 1", "Grupa 2", "Grupa 3", "Grupa 4", "Grupa 5" };
 
-											public Object getElementAt(int index) {
-												return values[index];
-											}
-										});
+			public int getSize() {
+				return values.length;
+			}
+
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
 		btnDodajGrupu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DodavanjeGrupe novifrejm = new DodavanjeGrupe(s);
@@ -426,6 +433,7 @@ public class GlavniProzorDirektor {
 		panel_3.add(scrollPane_2);
 
 		table_2 = new JTable();
+		table_2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table_2.setModel(new DefaultTableModel(new Object[][] { { null, null }, { null, null }, { null, null },
 				{ null, null }, { null, null }, { null, null }, }, new String[] { "Naziv aktivnosti", "Broj djece" }));
 		table_2.getColumnModel().getColumn(0).setPreferredWidth(92);
@@ -457,10 +465,13 @@ public class GlavniProzorDirektor {
 
 					aktivnostServis.ObrisiAktivnost(idSelektovaneAktivnosti);
 					popuniTabeluAktivnosti();
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali aktivnost.");
+					frmVrti.setAlwaysOnTop(true);
 				}
 
-				else JOptionPane.showMessageDialog(null, "Niste odabrali aktivnost.");
+				else
+					JOptionPane.showMessageDialog(null, "Niste odabrali aktivnost.");
 
 			}
 		});
@@ -489,6 +500,7 @@ public class GlavniProzorDirektor {
 		panel_4.add(scrollPane_3);
 
 		table_3 = new JTable();
+		table_3.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table_3.setModel(
 				new DefaultTableModel(
 						new Object[][] { { null, null, null }, { null, null, null }, { null, null, null },
@@ -517,11 +529,12 @@ public class GlavniProzorDirektor {
 					List<Vaspitac> sviVaspitaci = vaspitacServis.sviVaspitaci();
 					int idSelektovanog = sviVaspitaci.get(selektovani).getIdVaspitac();
 					vaspitacServis.obrisi(idSelektovanog);
-
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali vaspitaca");
+					frmVrti.setAlwaysOnTop(true);
 					popuniTabeluVaspitaci();
-				}
-				else JOptionPane.showMessageDialog(null, "Niste odabrali vaspitaca");
+				} else
+					JOptionPane.showMessageDialog(null, "Niste odabrali vaspitaca");
 			}
 		});
 		btnObrisiVaspitaca.setBounds(413, 164, 126, 23);
@@ -536,6 +549,7 @@ public class GlavniProzorDirektor {
 		panel_5.add(scrollPane_4);
 
 		table_4 = new JTable();
+		table_4.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table_4.setModel(new DefaultTableModel(
 				new Object[][] { { null, null, null, null, null, null }, { null, null, null, null, null, null },
 						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
@@ -611,6 +625,7 @@ public class GlavniProzorDirektor {
 		panel_6.add(scrollPane_6);
 
 		table_6 = new JTable();
+		table_6.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table_6.setModel(new DefaultTableModel(new Object[][] { { null, null }, { null, null }, { null, null },
 				{ null, null }, { null, null }, { null, null }, },
 				new String[] { "Ime i prezime roditelja", "Broj telefona" }));
@@ -626,6 +641,7 @@ public class GlavniProzorDirektor {
 		panel_7.add(scrollPane_5);
 
 		table_5 = new JTable();
+		table_5.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table_5.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null },
 				{ null, null, null, null, null }, { null, null, null, null, null }, { null, null, null, null, null },
 				{ null, null, null, null, null }, { null, null, null, null, null },
@@ -670,10 +686,13 @@ public class GlavniProzorDirektor {
 				File f = new File("izvjestaj.xls");
 				try {
 					exportTable(table_5, f);
-					JOptionPane.showMessageDialog(null, "Generisali ste izvjestaj na Desktop Vaseg racunara");
+					frmVrti.setAlwaysOnTop(false);
+					JOptionPane.showMessageDialog(null, "Generisali ste izvjestaj!");
+					frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Doslo je do greske, izvjestaj nije generisan.");
-
+					frmVrti.setAlwaysOnTop(true);
 					logger.info(e);
 				}
 

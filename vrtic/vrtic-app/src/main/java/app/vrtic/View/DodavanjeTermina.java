@@ -183,7 +183,9 @@ public class DodavanjeTermina {
 				
 				VrijemePocetka.setText("");
 				VrijemeZavrsetka.setText("");
+				frmVrti.setAlwaysOnTop(false);
 				JOptionPane.showMessageDialog(null, "Dodali ste novi termin u raspored!");
+				frmVrti.setAlwaysOnTop(true);
 				}
 									
 			}

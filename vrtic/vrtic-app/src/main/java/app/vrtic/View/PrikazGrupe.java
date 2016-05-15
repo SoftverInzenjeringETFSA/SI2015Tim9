@@ -174,16 +174,15 @@ public class PrikazGrupe {
 					ds.izmijeni(d);
 					ArrayList<Integer> djecijiID3 = sveDjecaZaGrupu(g2.getNaziv());
 					popuniTabeluDjece(djecijiID3);
-					
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Uspješno ste obrisali dijete iz grupe.");
-					/*
-					
-					frmVrti.invalidate();
-					frmVrti.validate();
-					frmVrti.repaint();
-					*/
+					frmVrti.setAlwaysOnTop(true);
 				}
-				else JOptionPane.showMessageDialog(null, "Niste odabrali dijete");
+				else{
+					frmVrti.setAlwaysOnTop(false);
+					JOptionPane.showMessageDialog(null, "Niste odabrali dijete");
+					frmVrti.setAlwaysOnTop(true);
+				}
 			}
 
 		});

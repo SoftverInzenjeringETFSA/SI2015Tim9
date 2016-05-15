@@ -107,24 +107,32 @@ public class DodavanjeVaspitaca {
 			public void actionPerformed(ActionEvent e)
 			{
 				if(textFieldPrezime.getText().length() < 4) {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Ime mora sadržavati barem 3 slova.");
+					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
 				
 				if(textFieldPrezime.getText().length() < 4) {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Prezime mora sadržavati barem 3 slova.");
+					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
 				
 				if(textFieldAdresa.getText().isEmpty()) {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Unesite adresu.");
+					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
 				
 				// Pattern patternTelefon = Pattern.compile("(\\+|00)?387\\d{2}\\-?\\d{3,4}\\-?\\d{3,4}");
 				// dodati validaciju za broj telefona
 				if(textFieldBroj.getText().length() <= 8) {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Broj telefona nije u ispravnom formatu.");
+					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
 				
@@ -137,7 +145,10 @@ public class DodavanjeVaspitaca {
 				v.setAdresaPrebivalista(textFieldAdresa.getText());
 				
 				vs.evidentiraj(v);
+				frmVrti.setAlwaysOnTop(false);
 				JOptionPane.showMessageDialog(null, "Uspjesno ste dodali novog vaspitaca.");
+				frmVrti.setAlwaysOnTop(true);
+				frmVrti.dispose();
 			}
 		});
 	}

@@ -309,39 +309,53 @@ public class EvidentiranjeDjeteta {
 			{
 				// validacije
 				if(textField.getText().length() < 4) {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Ime mora sadržavati barem 3 slova.");
+					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
 				
 				if(textField_1.getText().length() < 4) {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Prezime mora sadržavati barem 3 slova.");
+					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
 				
 			
 				if(textField_2.getText().length() < 4) {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Ime roditelja mora sadržavati barem 3 slova.");
+					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
 				
 				if(textField_3.getText().length() < 4) {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Prezime roditelja mora sadržavati barem 3 slova.");
+					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
 				
 				if(textField_4.getText().isEmpty()) {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Niste unijeli adresu");
+					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
 				
 				if(textField_5.getText().length() <= 8) {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Broj telefona nije u ispravnom formatu.");
+					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
 				
 				Pattern datum  = Pattern.compile("^[0-3]?[0-9]-[0-3]?[0-9]-(?:[0-9]{2})?[0-9]{2}$");
 				if (!datum.matcher(textField_6.getText()).matches()) {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Datum rodjenja nije u ispravnom datumu.");
+					frmVrti.setAlwaysOnTop(true);
 			        return;
 			    }
 		int diffM;
@@ -357,11 +371,15 @@ public class EvidentiranjeDjeteta {
 		
 		
 		if(!(diffG==1 && diffM==11)){
+			frmVrti.setAlwaysOnTop(false);
 			JOptionPane.showMessageDialog(null, "Ugovor se potpisuje na godinu dana.");
+			frmVrti.setAlwaysOnTop(true);
 			return;
 		}
 		if(kraj.getYear()==upis.getYear()+1 && upis.getMonth()==kraj.getMonth() && upis.getDate()!=kraj.getDate()){
+			frmVrti.setAlwaysOnTop(false);
 			JOptionPane.showMessageDialog(null,"Ugovor se potpisuje na godinu dana.");
+			frmVrti.setAlwaysOnTop(true);
 			return;
 		}
 				
@@ -417,7 +435,9 @@ public class EvidentiranjeDjeteta {
 			zs.generisiZaduzenjeZaPeriod(id,((Date)spinner_1.getValue()).getMonth(),((Date)spinner_1.getValue()).getYear());	
 			//zs.generisiZaduzenje(id,2011);
 				//refreshableRoditelj.refreshajTabeluDjece();
-			JOptionPane.showMessageDialog(null,"Uspjesno ste evidentirali dijete");		
+			frmVrti.setAlwaysOnTop(false);
+			JOptionPane.showMessageDialog(null,"Uspjesno ste evidentirali dijete");	
+			frmVrti.setAlwaysOnTop(true);
 			obrisiPolja();
 			}
 		});

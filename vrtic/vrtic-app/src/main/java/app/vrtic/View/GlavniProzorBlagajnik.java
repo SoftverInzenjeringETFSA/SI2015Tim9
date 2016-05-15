@@ -212,14 +212,18 @@ public class GlavniProzorBlagajnik {
 								}
 							}
 							textField_1.setText("brise");
+							frmVrti.setAlwaysOnTop(false);
 							JOptionPane.showMessageDialog(null, "Uplata školarine je uspješno evidentirana!",
 									"Obavještenje", JOptionPane.PLAIN_MESSAGE);
+							frmVrti.setAlwaysOnTop(true);
 							OcistiFormu(listaCheckboxova);
 						}
 						// nije izracunata cijena
 						else if (textField_1.getText().equals("")) {
+							frmVrti.setAlwaysOnTop(false);
 							JOptionPane.showMessageDialog(null, "Nije izracunata cijena!", "Obavjestenje",
 									JOptionPane.WARNING_MESSAGE);
+							frmVrti.setAlwaysOnTop(true);
 						}
 					}
 					// ne pohada aktivnost -nije bitno je li izracunata
@@ -278,14 +282,18 @@ public class GlavniProzorBlagajnik {
 								us.evidentirajUplatu(u);
 							}
 						}
+						frmVrti.setAlwaysOnTop(false);
 						JOptionPane.showMessageDialog(null,
 								"Dijete ne pohaða dodatne aktivnosti, evidantirana je samo uplata školarine!",
 								"Obavještenje", JOptionPane.PLAIN_MESSAGE);
+						frmVrti.setAlwaysOnTop(true);
 						OcistiFormu(listaCheckboxova);
 					}
 				} else {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Niste odabrali mjesec za koji želite izvršiti uplatu!!",
 							"Obavještenje", JOptionPane.WARNING_MESSAGE);
+					frmVrti.setAlwaysOnTop(true);
 				}
 				//////////////////////////////////////////////////////////////////////////////////////////////////////
 			}
@@ -522,7 +530,9 @@ public class GlavniProzorBlagajnik {
 				File f = new File("izvjestaj.xls");
 				try {
 					exportTable(table_5, f);
-					JOptionPane.showMessageDialog(null, "Generisali ste izvjestaj na Desktop Vaseg racunara");
+					frmVrti.setAlwaysOnTop(false);
+					JOptionPane.showMessageDialog(null, "Generisali ste izvjestaj!");
+					frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Doslo je do greske, izvjestaj nije generisan.");
 

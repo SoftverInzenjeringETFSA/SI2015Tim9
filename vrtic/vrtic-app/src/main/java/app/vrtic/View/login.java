@@ -135,10 +135,17 @@ public class login {
 				GlavniProzorDirektor mainForma = new GlavniProzorDirektor(s, user.getIdKorisnika());
 				mainForma.OtvoriFormu();
 				frmVrti.setVisible(false);
-			} else
+			} else{
+				frmVrti.setAlwaysOnTop(false);
 				JOptionPane.showMessageDialog(null, "Greška!");
-		} else
+				frmVrti.setAlwaysOnTop(true);
+			}
+		} else{
+			frmVrti.setAlwaysOnTop(false);
 			JOptionPane.showMessageDialog(null, "Neispravna šifra!");
+			frmVrti.setAlwaysOnTop(true);
+		}
+			
 	}
 
 }
