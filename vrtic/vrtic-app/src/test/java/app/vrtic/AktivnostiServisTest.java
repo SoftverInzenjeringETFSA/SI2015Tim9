@@ -89,6 +89,7 @@ public class AktivnostiServisTest {
 	    	g.setIdGrupe(1);
 	    	v.setIdVaspitac(1);
 	    	a.setIdAktivnosti(1);
+	    	t.setIdTermin(1);
 	    	
 	    	  
  
