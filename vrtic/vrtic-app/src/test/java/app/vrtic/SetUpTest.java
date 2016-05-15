@@ -24,7 +24,6 @@ import app.vrtic.Util.HibernateUtil;
 
 public class SetUpTest {
     static Session sesija = HibernateUtil.getSessionFactory().openSession();
-
     @BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		
@@ -77,13 +76,18 @@ public class SetUpTest {
 	    	v.setIdVaspitac(1);
 	    	a.setIdAktivnosti(1);
 	    	t.setIdTermin(1);
+	    	  
+ 
+	if(as.pretragaPoIDu(1) == null){
+	as.dodajAktivnost(a);
+	}
+	    	if(gs.PretragaPoIDu(1) == null){
+		    	gs.dodajGrupu(g);
+		    	}
 	    	if(ts.vratiTerminPoId(1) == null){
 		       	ts.dodajTermin(t);
-		    	}
-	    	if(as.pretragaPoIDu(1) == null){
-	    	as.dodajAktivnost(a);
+		   
 	    	}
-	    
 	    	if(ks.dajKorisnika(1) == null){
 	    	ks.kreirajKorisnika(k);
 	    	}
@@ -91,10 +95,7 @@ public class SetUpTest {
 	    	/*if(== null){
 	    	us.evidentirajUplatu(u);
 	    	}*/
-	    	  
-	    	if(gs.PretragaPoIDu(1) == null){
-		    	gs.dodajGrupu(g);
-		    	}
+	    	
 	    	if(vs.nadji(1) == null){
 		    	vs.evidentiraj(v);
 		    	}  
@@ -104,5 +105,4 @@ public class SetUpTest {
 		    	
 	  
 	}
-
 }
