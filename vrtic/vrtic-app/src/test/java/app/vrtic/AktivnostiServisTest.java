@@ -61,7 +61,7 @@ public class AktivnostiServisTest {
     	DefaultListModel<Aktivnost> akt_sve =  as.sveAktivnostiLista();
     	boolean imaLiIndex = false;
     	for(int i=0; i<akt_sve.size(); i++){
-    		if(akt_sve.elementAt(i).getIdAktivnosti()==1){
+    		if(akt_sve.elementAt(i).getIdAktivnosti()==123){
     			imaLiIndex=true;
     			break;
     		}
@@ -72,7 +72,7 @@ public class AktivnostiServisTest {
 		akt.setBrojDjece(10);
 		akt.setCijena(10);
 		akt.setNaziv("aktivnost");
-		akt.setIdAktivnosti(1);
+		akt.setIdAktivnosti(123);
 		as.dodajAktivnost(akt);
     	}
 		
@@ -86,7 +86,7 @@ public class AktivnostiServisTest {
 			boolean nasli =false;
 			Aktivnost akt_nadjena = new Aktivnost();
 			for(int i=0; i < akt_sve.size(); i++){
-				if(akt_sve.elementAt(i).getIdAktivnosti()==1 )
+				if(akt_sve.elementAt(i).getIdAktivnosti()==123 )
 				{
 					nasli = true;
 					akt_nadjena=akt_sve.elementAt(i);
@@ -97,7 +97,7 @@ public class AktivnostiServisTest {
 			}
 			assertTrue(nasli);
 
-			assertEquals(akt_nadjena.getIdAktivnosti(), Integer.valueOf(1));
+			assertEquals(akt_nadjena.getIdAktivnosti(), Integer.valueOf(123));
 			
 			
 		
@@ -107,7 +107,7 @@ public class AktivnostiServisTest {
 	public void testAktivnostObrisi() throws Exception{
 		
 			AktivnostServis as = new AktivnostServis(sesija);
-			as.ObrisiAktivnost(1);
+			as.ObrisiAktivnost(123);
 			
 			
 	
@@ -141,7 +141,7 @@ public class AktivnostiServisTest {
 	
 	@After
 	public void tearDown() throws Exception{
-		as.ObrisiAktivnost(1);
+		as.ObrisiAktivnost(123);
 	}
 	
 
