@@ -40,6 +40,7 @@ public class PrikazGrupe {
 	private JTable table_1;
 	private Grupa g2 = new Grupa();
 	private int idGrupe;
+	private PrikazGrupe roditelj;
 	/**
 	 * Launch the application.
 	 */
@@ -63,6 +64,7 @@ public class PrikazGrupe {
 	public PrikazGrupe(Session s, int id) {
 		this.s = s;
 		this.idGrupe = id;
+		this.roditelj = this;
 		initialize();
 	}
 
@@ -134,8 +136,8 @@ public class PrikazGrupe {
 		frmVrti.getContentPane().add(lblStatistikaAktivnosti);
 		
 		
-		final ArrayList<Integer> djecijiID = sveDjecaZaGrupu(g.getNaziv());
-		
+		ArrayList<Integer> djecijiID = sveDjecaZaGrupu(g.getNaziv());
+		final ArrayList<Integer> djecijiID2 = djecijiID;
 		JButton btnIzmijeni = new JButton("Izmijeni");
 		btnIzmijeni.setBounds(505, 90, 126, 23);
 		frmVrti.getContentPane().add(btnIzmijeni);
@@ -144,9 +146,9 @@ public class PrikazGrupe {
 			public void actionPerformed(ActionEvent e)
 			{
 					
-					int ID = djecijiID.get(tabelaDijete.getSelectedRow());
+					int ID = djecijiID2.get(tabelaDijete.getSelectedRow());
 					
-					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s, ID);
+					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s, roditelj ,ID);
 					novifrejm.OtvoriFormu();
 					frmVrti.dispose();
 									
@@ -161,7 +163,7 @@ public class PrikazGrupe {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				int ID = djecijiID.get(tabelaDijete.getSelectedRow());	
+				int ID = djecijiID2.get(tabelaDijete.getSelectedRow());	
 				ds.obrisi(ID);
 				ArrayList<Integer> djecijiID3 = sveDjecaZaGrupu(g2.getNaziv());
 				popuniTabeluDjece(djecijiID3);

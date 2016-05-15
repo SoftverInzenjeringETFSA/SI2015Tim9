@@ -76,7 +76,7 @@ public class GlavniProzorDirektor {
 	private DijeteServis dijeteServis;
 	private ZaduzenjeServis zaduzenjeServis;
 	private AktivnostServis aktivnostServis;
-	//private GlavniProzorDirektor ref;
+	private GlavniProzorDirektor ref;
 	
 	
 	/**
@@ -102,13 +102,13 @@ public class GlavniProzorDirektor {
 	public GlavniProzorDirektor(Session s, int id) {
 		KorisnikServis us = new KorisnikServis(s);
 		user = us.dajKorisnika(id);
-		//this.ref = this;
+		this.ref = this;
 		this.s = s;
 		this.zaduzenjeServis = new ZaduzenjeServis(s);
 		this.aktivnostServis = new AktivnostServis(s);
 		this.dijeteServis = new DijeteServis(s);
 		this.serviskorisnik= new KorisnikServis(this.s);
-	    
+	    this.id = id;
 		initialize();
 	}
 
@@ -124,7 +124,7 @@ public class GlavniProzorDirektor {
 		frmVrti.getContentPane().setLayout(null);
 		Termin termin = new Termin();
 		
-		
+		//refreshajTabeluDjece();
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10, 42, 702, 239);
 		frmVrti.getContentPane().add(tabbedPane);
@@ -266,10 +266,9 @@ public class GlavniProzorDirektor {
 		table_1 = new JTable();
 		table_1.setModel(new DefaultTableModel(
 			new Object[][] {
-				
 			},
 			new String[] {
-				"Ime djeteta", "Prezime djeteta", "Grupa"
+				"Ime djeteta", "Prezime djeteta", "Grupa", "ID"
 			}
 		));
 		
@@ -286,16 +285,16 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				int selektovani = table_1.getSelectedRow();
-				// ako je nešto selektvano
-				if(selektovani != -1) {
-					
-					List<Dijete> svaDjeca = dijeteServis.svaDjeca();
-					int idSelektovanog = svaDjeca.get(selektovani).getIdDijete();
-					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s, idSelektovanog);
+				    if(table_1.getSelectedRow()!=-1){
+			        int idDjeteta = odaberiIdKolonu(table_1, 3);
+					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s,ref,idDjeteta);
 					novifrejm.OtvoriFormu();
+				    }
+				    else{
+				    	JOptionPane.showMessageDialog(null,"Niste odabrali dijete");
+				    }
 				}
-			}
+			
 		});
 		
 		
@@ -367,7 +366,7 @@ public class GlavniProzorDirektor {
 		panel_2.add(listGrupe);
 		
 
-		JButton btnObrisiGrupu = new JButton("Obri\u0161i");
+JButton btnObrisiGrupu = new JButton("Obri\u0161i");
 		btnObrisiGrupu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -765,7 +764,8 @@ public class GlavniProzorDirektor {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-					PromjenaSifre novifrejm = new PromjenaSifre(s, user);
+					KorisnikServis noviservis = new KorisnikServis(s);
+					PromjenaSifre novifrejm = new PromjenaSifre(s, id);
 					novifrejm.OtvoriFormu();
 										
 			}
@@ -773,6 +773,7 @@ public class GlavniProzorDirektor {
 		});
 		
 	//popuniTabeluKorisnici();
+		refreshajTabeluDjece();
 		refreshujKorisnike();
 		
 	}
@@ -803,13 +804,14 @@ public class GlavniProzorDirektor {
 		Object[][] data= new Object[djeca.size()][];
 		for(int i = 0; i<djeca.size();i++) { 
 			if(djeca.get(i).getGrupa()!=null) { 
-				data[i]= new Object[]{(String)djeca.get(i).getIme(), (String)djeca.get(i).getPrezime(), (String) djeca.get(i).getGrupa().toString()};
+				data[i]= new Object[]{(String)djeca.get(i).getIme(), (String)djeca.get(i).getPrezime(), (String) djeca.get(i).getGrupa().toString(),djeca.get(i).getIdDijete()};
 			}
 			else { 
-				data[i]= new Object[]{(String)djeca.get(i).getIme(), (String)djeca.get(i).getPrezime(), "Nema grupe"};
+				data[i]= new Object[]{(String)djeca.get(i).getIme(), (String)djeca.get(i).getPrezime(), "Nema grupe",djeca.get(i).getIdDijete()};
 			}
 		}
-		table_1.setModel(new DefaultTableModel(data, new String[] {"Ime djeteta", "Prezime djeteta", "Grupa"}));
+		table_1.setModel(new DefaultTableModel(data, new String[] {"Ime djeteta", "Prezime djeteta", "Grupa","ID"}));
+		table_1.getColumnModel().removeColumn(table_1.getColumnModel().getColumn(3));
 		DefaultTableModel table1 = (DefaultTableModel) table_1.getModel();
 		table1.fireTableDataChanged();
 		
@@ -951,7 +953,8 @@ public class GlavniProzorDirektor {
 			
                 podaci[i] = new Object[]{(String)djeca.get(i).getIme(),
 						  (String)djeca.get(i).getPrezime(),
-						   (String)djeca.get(i).getGrupa().getNaziv()
+						   (String)djeca.get(i).getGrupa().getNaziv(),
+						   djeca.get(i).getIdDijete()
 						   };	
 		}
 		
@@ -960,17 +963,18 @@ public class GlavniProzorDirektor {
 			
                podaci[i] = new Object[]{(String)djeca.get(i).getIme(),
 						  (String)djeca.get(i).getPrezime(),
-						   "Bez grupe"
+						   "Bez grupe",
+						   djeca.get(i).getIdDijete()
 						   };	
 		}
 		}
 		table_1.setModel(new DefaultTableModel(
 				podaci,
 				new String[] {
-					"Ime djeteta", "Prezime djeteta", "Grupa"
+					"Ime djeteta", "Prezime djeteta", "Grupa","ID"
 				}
 			));
-		
+		table_1.getColumnModel().removeColumn(table_1.getColumnModel().getColumn(3));
 	}
 	
 public ArrayList<Integer> sviVaspitaciZaGrupu(String grupa) {
@@ -988,6 +992,11 @@ public ArrayList<Integer> sviVaspitaciZaGrupu(String grupa) {
 		
 		return vaspitaciTeGrupe;
 	}
+
+public int odaberiIdKolonu(JTable tabela,int brojKolone){
+	int id = (Integer)tabela.getModel().getValueAt(tabela.getSelectedRow(),brojKolone);
+	return id;
+}
 		
 }
 

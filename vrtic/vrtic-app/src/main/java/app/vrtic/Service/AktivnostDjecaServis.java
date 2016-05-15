@@ -36,6 +36,16 @@ public class AktivnostDjecaServis {
 		return false;
 	}
 	
+public boolean obrisiListu(ArrayList<Aktivnostidjeca> listaAktDjeca) {
+	      Transaction t = s.beginTransaction();
+		for(int i=0; i<listaAktDjeca.size();i++){
+			if(listaAktDjeca.get(i)!=null) 
+				s.delete(listaAktDjeca.get(i));
+		}
+		t.commit();
+		return true;
+		
+	}
 	
 
 	// probao isto raditi sa AktivnostidjecaID ovdje i ne radi opet, ista greška
@@ -54,7 +64,6 @@ public class AktivnostDjecaServis {
 		System.out.println("Dodana aktivnost za dijete!");
 		return true;
 	}
-
 	//provjerava da li neko dijete pohada neku aktivnost
 	public boolean daLiDijetePohadaAktivnost(int idDjeteta){
 		ArrayList<Aktivnostidjeca> sveAD= sveAktivnostiDjeca();

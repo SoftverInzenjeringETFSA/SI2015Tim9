@@ -1,8 +1,10 @@
 package app.vrtic.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.Spring;
 
 import org.hibernate.Criteria;
@@ -128,6 +130,50 @@ public class ZaduzenjeServis {
 		t.commit();
 		return true;
 		
+	}
+	
+	public boolean obrisiMjesecnoZaduzenje(Dijete d,int godina,int m){
+		String mjesec="";
+		Zaduzenja z = new Zaduzenja(); 
+        if(m==0) mjesec = "januar";
+        if(m==1) mjesec = "februar";
+        if(m==2) mjesec = "mart";
+        if(m==3) mjesec = "april";
+        if(m==4) mjesec = "maj";
+        if(m==5) mjesec = "juni";
+        if(m==6) mjesec = "juli";
+        if(m==7) mjesec = "august";
+        if(m==8) mjesec = "septembar";
+        if(m==9) mjesec = "oktobar";
+        if(m==10) mjesec = "novembar";
+        if(m==11) mjesec = "decembar";
+		Transaction t = s.beginTransaction();
+		z = vratiSlogZaduzenje(d,godina,mjesec);
+		if (z != null)
+			s.delete(z);
+		t.commit();
+		return true;
+		
+	}
+	//ovu pozivam kad se prekida
+	public void obrisiZaduzenjaZaPeriod(Dijete d,Date d1,Date d2){
+		int diffG=d2.getYear()-d1.getYear();
+		int diffM;
+		if(d2.getMonth()<d1.getMonth())
+			diffM =11 -Math.abs((d2.getMonth()  - d1.getMonth()));
+			else {
+				diffM =11+Math.abs((d2.getMonth()  - d1.getMonth()));
+			}
+		if(diffG==0){
+			if(d2.getMonth()<d1.getMonth()){ 
+				JOptionPane.showMessageDialog(null, "Datum kraja ugovora je prije datuma upisa djeteta u vrtic.");
+				return;}
+		}
+		else{
+			for(int i=d1.getMonth()+1;i<=d2.getMonth();i++){
+				obrisiMjesecnoZaduzenje(d,d1.getYear(),i);
+			}
+		}
 	}
 	
 	public Zaduzenja nadji(int idZaduzenja)

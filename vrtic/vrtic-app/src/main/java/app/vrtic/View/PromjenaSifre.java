@@ -14,14 +14,16 @@ import app.vrtic.Service.KorisnikServis;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import java.awt.Component;
 public class PromjenaSifre {
 
 	private JFrame frmVrti;
-	private JPasswordField passwordField_2;
-	private JPasswordField passwordField;
-	private JPasswordField passwordField_1;
+	private JPasswordField stara;
+	private JPasswordField nova;
+	private JPasswordField ponovljenaNova;
 	private Session s;
-	KorisnikServis ks;
+	int id;
 	Korisnik k;
 	
 	final static Logger logger = Logger.getLogger(login.class);
@@ -33,7 +35,7 @@ public class PromjenaSifre {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PromjenaSifre window = new PromjenaSifre(s,k);
+					PromjenaSifre window = new PromjenaSifre(s,id);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -46,10 +48,11 @@ public class PromjenaSifre {
 	/**
 	 * Create the application.
 	 */
-	public PromjenaSifre(Session s,Korisnik kor) {
+	public PromjenaSifre(Session s,int id) {
+		this.id=id;
+		KorisnikServis us = new KorisnikServis(s);
+		k = us.dajKorisnika(id);
 		this.s = s;
-		k=kor;
-		ks=new KorisnikServis(this.s);
 		initialize();
 	}
 
@@ -58,7 +61,8 @@ public class PromjenaSifre {
 	 */
 	private void initialize() {
 		frmVrti = new JFrame();
-		frmVrti.setTitle("Vrti\u0107");
+		frmVrti.setResizable(false);
+		frmVrti.setTitle("Vrti\u0107 - Promjena \u0160ifre");
 		frmVrti.setBounds(100, 100, 450, 300);
 		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);
@@ -67,50 +71,56 @@ public class PromjenaSifre {
 		lblKorisnickaSifra.setBounds(83, 95, 110, 14);
 		frmVrti.getContentPane().add(lblKorisnickaSifra);
 		
-		final JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(318, 193, 56, 16);
-		frmVrti.getContentPane().add(lblNewLabel);
-		
 		JButton btnPrijava = new JButton("Promijeni \u0161ifru");
 		btnPrijava.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//labela koja proslijeduje da li je ispravno proslijeden user sa glavne forme
-				lblNewLabel.setText(k.getKorisnickoIme());	
-				if(passwordField.getText().equals("") || passwordField_1.getText().equals("") || passwordField_2.getText().equals("")){
+				KorisnikServis ks = new KorisnikServis(s);
+				if(String.valueOf(nova.getPassword()).equals("") || String.valueOf(stara.getPassword()).equals("") || String.valueOf(ponovljenaNova.getPassword()).equals("")){
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null,
 						    "Sva polja nisu popunjena!",
 						    "Warning",
 						    JOptionPane.WARNING_MESSAGE);
+					frmVrti.setAlwaysOnTop(true);
 				}
-				else if(!passwordField.getText().equals(passwordField_1.getText())){
+				else if(String.valueOf(nova.getPassword()).equals(String.valueOf(ponovljenaNova.getPassword()))==false){
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null,
 						    "Nova šifra i ponovljena nova šifra nisu jednake!",
 						    "Warning",
 						    JOptionPane.WARNING_MESSAGE);
+					frmVrti.setAlwaysOnTop(true);
 				}
-				else if(passwordField.getText().equals(passwordField_2.getText())){
+				else if(String.valueOf(nova.getPassword()).equals(String.valueOf(stara.getPassword()))){
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null,
 						    "Stara i nova šifra su jednake, molimo promjenite šifru!",
 						    "Warning",
 						    JOptionPane.WARNING_MESSAGE);
+					frmVrti.setAlwaysOnTop(true);
 				}
-				else if(!passwordField_2.getText().equals(k.getSifra())){
+				else if(String.valueOf(stara.getPassword()).equals(ks.dajKorisnika(id).getSifra()) == false){
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null,
 						    "Unijeli ste pogrešnu staru šifru!",
 						    "Warning",
 						    JOptionPane.WARNING_MESSAGE);
+					frmVrti.setAlwaysOnTop(true);
 				}
 				else{
-				
-					/*	ks.promjeniSifru(k, passwordField.getText());
+					
+					ks.promjeniSifru(k, String.valueOf(nova.getPassword()));
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null,
 							"Sifra je uspješno promjenjena!",
 					    "Obavještenje",
-					    JOptionPane.PLAIN_MESSAGE);*/
+					    JOptionPane.PLAIN_MESSAGE);
+					frmVrti.setAlwaysOnTop(true);
 				}
 			}
 		});
-		btnPrijava.setBounds(152, 190, 122, 23);
+		btnPrijava.setBounds(203, 187, 122, 23);
 		frmVrti.getContentPane().add(btnPrijava);
 		
 		JLabel lblStaraifra = new JLabel("Stara \u0161ifra:");
@@ -121,17 +131,18 @@ public class PromjenaSifre {
 		lblPonovljenaNovaifra.setBounds(23, 135, 146, 14);
 		frmVrti.getContentPane().add(lblPonovljenaNovaifra);
 		
-		passwordField_2 = new JPasswordField();
-		passwordField_2.setBounds(203, 48, 122, 20);
-		frmVrti.getContentPane().add(passwordField_2);
+		stara = new JPasswordField();
+		stara.setBounds(203, 48, 122, 20);
+		frmVrti.getContentPane().add(stara);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(203, 92, 122, 20);
-		frmVrti.getContentPane().add(passwordField);
+		nova = new JPasswordField();
+		nova.setBounds(203, 92, 122, 20);
+		frmVrti.getContentPane().add(nova);
 		
-		passwordField_1 = new JPasswordField();
-		passwordField_1.setBounds(203, 132, 122, 20);
-		frmVrti.getContentPane().add(passwordField_1);
+		ponovljenaNova = new JPasswordField();
+		ponovljenaNova.setBounds(203, 132, 122, 20);
+		frmVrti.getContentPane().add(ponovljenaNova);
+		
 		
 	}
 }

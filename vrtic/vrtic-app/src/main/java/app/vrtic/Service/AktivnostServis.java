@@ -2,6 +2,7 @@ package app.vrtic.Service;
 
 import app.vrtic.Model.*;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -15,10 +16,12 @@ import org.hibernate.criterion.Restrictions;
 
 public class AktivnostServis {
 	private Session s;
+	private AktivnostDjecaServis ads;
 
 	// konstruktor klase AktivnostServis
 	public AktivnostServis(Session s) {
 		this.s = s;
+		this.ads = new AktivnostDjecaServis(s);
 	}
 	public boolean ObrisiAktivnost(int id) {
 		Transaction trans = s.beginTransaction();
@@ -86,21 +89,60 @@ public class AktivnostServis {
 	public DefaultListModel<Aktivnost> sveAktivnostiLista(){
 	DefaultListModel<Aktivnost> model = new DefaultListModel<Aktivnost>();
 	ArrayList<Aktivnost> niz = (ArrayList) s.createCriteria(Aktivnost.class).list();
-	for(Aktivnost val : niz)  {
-		model.addElement(val); 
-		}
+	for(Aktivnost val : niz)
+		model.addElement(val);
 		return model;
 	}
 	
+	public DefaultListModel<Aktivnost> vratiAktivnostiDjetetaZaListu(Dijete d){
+		DefaultListModel<Aktivnost> model = new DefaultListModel<Aktivnost>();
+		ArrayList<Aktivnost> niz = vratiAktivnostiDjeteta(d);
+		if(niz!=null){
+		for(Aktivnost val : niz)
+			model.addElement(val);
+		}
+			return model;
+			
+	}
+	public DefaultListModel<Aktivnost> vratiAktivnostiNaKojeNeIdeLista(Dijete d){
+		DefaultListModel<Aktivnost> model = new DefaultListModel<Aktivnost>();
+		ArrayList<Aktivnost> niz = vratiDostupneAktivnostiZaDijete(d);
+		for(Aktivnost val : niz)
+			model.addElement(val);
+			return model;
+	}
+	
+	public ArrayList<Aktivnost> vratiDostupneAktivnostiZaDijete(Dijete d){
+		ArrayList<Aktivnost> pohadja = vratiAktivnostiDjeteta(d);
+		ArrayList<Aktivnost> sveAktivnosti = SveAktivnosti();
+		ArrayList<Aktivnost> dostupne = new ArrayList<Aktivnost>();
+		if(!pohadja.isEmpty()){ 
+		sveAktivnosti.removeAll(pohadja);}
+		 return sveAktivnosti;
+	
+	}
 	public ArrayList<Aktivnost> vratiAktivnostiDjeteta(Dijete d){
-		List<Aktivnost> spisakAktivnosti = new ArrayList<Aktivnost>();;
+		ArrayList<Aktivnost> spisakAktivnosti = new ArrayList<Aktivnost>();
 		Set<Aktivnostidjeca>skupMedjutabela = d.getAktivnostidjecas();
+		if(skupMedjutabela!=null){
 		Aktivnostidjeca[] medju = skupMedjutabela.toArray(new Aktivnostidjeca[skupMedjutabela.size()]);
 	    for(int i=0; i<medju.length;i++){
 	    	spisakAktivnosti.add(medju[i].getAktivnost());
-	    	
 	    	}
+		}
 	    return new ArrayList<Aktivnost>(spisakAktivnosti);
+	    
+	}
+	
+	public boolean obrisiAktivnostiDjeteta(Dijete d){
+		Criteria c = s.createCriteria(Aktivnostidjeca.class);
+		c.add(Restrictions.eq("dijete",d));
+		ArrayList<Aktivnostidjeca> listaAkt = new ArrayList<Aktivnostidjeca>(c.list());
+				if(listaAkt == null || listaAkt.size()==0) return false;
+				ads.obrisiListu(listaAkt);
+				return true;
+				
+		
 	}
 	
 }
