@@ -77,7 +77,16 @@ public class AktivnostiServisTest {
 			a.setTermins(set_t);
 			as.dodajAktivnost(a);
 			ArrayList<Aktivnost> sveaktivnosti = as.SveAktivnosti();
-			assertTrue(sveaktivnosti.contains(a));	
+			Aktivnost nadjena = new Aktivnost();
+			boolean nasli = false;
+			for(Aktivnost akt:sveaktivnosti){
+				if(akt.getNaziv().equals("TestImeAktivnosti")){
+					nadjena = akt;
+					nasli= true && (akt.getBrojDjece()==12) && (akt.getCijena()==12) &&
+							(akt.getTermins().equals(set_t));
+				}
+			}
+			assertTrue(nasli);
 			
 	}
 	
