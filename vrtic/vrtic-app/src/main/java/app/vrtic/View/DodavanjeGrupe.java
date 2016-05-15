@@ -67,7 +67,7 @@ public class DodavanjeGrupe {
 		final GrupaServis gs= new GrupaServis(this.s);
 		frmVrti = new JFrame();
 		frmVrti.setResizable(false);
-		frmVrti.setTitle("Vrti\u0107");
+		frmVrti.setTitle("Dodavanje Grupe");
 		frmVrti.setBounds(100, 100, 503, 355);
 		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);

@@ -53,7 +53,7 @@ public class PrikazProfilaKorisnika {
 	 */
 	private void initialize() {
 		frmVrti = new JFrame();
-		frmVrti.setTitle("Vrti\u0107");
+		frmVrti.setTitle("Prikaz Korisnika");
 		frmVrti.setBounds(100, 100, 474, 300);
 		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);

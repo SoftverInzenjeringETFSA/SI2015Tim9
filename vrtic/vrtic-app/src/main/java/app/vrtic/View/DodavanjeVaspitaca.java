@@ -56,18 +56,18 @@ public class DodavanjeVaspitaca {
 	 */
 	private void initialize() {
 		frmVrti = new JFrame();
-		frmVrti.setTitle("Vrti\u0107");
+		frmVrti.setTitle("Dodavanje Vaspita\u010Da");
 		frmVrti.setBounds(100, 100, 504, 308);
 		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);
 		
 		
 		JLabel lblNazivAktivnosti = new JLabel("Ime:");
-		lblNazivAktivnosti.setBounds(90, 72, 103, 14);
+		lblNazivAktivnosti.setBounds(97, 72, 103, 14);
 		frmVrti.getContentPane().add(lblNazivAktivnosti);
 		
 		JLabel lblCijenaAktivnosti = new JLabel("Prezime:");
-		lblCijenaAktivnosti.setBounds(74, 111, 103, 14);
+		lblCijenaAktivnosti.setBounds(76, 111, 103, 14);
 		frmVrti.getContentPane().add(lblCijenaAktivnosti);
 		
 		JButton btnDodajVaspitaca = new JButton("Dodaj vaspita\u010Da");
@@ -84,10 +84,6 @@ public class DodavanjeVaspitaca {
 		textFieldPrezime.setBounds(160, 108, 182, 20);
 		frmVrti.getContentPane().add(textFieldPrezime);
 		
-		JLabel lblKm = new JLabel("Broj telefona:");
-		lblKm.setBounds(47, 32, 103, 14);
-		frmVrti.getContentPane().add(lblKm);
-		
 		textFieldBroj = new JTextField();
 		textFieldBroj.setColumns(10);
 		textFieldBroj.setBounds(160, 148, 182, 20);
@@ -102,8 +98,8 @@ public class DodavanjeVaspitaca {
 		textFieldAdresa.setBounds(160, 191, 182, 20);
 		frmVrti.getContentPane().add(textFieldAdresa);
 		
-		JLabel labelAdresa = new JLabel("Adresa prebivalista:");
-		labelAdresa.setBounds(22, 194, 96, 14);
+		JLabel labelAdresa = new JLabel("Adresa prebivališta:");
+		labelAdresa.setBounds(12, 194, 126, 14);
 		frmVrti.getContentPane().add(labelAdresa);
 		
 		btnDodajVaspitaca.addActionListener(new ActionListener()

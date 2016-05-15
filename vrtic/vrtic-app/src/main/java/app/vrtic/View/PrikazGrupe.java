@@ -79,7 +79,7 @@ public class PrikazGrupe {
 		final DijeteServis ds = new DijeteServis(this.s);
 		frmVrti = new JFrame();
 		frmVrti.setResizable(false);
-		frmVrti.setTitle("Vrti\u0107");
+		frmVrti.setTitle("Prikaz Grupa");
 		frmVrti.setBounds(100, 100, 657, 369);
 		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);

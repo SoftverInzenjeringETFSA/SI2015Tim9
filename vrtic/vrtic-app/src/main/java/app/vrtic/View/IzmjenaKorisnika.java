@@ -65,7 +65,7 @@ public class IzmjenaKorisnika {
 	 */
 	private void initialize() {
 		frmVrti = new JFrame();
-		frmVrti.setTitle("Vrti\u0107");
+		frmVrti.setTitle("Izmjena Korisnika");
 		frmVrti.setBounds(100, 100, 474, 323);
 		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);

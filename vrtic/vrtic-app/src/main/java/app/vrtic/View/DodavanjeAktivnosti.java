@@ -53,7 +53,7 @@ public class DodavanjeAktivnosti {
 	 */
 	private void initialize() {
 		frmVrti = new JFrame();
-		frmVrti.setTitle("Vrti\u0107");
+		frmVrti.setTitle("Dodavanje Aktivnosti");
 		frmVrti.setBounds(100, 100, 504, 231);
 		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);

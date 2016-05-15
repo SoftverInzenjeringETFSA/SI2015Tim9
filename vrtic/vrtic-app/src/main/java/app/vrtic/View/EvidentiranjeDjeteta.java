@@ -115,7 +115,7 @@ public class EvidentiranjeDjeteta {
 	 */
 	private void initialize() {
 		frmVrti = new JFrame();
-		frmVrti.setTitle("Vrti\u0107");
+		frmVrti.setTitle("Evidentiranje Djeteta");
 		frmVrti.setBounds(100, 100, 517, 726);
 		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		JLabel lblIme = new JLabel("Ime djeteta:");
@@ -140,7 +140,7 @@ public class EvidentiranjeDjeteta {
 		lblAdresaStanovanja.setBounds(35, 232, 128, 14);
 		
 		JLabel lblBrojTelefonaStaratelja = new JLabel("Broj telefona staratelja:");
-		lblBrojTelefonaStaratelja.setBounds(11, 271, 115, 14);
+		lblBrojTelefonaStaratelja.setBounds(6, 271, 144, 14);
 		
 		JLabel lblGrupa = new JLabel("Grupa:");
 		lblGrupa.setBounds(84, 449, 46, 14);

@@ -60,7 +60,7 @@ public class DodavanjeTermina {
 	 */
 	private void initialize() {
 		frmVrti = new JFrame();
-		frmVrti.setTitle("Vrti\u0107");
+		frmVrti.setTitle("Dodavanje Rasporeda");
 		frmVrti.setBounds(100, 100, 503, 322);
 		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);

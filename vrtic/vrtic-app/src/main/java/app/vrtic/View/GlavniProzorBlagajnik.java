@@ -291,7 +291,7 @@ public class GlavniProzorBlagajnik {
 			}
 
 		});
-		btnPotvrdi.setBounds(135, 311, 127, 23);
+		btnPotvrdi.setBounds(142, 296, 127, 23);
 		panel_5.add(btnPotvrdi);
 
 		comboBox_1.setBounds(135, 46, 248, 20);
@@ -302,55 +302,55 @@ public class GlavniProzorBlagajnik {
 		panel_5.add(comboBox_1);
 
 		JLabel lblMjeseci = new JLabel("Mjeseci:");
-		lblMjeseci.setBounds(389, 11, 74, 14);
+		lblMjeseci.setBounds(412, 11, 74, 14);
 		panel_5.add(lblMjeseci);
 
 		JCheckBox chckbxJanuar = new JCheckBox("Januar");
-		chckbxJanuar.setBounds(389, 31, 97, 23);
+		chckbxJanuar.setBounds(412, 31, 97, 23);
 		panel_5.add(chckbxJanuar);
 
 		JCheckBox chckbxFebruar = new JCheckBox("Februar");
-		chckbxFebruar.setBounds(389, 57, 97, 23);
+		chckbxFebruar.setBounds(412, 57, 97, 23);
 		panel_5.add(chckbxFebruar);
 
 		JCheckBox chckbxMart = new JCheckBox("Mart");
-		chckbxMart.setBounds(389, 85, 97, 23);
+		chckbxMart.setBounds(412, 85, 97, 23);
 		panel_5.add(chckbxMart);
 
 		JCheckBox chckbxApril = new JCheckBox("April");
-		chckbxApril.setBounds(389, 111, 97, 23);
+		chckbxApril.setBounds(412, 111, 97, 23);
 		panel_5.add(chckbxApril);
 
 		JCheckBox chckbxMaj = new JCheckBox("Maj");
-		chckbxMaj.setBounds(389, 137, 97, 23);
+		chckbxMaj.setBounds(412, 137, 97, 23);
 		panel_5.add(chckbxMaj);
 
 		JCheckBox chckbxJuni = new JCheckBox("Juni");
-		chckbxJuni.setBounds(389, 163, 97, 23);
+		chckbxJuni.setBounds(412, 163, 97, 23);
 		panel_5.add(chckbxJuni);
 
 		JCheckBox chckbxJuli = new JCheckBox("Juli");
-		chckbxJuli.setBounds(389, 189, 97, 23);
+		chckbxJuli.setBounds(412, 189, 97, 23);
 		panel_5.add(chckbxJuli);
 
 		JCheckBox chckbxAugust = new JCheckBox("August");
-		chckbxAugust.setBounds(389, 215, 97, 23);
+		chckbxAugust.setBounds(412, 215, 97, 23);
 		panel_5.add(chckbxAugust);
 
 		JCheckBox chckbxSeptembar = new JCheckBox("Septembar");
-		chckbxSeptembar.setBounds(389, 241, 97, 23);
+		chckbxSeptembar.setBounds(412, 241, 97, 23);
 		panel_5.add(chckbxSeptembar);
 
 		JCheckBox chckbxOktobar = new JCheckBox("Oktobar");
-		chckbxOktobar.setBounds(389, 267, 97, 23);
+		chckbxOktobar.setBounds(412, 267, 97, 23);
 		panel_5.add(chckbxOktobar);
 
 		JCheckBox chckbxNovembar = new JCheckBox("Novembar");
-		chckbxNovembar.setBounds(389, 290, 97, 23);
+		chckbxNovembar.setBounds(412, 290, 97, 23);
 		panel_5.add(chckbxNovembar);
 
 		JCheckBox chckbxDecembar = new JCheckBox("Decembar");
-		chckbxDecembar.setBounds(389, 311, 97, 23);
+		chckbxDecembar.setBounds(412, 311, 97, 23);
 		panel_5.add(chckbxDecembar);
 		listaCheckboxova.add(chckbxJanuar);
 		listaCheckboxova.add(chckbxFebruar);
@@ -382,7 +382,7 @@ public class GlavniProzorBlagajnik {
 
 		panel_5.add(spinner_3);
 
-		JButton btnPrikaziMjesece = new JButton("Prikazi mjesece");
+		JButton btnPrikaziMjesece = new JButton("Prikaži mjesece");
 		btnPrikaziMjesece.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -403,7 +403,7 @@ public class GlavniProzorBlagajnik {
 				}
 			}
 		});
-		btnPrikaziMjesece.setBounds(434, 7, 126, 23);
+		btnPrikaziMjesece.setBounds(471, 7, 126, 23);
 		panel_5.add(btnPrikaziMjesece);
 
 		textField_1 = new JTextField();

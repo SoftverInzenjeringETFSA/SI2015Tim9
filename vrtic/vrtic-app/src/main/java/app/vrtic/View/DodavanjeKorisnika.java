@@ -65,7 +65,7 @@ public class DodavanjeKorisnika {
 	 */
 	private void initialize() {
 		frmVrti = new JFrame();
-		frmVrti.setTitle("Vrti\u0107");
+		frmVrti.setTitle("Dodavanje Korisnika");
 		frmVrti.setBounds(100, 100, 474, 354);
 		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);
