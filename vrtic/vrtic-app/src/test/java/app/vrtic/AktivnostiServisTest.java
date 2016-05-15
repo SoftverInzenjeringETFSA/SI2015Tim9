@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -61,13 +62,26 @@ public class AktivnostiServisTest {
 		akt.setNaziv("aktivnost");
 		akt.setIdAktivnosti(1);
 		as.dodajAktivnost(akt);
+		
     }
     
 	@Test
 	public void testAktivnostPretragaID() throws Exception{
 		
 			
-			Aktivnost akt_nadjena = as.pretragaPoIDu(1);
+			List<Aktivnost> akt_sve = (List<Aktivnost>) as.sveAktivnostiLista();
+			boolean nasli =false;
+			Aktivnost akt_nadjena = new Aktivnost();
+			for(Aktivnost aktivnost_item:akt_sve){
+				if(aktivnost_item.getNaziv().equals("aktivnost") && aktivnost_item.getIdAktivnosti()==1 )
+				{
+					nasli = true;
+					akt_nadjena=aktivnost_item;
+					break;
+					
+				}
+			
+			}
 			assertEquals(akt_nadjena.getBrojDjece(), Integer.valueOf(10));
 			assertEquals(akt_nadjena.getCijena(), Integer.valueOf(10));
 			assertEquals(akt_nadjena.getIdAktivnosti(), Integer.valueOf(1));
