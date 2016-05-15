@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.JScrollPane;
@@ -110,6 +111,7 @@ public class PrikazGrupe {
 				"Ime djeteta", "Prezime djeteta"
 			}
 		));
+		tabelaDijete.setDefaultEditor(Object.class, null);
 		scrollPane.setViewportView(tabelaDijete);
 		
 		JScrollPane tabelaAktivnosti = new JScrollPane();
@@ -129,6 +131,7 @@ public class PrikazGrupe {
 		));
 		table_1.getColumnModel().getColumn(0).setPreferredWidth(101);
 		table_1.getColumnModel().getColumn(1).setPreferredWidth(91);
+		table_1.setDefaultEditor(Object.class, null);
 		tabelaAktivnosti.setViewportView(table_1);
 		
 		JLabel lblStatistikaAktivnosti = new JLabel("Statistika aktivnosti:");
@@ -145,13 +148,14 @@ public class PrikazGrupe {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-					
-					int ID = djecijiID2.get(tabelaDijete.getSelectedRow());
-					
-					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s, roditelj ,ID);
-					novifrejm.OtvoriFormu();
-					frmVrti.dispose();
-									
+					if(tabelaDijete.getSelectedRow()!=-1) {
+						int ID = djecijiID2.get(tabelaDijete.getSelectedRow());
+						
+						IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s, roditelj ,ID);
+						novifrejm.OtvoriFormu();
+						frmVrti.dispose();
+					}
+					else JOptionPane.showMessageDialog(null, "Niste odabrali dijete");
 			}
 
 		});
@@ -163,19 +167,23 @@ public class PrikazGrupe {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				int ID = djecijiID2.get(tabelaDijete.getSelectedRow());	
-				ds.obrisi(ID);
-				ArrayList<Integer> djecijiID3 = sveDjecaZaGrupu(g2.getNaziv());
-				popuniTabeluDjece(djecijiID3);
-				
-				/*
-				Dijete d = ds.nadji(ID);
-				d.setGrupa(gs.sveGrupe().get(4));
-				ds.izmijeni(d);
-				frmVrti.invalidate();
-				frmVrti.validate();
-				frmVrti.repaint();
-				*/
+				if(tabelaDijete.getSelectedRow()!=-1) { 
+					int ID = djecijiID2.get(tabelaDijete.getSelectedRow());	
+					Dijete d = ds.nadji(ID);
+					d.setGrupa(null);
+					ds.izmijeni(d);
+					ArrayList<Integer> djecijiID3 = sveDjecaZaGrupu(g2.getNaziv());
+					popuniTabeluDjece(djecijiID3);
+					
+					JOptionPane.showMessageDialog(null, "Uspješno ste obrisali dijete iz grupe.");
+					/*
+					
+					frmVrti.invalidate();
+					frmVrti.validate();
+					frmVrti.repaint();
+					*/
+				}
+				else JOptionPane.showMessageDialog(null, "Niste odabrali dijete");
 			}
 
 		});

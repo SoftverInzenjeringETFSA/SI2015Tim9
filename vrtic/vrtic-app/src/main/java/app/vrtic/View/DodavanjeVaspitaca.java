@@ -141,6 +141,7 @@ public class DodavanjeVaspitaca {
 				v.setAdresaPrebivalista(textFieldAdresa.getText());
 				
 				vs.evidentiraj(v);
+				JOptionPane.showMessageDialog(null, "Uspjesno ste dodali novog vaspitaca.");
 			}
 		});
 	}

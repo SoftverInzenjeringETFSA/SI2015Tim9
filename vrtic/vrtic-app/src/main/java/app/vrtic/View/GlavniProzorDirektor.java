@@ -55,6 +55,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.swing.ListSelectionModel;
 
 public class GlavniProzorDirektor {
 
@@ -195,11 +196,13 @@ public class GlavniProzorDirektor {
 		panel.add(btnPrikazi);
 		btnPrikazi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Korisnik k = serviskorisnik
+				if(table_0.getSelectedRow()!=-1) {
+					Korisnik k = serviskorisnik
 						.dajKorisnika((Integer) table_0.getModel().getValueAt(table_0.getSelectedRow(), 2));
-				PrikazProfilaKorisnika novifrejm = new PrikazProfilaKorisnika(s, k);
-				novifrejm.OtvoriFormu();
-
+					PrikazProfilaKorisnika novifrejm = new PrikazProfilaKorisnika(s, k);
+					novifrejm.OtvoriFormu();
+				}
+				else JOptionPane.showMessageDialog(null, "Odaberite korisnika u tabeli kojeg je potrebno prikazati");
 			}
 
 		});
@@ -209,11 +212,13 @@ public class GlavniProzorDirektor {
 		panel.add(btnIzmijeni);
 		btnIzmijeni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Korisnik k = serviskorisnik
+				if(table_0.getSelectedRow()!=-1) {
+					Korisnik k = serviskorisnik
 						.dajKorisnika((Integer) table_0.getModel().getValueAt(table_0.getSelectedRow(), 2));
-				IzmjenaKorisnika novifrejm = new IzmjenaKorisnika(s, k);
-				novifrejm.OtvoriFormu();
-
+					IzmjenaKorisnika novifrejm = new IzmjenaKorisnika(s, k);
+					novifrejm.OtvoriFormu();
+				}
+				else JOptionPane.showMessageDialog(null, "Odaberite korisnika u tabeli kojeg je potrebno izmjeniti");
 			}
 
 		});
@@ -223,8 +228,12 @@ public class GlavniProzorDirektor {
 		panel.add(btnObrisi);
 		btnObrisi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				serviskorisnik.izbrisiKorisnika((Integer) table_0.getModel().getValueAt(table_0.getSelectedRow(), 2));
-				refreshujKorisnike();
+				if(table_0.getSelectedRow()!=-1) {
+					serviskorisnik.izbrisiKorisnika((Integer) table_0.getModel().getValueAt(table_0.getSelectedRow(), 2));
+					JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali korisnika");
+					refreshujKorisnike();
+				}
+				else JOptionPane.showMessageDialog(null, "Odaberite korisnika u tabeli kojeg je potrebno obrisati");
 			}
 		});
 
@@ -305,10 +314,11 @@ public class GlavniProzorDirektor {
 					}
 
 					dijeteServis.obrisi(idSelektovanogDjeteta);
+					JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali dijete.");
 					popuniTabeluDjeca();
 				}
-
-				JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali dijete.");
+				else JOptionPane.showMessageDialog(null, "Niste odabrali dijete.");
+				
 			}
 		});
 
@@ -322,21 +332,6 @@ public class GlavniProzorDirektor {
 		JLabel lblSpisakGrupa = new JLabel("Spisak grupa:");
 		lblSpisakGrupa.setBounds(47, 11, 76, 14);
 		panel_2.add(lblSpisakGrupa);
-
-		listGrupe = new JList();
-		listGrupe.setModel(new AbstractListModel() {
-			String[] values = new String[] { "Grupa 1", "Grupa 2", "Grupa 3", "Grupa 4", "Grupa 5" };
-
-			public int getSize() {
-				return values.length;
-			}
-
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		listGrupe.setBounds(47, 36, 140, 96);
-		panel_2.add(listGrupe);
 
 		JButton btnObrisiGrupu = new JButton("Obri\u0161i");
 		btnObrisiGrupu.addActionListener(new ActionListener() {
@@ -364,9 +359,10 @@ public class GlavniProzorDirektor {
 
 					grupaServis.ObrisiGrupu(sveGrupe.get(selektovani).getIdGrupe());
 					postaviListuGrupa();
+					JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali grupu");
 				}
-
-				JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali grupu");
+				else JOptionPane.showMessageDialog(null, "Niste odabrali grupu");
+				
 			}
 		});
 		btnObrisiGrupu.setBounds(561, 33, 126, 23);
@@ -385,6 +381,7 @@ public class GlavniProzorDirektor {
 					PrikazGrupe novifrejm = new PrikazGrupe(s, idSelektovanog);
 					novifrejm.OtvoriFormu();
 				}
+				else JOptionPane.showMessageDialog(null, "Niste odabrali grupu");
 			}
 
 		});
@@ -392,6 +389,25 @@ public class GlavniProzorDirektor {
 		JButton btnDodajGrupu = new JButton("Dodaj grupu");
 		btnDodajGrupu.setBounds(561, 158, 126, 23);
 		panel_2.add(btnDodajGrupu);
+		
+		JScrollPane scrollPane_7 = new JScrollPane();
+		scrollPane_7.setBounds(42, 36, 151, 124);
+		panel_2.add(scrollPane_7);
+								
+										listGrupe = new JList();
+										scrollPane_7.setViewportView(listGrupe);
+										listGrupe.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+										listGrupe.setModel(new AbstractListModel() {
+											String[] values = new String[] { "Grupa 1", "Grupa 2", "Grupa 3", "Grupa 4", "Grupa 5" };
+
+											public int getSize() {
+												return values.length;
+											}
+
+											public Object getElementAt(int index) {
+												return values[index];
+											}
+										});
 		btnDodajGrupu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DodavanjeGrupe novifrejm = new DodavanjeGrupe(s);
@@ -441,9 +457,10 @@ public class GlavniProzorDirektor {
 
 					aktivnostServis.ObrisiAktivnost(idSelektovaneAktivnosti);
 					popuniTabeluAktivnosti();
+					JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali aktivnost.");
 				}
 
-				JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali aktivnost.");
+				else JOptionPane.showMessageDialog(null, "Niste odabrali aktivnost.");
 
 			}
 		});
@@ -504,6 +521,7 @@ public class GlavniProzorDirektor {
 					JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali vaspitaca");
 					popuniTabeluVaspitaci();
 				}
+				else JOptionPane.showMessageDialog(null, "Niste odabrali vaspitaca");
 			}
 		});
 		btnObrisiVaspitaca.setBounds(413, 164, 126, 23);
@@ -754,7 +772,7 @@ public class GlavniProzorDirektor {
 
 		Object[][] data = new Object[aktivnosti.size()][];
 		for (int i = 0; i < aktivnosti.size(); i++) {
-			String naziv = naziv = (String) aktivnosti.get(i).getNaziv();
+			String naziv = (String) aktivnosti.get(i).getNaziv();
 			String broj = "" + (aktivnosti.get(i).getAktivnostidjecas().size());
 
 			data[i] = new Object[] { naziv, broj };
@@ -891,5 +909,4 @@ public class GlavniProzorDirektor {
 		int id = (Integer) tabela.getModel().getValueAt(tabela.getSelectedRow(), brojKolone);
 		return id;
 	}
-
 }

@@ -298,7 +298,7 @@ private JTextField textField_6;
 				ds.izmijeni(dNovo);
 				
 				aktivnostServis.obrisiAktivnostiDjeteta(ds.nadji(idDjeteta));
-				JOptionPane.showMessageDialog(null,parts.size());
+				
 				for(int i=0; i < parts.getSize(); i++){
 					Aktivnost a =  parts.getElementAt(i); 
 					AktivnostidjecaId adi = new AktivnostidjecaId();

@@ -73,6 +73,8 @@ public class EvidentiranjeDjeteta {
 	private JTextField textField_4;
 	private JTextField textField_5;
 	private JTextField textField_6;
+	private final JSpinner spinner_1;
+	private final JSpinner spinner_2;
 	
 
 	/**
@@ -103,6 +105,8 @@ public class EvidentiranjeDjeteta {
 		this.ds = new DijeteServis(s);
 		this.zs = new ZaduzenjeServis(s);
 		this.refreshableRoditelj=roditelj;
+		spinner_1 = new JSpinner();
+		spinner_2 = new JSpinner();
     	initialize();
 	}
 
@@ -115,7 +119,7 @@ public class EvidentiranjeDjeteta {
 		frmVrti.setBounds(100, 100, 517, 726);
 		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		JLabel lblIme = new JLabel("Ime djeteta:");
-		lblIme.setBounds(71, 27, 79, 14);
+		lblIme.setBounds(61, 27, 69, 14);
 		
 		JLabel lblPrezime = new JLabel("Prezime djeteta:");
 		lblPrezime.setBounds(45, 63, 95, 14);
@@ -124,19 +128,19 @@ public class EvidentiranjeDjeteta {
 		lblNewLabel.setBounds(45, 106, 95, 14);
 		
 		JLabel lblBrojTelefona = new JLabel("Ime staratelja:");
-		lblBrojTelefona.setBounds(45, 152, 95, 14);
+		lblBrojTelefona.setBounds(51, 152, 79, 14);
 		
 		JLabel lblUloga = new JLabel("Prezime staratelja:");
-		lblUloga.setBounds(22, 194, 130, 14);
+		lblUloga.setBounds(33, 194, 130, 14);
 		
 		JButton Dodaj = new JButton("Dodaj");
 		Dodaj.setBounds(255, 653, 126, 23);
 		
 		JLabel lblAdresaStanovanja = new JLabel("Adresa stanovanja:");
-		lblAdresaStanovanja.setBounds(22, 232, 128, 14);
+		lblAdresaStanovanja.setBounds(35, 232, 128, 14);
 		
 		JLabel lblBrojTelefonaStaratelja = new JLabel("Broj telefona staratelja:");
-		lblBrojTelefonaStaratelja.setBounds(6, 271, 140, 14);
+		lblBrojTelefonaStaratelja.setBounds(11, 271, 115, 14);
 		
 		JLabel lblGrupa = new JLabel("Grupa:");
 		lblGrupa.setBounds(84, 449, 46, 14);
@@ -176,15 +180,17 @@ public class EvidentiranjeDjeteta {
 		frmVrti.getContentPane().add(lblNapomena);
 		frmVrti.getContentPane().add(textPane);
 		
-		final JSpinner spinner_1 = new JSpinner();
+		Date d = Calendar.getInstance().getTime();
 		spinner_1.setBounds(166, 481, 189, 20);
-		spinner_1.setModel(new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.DAY_OF_YEAR));
+		spinner_1.setModel(new SpinnerDateModel(d, null, null, Calendar.DAY_OF_YEAR));
+		spinner_1.setEditor(new JSpinner.DateEditor(spinner_1, "dd-MM-yyyy"));
 		frmVrti.getContentPane().add(spinner_1);
 		
-		final JSpinner spinner_2 = new JSpinner();
+		Date d2 = d;
+		d2.setYear(d.getYear()+1);
 		spinner_2.setBounds(166, 517, 189, 20);
-		
-		spinner_2.setModel(new SpinnerDateModel(new Date(1494768644219L), null, null, Calendar.DAY_OF_YEAR));
+		spinner_2.setModel(new SpinnerDateModel(d2, null, null, Calendar.DAY_OF_YEAR));
+		spinner_2.setEditor(new JSpinner.DateEditor(spinner_2, "dd-MM-yyyy"));
 		frmVrti.getContentPane().add(spinner_2);
 		 
 		final DefaultListModel<Aktivnost> parts = as.sveAktivnostiLista();
@@ -253,38 +259,38 @@ public class EvidentiranjeDjeteta {
 		frmVrti.getContentPane().add(comboBox);
 		
 		textField = new JTextField();
-		textField.setBounds(167, 24, 188, 20);
+		textField.setBounds(150, 24, 205, 20);
 		frmVrti.getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
-		textField_1.setBounds(166, 60, 188, 20);
+		textField_1.setBounds(150, 60, 205, 20);
 		frmVrti.getContentPane().add(textField_1);
 		
 		textField_2 = new JTextField();
 		textField_2.setColumns(10);
-		textField_2.setBounds(163, 149, 188, 20);
+		textField_2.setBounds(150, 149, 205, 20);
 		frmVrti.getContentPane().add(textField_2);
 		
 		textField_3 = new JTextField();
 		textField_3.setColumns(10);
-		textField_3.setBounds(162, 191, 188, 20);
+		textField_3.setBounds(150, 191, 205, 20);
 		frmVrti.getContentPane().add(textField_3);
 		
 		textField_4 = new JTextField();
 		textField_4.setColumns(10);
-		textField_4.setBounds(167, 229, 188, 20);
+		textField_4.setBounds(150, 229, 205, 20);
 		frmVrti.getContentPane().add(textField_4);
 		
 		textField_5 = new JTextField();
 		textField_5.setColumns(10);
-		textField_5.setBounds(156, 268, 188, 20);
+		textField_5.setBounds(150, 268, 205, 20);
 		frmVrti.getContentPane().add(textField_5);
 		
 		textField_6 = new JTextField();
 		textField_6.setColumns(10);
-		textField_6.setBounds(166, 103, 188, 20);
+		textField_6.setBounds(150, 103, 205, 20);
 		frmVrti.getContentPane().add(textField_6);
 		
 		JLabel label = new JLabel("dd-mm-yyyy");
@@ -409,9 +415,30 @@ public class EvidentiranjeDjeteta {
 			zs.generisiZaduzenjeZaPeriod(id,((Date)spinner_1.getValue()).getMonth(),((Date)spinner_1.getValue()).getYear());	
 			//zs.generisiZaduzenje(id,2011);
 				//refreshableRoditelj.refreshajTabeluDjece();
-			JOptionPane.showMessageDialog(null,"Uspjesno ste evidentirali dijete");			
+			JOptionPane.showMessageDialog(null,"Uspjesno ste evidentirali dijete");		
+			obrisiPolja();
 			}
 		});
 	
+	}
+	
+	public void obrisiPolja() {
+		textField.setText("");
+		textField_1.setText("");
+		textField_2.setText("");
+		textField_3.setText("");
+		textField_4.setText("");
+		textField_5.setText("");
+		textField_6.setText("");
+		
+		Date d = Calendar.getInstance().getTime();
+		spinner_1.setModel(new SpinnerDateModel(d, null, null, Calendar.DAY_OF_YEAR));
+		spinner_1.setEditor(new JSpinner.DateEditor(spinner_1, "dd-MM-yyyy"));
+		
+		Date d2 = d;
+		d2.setYear(d.getYear()+1);
+		spinner_2.setModel(new SpinnerDateModel(d2, null, null, Calendar.DAY_OF_YEAR));
+		spinner_2.setEditor(new JSpinner.DateEditor(spinner_2, "dd-MM-yyyy"));
+		
 	}
 }
