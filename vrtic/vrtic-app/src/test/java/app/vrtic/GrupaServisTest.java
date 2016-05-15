@@ -87,30 +87,35 @@ public class GrupaServisTest {
 	    	v.setIdVaspitac(1);
 	    	a.setIdAktivnosti(1);
 	    	t.setIdTermin(1);
-	    	if(as.pretragaPoIDu(1) == null){
-	    	as.dodajAktivnost(a);
-	    	}
-	    	if(ds.nadji(1) == null){
-	    	ds.evidentiraj(d);
-	    	}
+	    	  
+ 
+	if(as.pretragaPoIDu(1) == null){
+	as.dodajAktivnost(a);
+	}
 	    	if(gs.PretragaPoIDu(1) == null){
-	    	gs.dodajGrupu(g);
+		    	gs.dodajGrupu(g);
+		    	}
+	    	if(ts.vratiTerminPoId(1) == null){
+		       	ts.dodajTermin(t);
+		   
 	    	}
 	    	if(ks.dajKorisnika(1) == null){
 	    	ks.kreirajKorisnika(k);
 	    	}
-	    	if(ts.vratiTerminPoId(1) == null){
-	       	ts.dodajTermin(t);
-	    	}
+	    	
 	    	/*if(== null){
 	    	us.evidentirajUplatu(u);
 	    	}*/
+	    	
 	    	if(vs.nadji(1) == null){
-	    	vs.evidentiraj(v);
-	    	}    	
+		    	vs.evidentiraj(v);
+		    	}  
+	    	if(ds.nadji(1) == null){
+		    	ds.evidentiraj(d);
+		    	}
+		    	
 	  
 	}
-
 	/*
 	@Test
 	public void testGrupaKonst() {
