@@ -89,8 +89,9 @@ public class AktivnostServis {
 	public DefaultListModel<Aktivnost> sveAktivnostiLista(){
 	DefaultListModel<Aktivnost> model = new DefaultListModel<Aktivnost>();
 	ArrayList<Aktivnost> niz = (ArrayList) s.createCriteria(Aktivnost.class).list();
-	for(Aktivnost val : niz)
+	for(Aktivnost val : niz){
 		model.addElement(val);
+	}
 		return model;
 	}
 	
@@ -98,8 +99,9 @@ public class AktivnostServis {
 		DefaultListModel<Aktivnost> model = new DefaultListModel<Aktivnost>();
 		ArrayList<Aktivnost> niz = vratiAktivnostiDjeteta(d);
 		if(niz!=null){
-		for(Aktivnost val : niz)
+		for(Aktivnost val : niz){
 			model.addElement(val);
+		}
 		}
 			return model;
 			
