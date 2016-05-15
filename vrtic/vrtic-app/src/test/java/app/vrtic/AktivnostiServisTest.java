@@ -54,7 +54,7 @@ public class AktivnostiServisTest {
 	*/
     
     @Before
-    public void setUp(){
+    public void setUp() throws Exception{
     	Aktivnost akt = new Aktivnost();
 		akt.setBrojDjece(10);
 		akt.setCijena(10);
@@ -118,7 +118,7 @@ public class AktivnostiServisTest {
 	}
 	
 	@After
-	public void tearDown(){
+	public void tearDown() throws Exception{
 		as.ObrisiAktivnost(1);
 	}
 	
