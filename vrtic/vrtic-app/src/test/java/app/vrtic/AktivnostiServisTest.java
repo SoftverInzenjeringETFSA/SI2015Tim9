@@ -58,12 +58,23 @@ public class AktivnostiServisTest {
     
     @Before
     public void setUp() throws Exception{
+    	DefaultListModel<Aktivnost> akt_sve =  as.sveAktivnostiLista();
+    	boolean imaLiIndex = false;
+    	for(int i=0; i<akt_sve.size(); i++){
+    		if(akt_sve.elementAt(i).getIdAktivnosti()==1){
+    			imaLiIndex=true;
+    			break;
+    		}
+    		
+    	}
+    	if(!imaLiIndex){
     	Aktivnost akt = new Aktivnost();
 		akt.setBrojDjece(10);
 		akt.setCijena(10);
 		akt.setNaziv("aktivnost");
 		akt.setIdAktivnosti(1);
 		as.dodajAktivnost(akt);
+    	}
 		
     }
     
@@ -84,6 +95,7 @@ public class AktivnostiServisTest {
 				}
 			
 			}
+			assertTrue(nasli);
 			assertEquals(akt_nadjena.getBrojDjece(), Integer.valueOf(10));
 			assertEquals(akt_nadjena.getCijena(), Integer.valueOf(10));
 			assertEquals(akt_nadjena.getIdAktivnosti(), Integer.valueOf(1));
@@ -96,13 +108,8 @@ public class AktivnostiServisTest {
 	public void testAktivnostObrisi() throws Exception{
 		
 			AktivnostServis as = new AktivnostServis(sesija);
-			Aktivnost akt = as.pretragaPoIDu(1);
-			String ime = akt.getNaziv();
 			as.ObrisiAktivnost(1);
-			akt = as.pretragaPoIDu(1);
-			String s1 = akt.getNaziv();
-			boolean different = ime != s1;
-			assertTrue(different);
+			
 			
 	
 	}
