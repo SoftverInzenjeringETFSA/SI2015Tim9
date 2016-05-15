@@ -41,7 +41,7 @@ public class KorisnikServisTest {
 	final static Logger logger = Logger.getLogger(login.class);
     static Session sesija = HibernateUtil.getSessionFactory().openSession();
     static ArrayList<Korisnik> brisati = new ArrayList<Korisnik>();
-    
+    Integer id_kor;
     static KorisnikServis ks = new KorisnikServis(sesija);
    
 	/*@Test
@@ -57,26 +57,22 @@ public class KorisnikServisTest {
 	*/
     @Before
     public void setUp() throws Exception{
-    	ArrayList<Korisnik> svi_korisnici = ks.dajKorisnike();
-    	boolean ima=false;
-    	for(Korisnik kor: svi_korisnici){
-    		if(kor.getIdKorisnika()==123){
-    			ima=true;
-    			break;
-    		}
-    			
-    	}
-    	if(ima==false){
+    	
     		Korisnik k = new Korisnik();
     		k.setBrojTelefona("033225883");
-    		k.setIdKorisnika(123);
+    		
     		k.setIme("NekoIme");
     		k.setKorisnickoIme("username_unique");
     		k.setPrezime("Prezime");
     		k.setPrivilegije("direktor");
     		k.setSifra("Sifra");
     		ks.kreirajKorisnika(k);
-    	}
+    		ArrayList<Korisnik> svi_korisnici = ks.dajKorisnike();
+    		for(Korisnik kor:svi_korisnici){
+    			if(kor.getKorisnickoIme().equals("username_unique")){
+    				id_kor = kor.getIdKorisnika();
+    			}
+    		}
     }
     @Test
     public void KreirajKorisnikaTest() throws Exception{
@@ -94,10 +90,10 @@ public class KorisnikServisTest {
     @Test 
     public void IzmjenaKorisnikaTest() throws Exception{
     	
-    		Korisnik k = ks.dajKorisnika(123);
+    		Korisnik k = ks.dajKorisnika(id_kor);
     		k.setKorisnickoIme("HamdoTest");
     		ks.izmjeniKorisnika(k);
-    		Korisnik korisnikOpet = ks.dajKorisnika(123);
+    		Korisnik korisnikOpet = ks.dajKorisnika(id_kor);
     		assertEquals(korisnikOpet.getKorisnickoIme(), "HamdoTest");
     	
     }
@@ -116,7 +112,7 @@ public class KorisnikServisTest {
     public void DajKorisnikaTest() throws Exception{
     	
     		
-    		assertEquals(ks.dajKorisnika(123).getIdKorisnika(), Integer.valueOf(123));
+    		assertEquals(ks.dajKorisnika(id_kor).getIdKorisnika(), Integer.valueOf(id_kor));
 
     }
     
@@ -125,11 +121,11 @@ public class KorisnikServisTest {
     @Test 
     public void ProvjeriIstiImaTest() throws Exception{
     
-    		Korisnik k = new Korisnik("Hamdo", "Hamdic", ks.dajKorisnika(123).getKorisnickoIme() , "hamid123",
+    		Korisnik k = new Korisnik("Hamdo", "Hamdic", ks.dajKorisnika(id_kor).getKorisnickoIme() , "hamid123",
     				"direktor", "225883" );
     		brisati.add(k);
     		ks.kreirajKorisnika(k);
-    		assertTrue(ks.provjeriDaLiPostojiIstiKorisnik(ks.dajKorisnika(123).getKorisnickoIme()));
+    		assertTrue(ks.provjeriDaLiPostojiIstiKorisnik(ks.dajKorisnika(id_kor).getKorisnickoIme()));
     	
     }
     
@@ -210,7 +206,7 @@ public class KorisnikServisTest {
     }
     @After
     public void tearDown() throws Exception{
-    	ks.izbrisiKorisnika(123);
+    	ks.izbrisiKorisnika(id_kor);
     }
     
 }
