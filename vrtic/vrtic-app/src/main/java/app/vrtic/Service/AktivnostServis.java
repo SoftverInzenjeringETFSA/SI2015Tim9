@@ -109,8 +109,9 @@ public class AktivnostServis {
 	public DefaultListModel<Aktivnost> vratiAktivnostiNaKojeNeIdeLista(Dijete d){
 		DefaultListModel<Aktivnost> model = new DefaultListModel<Aktivnost>();
 		ArrayList<Aktivnost> niz = vratiDostupneAktivnostiZaDijete(d);
-		for(Aktivnost val : niz)
+		for(Aktivnost val : niz){
 			model.addElement(val);
+		}
 			return model;
 	}
 	
