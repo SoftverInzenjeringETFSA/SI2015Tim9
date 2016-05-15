@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -112,5 +113,15 @@ public class GrupaServisTest {
 			Grupa g = gs.PretragaPoImenu("Grupica");//ovo je ovisno o testu prije
 			assertEquals(g.getNaziv(), "Grupica");
 		
+	}
+	
+	@After
+	public void tearDown() throws Exception{
+		ArrayList<Grupa> sve_grupe = gs.sveGrupe();
+		for(Grupa gr:sve_grupe){
+			if(gr.getIdGrupe()==123){
+				gs.ObrisiGrupu(123);
+			}
+		}
 	}
 }
