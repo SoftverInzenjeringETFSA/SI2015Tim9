@@ -319,7 +319,7 @@ private JTextField textField_6;
 				
 				roditelj.refreshajTabeluDjece();
 				//Ovdje ide kod za zaduzenja
-			//	zs.obrisiZaduzenjaZaPeriod(ds.nadji(idDjeteta),(Date) spinner_1.getValue(),stariDatumUgovora);
+			zs.obrisiZaduzenjaZaPeriod(ds.nadji(idDjeteta),(Date) spinner_1.getValue(),stariDatumUgovora,(Date)spinner.getValue());
 				JOptionPane.showMessageDialog(null, "Uspjesno azurirani podaci za dijete.");
 				frmVrti.dispose();
 			}

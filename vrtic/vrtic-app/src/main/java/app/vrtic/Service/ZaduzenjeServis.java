@@ -155,25 +155,62 @@ public class ZaduzenjeServis {
 		return true;
 		
 	}
-	//ovu pozivam kad se prekida
-	public void obrisiZaduzenjaZaPeriod(Dijete d,Date d1,Date d2){
+	//ovu pozivam kad se prekida                  novi,stari,upis
+	public void obrisiZaduzenjaZaPeriod(Dijete d,Date d1,Date d2,Date d3){
 		int diffG=d2.getYear()-d1.getYear();
+		int diffG1=d1.getYear()-d3.getYear();
 		int diffM;
-		if(d2.getMonth()<d1.getMonth())
-			diffM =11 -Math.abs((d2.getMonth()  - d1.getMonth()));
+		if(d2.getMonth()>d1.getMonth())//
+			diffM =12-Math.abs((d2.getMonth()  - d1.getMonth()));
 			else {
-				diffM =11+Math.abs((d2.getMonth()  - d1.getMonth()));
+				diffM =Math.abs((d2.getMonth()  - d1.getMonth()));
 			}
-		if(diffG==0){
-			if(d2.getMonth()<d1.getMonth()){ 
+		
+			if(diffG1==0 && (d1.getMonth()<d3.getMonth())){ 
 				JOptionPane.showMessageDialog(null, "Datum kraja ugovora je prije datuma upisa djeteta u vrtic.");
 				return;}
-		}
-		else{
-			for(int i=d1.getMonth()+1;i<=d2.getMonth();i++){
-				obrisiMjesecnoZaduzenje(d,d1.getYear(),i);
+			
+			//uslov kad se ugovor skracuje ista godina
+		if(diffG==0){
+				for(int i=d1.getMonth()+1;i<=d2.getMonth();i++){
+					obrisiMjesecnoZaduzenje(d,d1.getYear(),i);
+					System.out.println("Uso");
+				}
+				return;
 			}
+		//d1 novi,d2 stari  13.11.2016, 13.5.2017
+		//skracuje,a razlicite godine datuma ugovora
+		if(diffG==1){
+			for(int i=0;i<=d2.getMonth();i++){
+				
+				obrisiMjesecnoZaduzenje(d,d2.getYear(),i);
+				System.out.println("Uso");
+			}
+	for(int i=d1.getMonth();i<=11;i++){
+				
+				obrisiMjesecnoZaduzenje(d,d1.getYear(),i);
+				System.out.println("Uso");
+			}
+			
+			return;
 		}
+		
+		//produzava se
+		else{
+		//if(!(diffG==1 && diffM==11)){
+			//JOptionPane.showMessageDialog(null, "Ugovor se  produzava na godinu dana.");
+			//return;
+		
+		
+		if(d1.getYear()==d2.getYear()+1 && d2.getMonth()==d1.getMonth() && d2.getDate()!=d1.getDate()){
+			JOptionPane.showMessageDialog(null,"Ugovor se potpisuje na godinu dana.");
+			return;
+		}
+		
+			generisiZaduzenjeZaPeriod(d.getIdDijete(),d2.getMonth(),d2.getYear());	
+		return;	
+		}
+		
 	}
 	
 	public Zaduzenja nadji(int idZaduzenja)
