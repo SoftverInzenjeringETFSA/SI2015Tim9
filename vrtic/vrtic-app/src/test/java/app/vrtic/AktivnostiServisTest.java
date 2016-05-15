@@ -64,10 +64,11 @@ public class AktivnostiServisTest {
 	    	g.setVaspitacs(set_v);
 	    	Aktivnost a = new Aktivnost("Aktivnost", 12, 12, set_t, set_ad);
 	    	Termin t = new Termin(a, g, "17:00", "20:00", "ponedjeljak");
+	    	t.setIdTermin(1);
 	    	set_t.add(t);
 	    	g.setTermins(set_t);
 	    	a.setTermins(set_t);
-	    	t.setIdTermin(1);
+	    	
 	    	
 	       	Set<Zaduzenja> set_z = new HashSet<Zaduzenja>();
 	       	
