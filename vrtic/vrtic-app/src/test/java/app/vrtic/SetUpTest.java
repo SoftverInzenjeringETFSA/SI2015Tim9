@@ -77,27 +77,31 @@ public class SetUpTest {
 	    	v.setIdVaspitac(1);
 	    	a.setIdAktivnosti(1);
 	    	t.setIdTermin(1);
+	    	if(ts.vratiTerminPoId(1) == null){
+		       	ts.dodajTermin(t);
+		    	}
 	    	if(as.pretragaPoIDu(1) == null){
 	    	as.dodajAktivnost(a);
 	    	}
-	    	if(ds.nadji(1) == null){
-	    	ds.evidentiraj(d);
-	    	}
-	    	if(gs.PretragaPoIDu(1) == null){
-	    	gs.dodajGrupu(g);
-	    	}
+	    
 	    	if(ks.dajKorisnika(1) == null){
 	    	ks.kreirajKorisnika(k);
 	    	}
-	    	if(ts.vratiTerminPoId(1) == null){
-	       	ts.dodajTermin(t);
-	    	}
+	    	
 	    	/*if(== null){
 	    	us.evidentirajUplatu(u);
 	    	}*/
+	    	  
+	    	if(gs.PretragaPoIDu(1) == null){
+		    	gs.dodajGrupu(g);
+		    	}
 	    	if(vs.nadji(1) == null){
-	    	vs.evidentiraj(v);
-	    	}    	
+		    	vs.evidentiraj(v);
+		    	}  
+	    	if(ds.nadji(1) == null){
+		    	ds.evidentiraj(d);
+		    	}
+		    	
 	  
 	}
 
