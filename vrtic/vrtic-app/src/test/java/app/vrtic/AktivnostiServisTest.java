@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.DefaultListModel;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.junit.After;
@@ -69,14 +71,14 @@ public class AktivnostiServisTest {
 	public void testAktivnostPretragaID() throws Exception{
 		
 			
-			List<Aktivnost> akt_sve = (List<Aktivnost>) as.sveAktivnostiLista();
+			DefaultListModel<Aktivnost> akt_sve =  as.sveAktivnostiLista();
 			boolean nasli =false;
 			Aktivnost akt_nadjena = new Aktivnost();
-			for(Aktivnost aktivnost_item:akt_sve){
-				if(aktivnost_item.getNaziv().equals("aktivnost") && aktivnost_item.getIdAktivnosti()==1 )
+			for(int i=0; i < akt_sve.size(); i++){
+				if(akt_sve.elementAt(i).getNaziv().equals("aktivnost") && akt_sve.elementAt(i).getIdAktivnosti()==1 )
 				{
 					nasli = true;
-					akt_nadjena=aktivnost_item;
+					akt_nadjena=akt_sve.elementAt(i);
 					break;
 					
 				}
