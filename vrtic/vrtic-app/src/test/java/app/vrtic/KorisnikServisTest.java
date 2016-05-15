@@ -36,8 +36,8 @@ public class KorisnikServisTest {
 	*/
    
     @Test
-    public void KreirajKorisnikaTest(){
-    	try{
+    public void KreirajKorisnikaTest() throws Exception{
+    	
     		
     		
     		Korisnik k = new Korisnik("Hamdo", "Hamdic", "Hamdex", "hamid123",
@@ -45,74 +45,55 @@ public class KorisnikServisTest {
     		brisati.add(k);
     		ks.kreirajKorisnika(k);
     		assertTrue(ks.provjeriDaLiPostojiIstiKorisnik("Hamdex"));
-    		
-    	}
-    	catch(Exception e){
-    		
-    	}
+    	
     }
     
     @Test 
-    public void IzmjenaKorisnikaTest(){
-    	try{
-
+    public void IzmjenaKorisnikaTest() throws Exception{
+    	
     		Korisnik k = ks.dajKorisnika(1);
     		k.setKorisnickoIme("HamdoTest");
     		ks.izmjeniKorisnika(k);
     		Korisnik korisnikOpet = ks.dajKorisnika(1);
     		assertEquals(korisnikOpet.getKorisnickoIme(), "HamdoTest");
-    	}
-    	catch(Exception e){
-    		logger.info(e);
-    	}
+    	
     }
     @Test 
-    public void IzbrisiKorisnika(){
-    	try{
+    public void IzbrisiKorisnika() throws Exception{
+    	
 
     		Korisnik brisemo = ks.dajKorisnika(1);
     		ks.izbrisiKorisnika(1);
     		boolean different = brisemo.getKorisnickoIme() != ks.dajKorisnika(1).getKorisnickoIme();
     		assertTrue(different);
-    	}
-    	catch(Exception e){
-    		
-    	}
+    	
     }
     
     @Test
-    public void DajKorisnikaTest(){
-    	try{
-   
+    public void DajKorisnikaTest() throws Exception{
+    	
     		
     		assertEquals(ks.dajKorisnika(1).getIdKorisnika(), Integer.valueOf(1));
-    	}
-    	catch(Exception e){
-    		logger.info(e);
-    	}
+
     }
     
    
     
     @Test 
-    public void ProvjeriIstiImaTest(){
-    	try{
-    		
+    public void ProvjeriIstiImaTest() throws Exception{
+    
     		Korisnik k = new Korisnik("Hamdo", "Hamdic", ks.dajKorisnika(1).getKorisnickoIme() , "hamid123",
     				"direktor", "225883" );
     		brisati.add(k);
     		ks.kreirajKorisnika(k);
-    		assertFalse(ks.provjeriDaLiPostojiIstiKorisnik(ks.dajKorisnika(1).getKorisnickoIme()));
-    	}
-    	catch(Exception e){
-    		logger.info(e);
-    	}
+    		assertTrue(ks.provjeriDaLiPostojiIstiKorisnik(ks.dajKorisnika(1).getKorisnickoIme()));
+    	
     }
     
   
     @Test
-    public void ProvjeriIstiNemaTest(){
-    	try{
+    public void ProvjeriIstiNemaTest() throws Exception{
+    	
 
     		ArrayList<Korisnik> lista_svih = ks.dajKorisnike();
     		Set<Korisnik> skup_svih = new HashSet<Korisnik>(lista_svih);
@@ -134,49 +115,38 @@ public class KorisnikServisTest {
     		lista_svih.clear();
     		lista_svih=ks.dajKorisnike();
     		for(Korisnik kor : lista_svih){
-    		assertTrue(ks.provjeriDaLiPostojiIstiKorisnik(kor.getKorisnickoIme()));
+    		assertFalse(ks.provjeriDaLiPostojiIstiKorisnik(kor.getKorisnickoIme()));
     		}
-    	}
-    	catch(Exception e){
-    		logger.info(e);
-    	}
+    	
     }
     
     @Test
-    public void ProvjeriSifruTestIsta(){
-    	try{
-    		
+    public void ProvjeriSifruTestIsta() throws Exception{
+    	
     		Korisnik k = new Korisnik("Hamdo", "Hamdic", "Hamdex1", "hamid123",
     				"direktor", "225883" );
     		ks.kreirajKorisnika(k);
     		brisati.add(k);
     		boolean different =ks.provjeriSifruKorisnika(k.getKorisnickoIme(), k.getSifra());
     		assertTrue(different);
-    	}
-    	catch(Exception e){
-    		logger.info(e);
-    	}
+    	
     }
     
     @Test
-    public void ProvjeriSifruTestNijeIsta(){
-    	try{
-    		
+    public void ProvjeriSifruTestNijeIsta() throws Exception{
+    	
     		Korisnik k = new Korisnik("Hamdo", "Hamdic", "Hamdex", "hamid123",
     				"direktor", "225883" );
     		ks.kreirajKorisnika(k);
     		brisati.add(k);
     		boolean different=ks.provjeriSifruKorisnika(k.getKorisnickoIme(), k.getSifra()+"nije");
     		assertFalse(different);
-    	}
-    	catch(Exception e){
-    		logger.info(e);
-    	}
+    	
     }
     
     @Test
-    public void PromjenaSifreTest(){
-    	try{
+    public void PromjenaSifreTest() throws Exception{
+    
     		Korisnik k = new Korisnik("Hamdo", "Hamdic", "Hamdex", "hamid123",
     				"direktor", "225883" );
     		ks.kreirajKorisnika(k);
@@ -193,15 +163,13 @@ public class KorisnikServisTest {
     		
     		assertEquals("novasifra", provjera.getSifra());
     		
-    		}
-    	catch(Exception e){
-    		logger.info(e);
-    	}
+    		
     }
     @AfterClass
-    public static void tearDown(){
+    public static void tearDown() throws Exception{
     	for(Korisnik k:brisati){
     		ks.izbrisiKorisnika(k.getIdKorisnika());
+    		System.out.println(k.getIme());
     	}
     }
     

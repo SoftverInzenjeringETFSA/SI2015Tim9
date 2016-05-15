@@ -37,35 +37,29 @@ public class GrupaServisTest {
 	}
 	*/
 	@Test 
-	public void testGrupaPretragaID(){
-		try{
+	public void testGrupaPretragaID() throws Exception{
+		
 			GrupaServis gs = new GrupaServis(sesija);
 			Grupa g = gs.PretragaPoIDu(1);
 			assertEquals(g.getIdGrupe(), Integer.valueOf(1));
-		}
-		catch(Exception e){
-			logger.info(e);
-		}
+		
 	}
 	
 	@Test
-	public void testBrisanjeGrupe(){
-		try{
+	public void testBrisanjeGrupe() throws Exception{
+		
 			GrupaServis gs = new GrupaServis(sesija);
 			Grupa ovasebrise = gs.PretragaPoIDu(1);
 			gs.ObrisiGrupu(1);
 			Grupa sovomporedimo = gs.PretragaPoIDu(1);
 			boolean different = ovasebrise.getNaziv() != sovomporedimo.getNaziv();
 			assertTrue(different);
-		}
-		catch(Exception e){
-			logger.info(e);
-		}
+		
 	}
 
 	@Test
-	public void testDodavanjeGrupe(){
-		try{
+	public void testDodavanjeGrupe() throws Exception{
+		
 			GrupaServis gs = new GrupaServis(sesija);
 			VaspitacServis vs = new VaspitacServis(sesija);
 			Vaspitac v = vs.nadji(1);
@@ -85,21 +79,15 @@ public class GrupaServisTest {
 			Grupa nadjena = gs.PretragaPoImenu(g.getNaziv());
 			assertEquals(nadjena.getNaziv(), g.getNaziv());
 			
-		}
-		catch(Exception e){
-			logger.info(e);
-		}
+		
 	}
 	
 	@Test
-	public void testPretragaPoImenu(){
-		try{
+	public void testPretragaPoImenu() throws Exception{
+		
 			GrupaServis gs = new GrupaServis(sesija);
 			Grupa g = gs.PretragaPoImenu("imeGrupe");//ovo je ovisno o testu prije
 			assertEquals(g.getNaziv(), "imeGrupe");
-		}
-		catch(Exception e){
-			logger.info(e);
-		}
+		
 	}
 }
