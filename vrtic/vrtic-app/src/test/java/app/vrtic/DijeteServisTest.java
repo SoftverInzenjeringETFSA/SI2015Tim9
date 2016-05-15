@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -46,11 +47,7 @@ public class DijeteServisTest {
     	g.setKapacitet(10);
     	g.setNaziv("grupica");
     	g.setRedniBroj(1);
-    	gs.dodajGrupu(g); 	
-    	
-    	
-    	
-    	
+    	gs.dodajGrupu(g); 	   	
     	
     }
 
@@ -95,29 +92,60 @@ public class DijeteServisTest {
 		
 		
 	}
-	@Test
 	
-	public void ObrisiDijeteTest() throws Exception{
-		
-					
-	}
 	
 	@Test
 	public void nadjiDijeteTest() throws Exception{
 //ovdje kreirati dijete pa ga provjeriti sa nadji
 		
-			assertEquals(ds.nadji(1).getIdDijete(), Integer.valueOf(1));
-		
+		Dijete d = new Dijete();
+		GrupaServis gs = new GrupaServis(sesija);
+		Calendar c = Calendar.getInstance();
+		Date datum = c.getTime();
+		d.setAdresaPrebivalista("test");
+		d.setBrojTelefona("033225883");
+		d.setDatumIsteka(datum);
+		d.setDatumRodjenja("1999-02-02");
+		d.setDatumUpisa(datum);
+		d.setGrupa(g);
+		d.setIme("TestDijete");
+		d.setImeRoditelja("TestRoditelj");
+		d.setPrezime("testPrezime");
+		d.setPrezimeRoditelja("prezimeRoditelja");
+		d.setIdDijete(123);
+		ds.evidentiraj(d);
+		ds.nadji(123);
 	}
 	
 	@Test
 	public void izmijeniDijeteTest() throws Exception{
 		
-			Dijete d = ds.nadji(1);
-			d.setIme("NovoImeDjeteta");;
-			ds.izmijeni(d);
-			assertTrue(ds.nadji(1).getIme().equals("NovoImeDjeteta"));
+		Dijete d = new Dijete();
+		GrupaServis gs = new GrupaServis(sesija);
+		Calendar c = Calendar.getInstance();
+		Date datum = c.getTime();
+		d.setAdresaPrebivalista("test");
+		d.setBrojTelefona("033225883");
+		d.setDatumIsteka(datum);
+		d.setDatumRodjenja("1999-02-02");
+		d.setDatumUpisa(datum);
+		d.setGrupa(g);
+		d.setIme("TestDijete");
+		d.setImeRoditelja("TestRoditelj");
+		d.setPrezime("testPrezime");
+		d.setPrezimeRoditelja("prezimeRoditelja");
+		d.setIdDijete(123);
+		ds.evidentiraj(d);
+		Dijete nadjeno = ds.nadji(123);
+			nadjeno.setIme("NovoImeDjeteta");;
+			ds.izmijeni(nadjeno);
+			assertTrue(ds.nadji(123).getIme().equals("NovoImeDjeteta"));
 		
+	}
+	
+	@After
+	public void tearDown() throws Exception{
+		ds.obrisi(123);
 	}
 	
 	/*trebalo bi jos ovu skolarinu testirati, ali onda mi trebaju aktivnosti..*/
