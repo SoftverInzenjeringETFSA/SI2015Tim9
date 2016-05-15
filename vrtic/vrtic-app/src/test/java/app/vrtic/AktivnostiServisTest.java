@@ -19,7 +19,7 @@ import app.vrtic.Service.TerminServis;
 import app.vrtic.Util.HibernateUtil;
 import app.vrtic.View.login;
 
-public class TestAktivnostiServis {
+public class AktivnostiServisTest {
 	final static Logger logger = Logger.getLogger(login.class);
     static Session sesija = HibernateUtil.getSessionFactory().openSession();
 
@@ -37,23 +37,20 @@ public class TestAktivnostiServis {
 	}
 	*/
 	@Test
-	public void testAktivnostPretragaID(){
-		try{
+	public void testAktivnostPretragaID() throws Exception{
+		
 			AktivnostServis as = new AktivnostServis(sesija);
 			Aktivnost akt = as.pretragaPoIDu(Integer.valueOf(1));
 			System.out.println(akt.getNaziv());
 			Integer id_akt = akt.getIdAktivnosti();
 			assertEquals(Integer.valueOf(id_akt), Integer.valueOf(1));
 			
-		}
-		catch(Exception e){
-			logger.info(e);
-		}
+		
 	}
 	
 	@Test
-	public void testAktivnostObrisi(){
-		try{
+	public void testAktivnostObrisi() throws Exception{
+		
 			AktivnostServis as = new AktivnostServis(sesija);
 			Aktivnost akt = as.pretragaPoIDu(1);
 			String ime = akt.getNaziv();
@@ -63,55 +60,35 @@ public class TestAktivnostiServis {
 			boolean different = ime != s1;
 			assertTrue(different);
 			
-		}
-		catch(Exception e){
-			logger.info(e);
-		}
+	
 	}
-/*
+
 	@Test
-	public void testDodajAktivnost(){
-		try{
-			AktivnostServis as = new AktivnostServis(sesija);
-			TerminServis ts = new TerminServis(sesija);
-			DijeteServis ds = new DijeteServis(sesija);
-			ArrayList<Dijete> sva_djeca = ds.svaDjeca();
-			Termin t = ts.vratiTerminPoId(1);
-			Set<Termin> termini = new HashSet<Termin>();
-			termini.add(t);
-			Set<Dijete> djeca = new HashSet<Dijete>();
-			djeca.addAll(sva_djeca);
-			
-			
-			/*Aktivnost a = new Aktivnost("Programiranje", 30, 15, termini, djeca);
-			 * ovo ne moze, jer prima set aktivnostidjeca
-			 * 
-			as.dodajAktivnost(a);*/
-	/*
-			ArrayList<Aktivnost> sve_aktivnosti = as.SveAktivnosti();
+	public void testDodajAktivnost() throws Exception{
 		
-			Aktivnost pronadjena = new Aktivnost();
-			for(int i = 0; i<sve_aktivnosti.size();i++){
-				if(sve_aktivnosti.get(i).getNaziv() == "Programiranje"){
-					pronadjena = sve_aktivnosti.get(i);
-					break;
+			AktivnostServis as = new AktivnostServis(sesija);
+			Aktivnost a = new Aktivnost();
+			TerminServis t = new TerminServis(sesija);
+			t.vratiTerminPoId(1);
+			Set<Termin> set_t = new HashSet<Termin>();
+			a.setNaziv("TestImeAktivnosti");
+			a.setBrojDjece(12);
+			a.setCijena(12);
+			a.setTermins(set_t);
+			as.dodajAktivnost(a);
+			ArrayList<Aktivnost> sveaktivnosti = as.SveAktivnosti();
+			Aktivnost nadjena = new Aktivnost();
+			boolean nasli = false;
+			for(Aktivnost akt:sveaktivnosti){
+				if(akt.getNaziv().equals("TestImeAktivnosti")){
+					nadjena = akt;
+					nasli= true && (akt.getBrojDjece()==12) && (akt.getCijena()==12) &&
+							(akt.getTermins().equals(set_t));
 				}
 			}
-			assertEquals(pronadjena.getNaziv(), "Programiranje");
-			assertEquals(pronadjena.getBrojDjece(), Integer.valueOf(30));
-			assertEquals(pronadjena.getCijena(), Integer.valueOf(15));
-			assertEquals(pronadjena.getTermins(), termini);
+			assertTrue(nasli);
 			
-			
-			
-		}
-		catch(Exception e){
-			logger.info(e);
-		}
-		
 	}
-	*/
-	
 	
 
 }
