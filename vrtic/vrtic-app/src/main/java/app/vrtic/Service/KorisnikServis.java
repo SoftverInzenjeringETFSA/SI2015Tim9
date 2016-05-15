@@ -84,9 +84,23 @@ public class KorisnikServis {
 	}
 
 	public boolean promjeniSifru(Korisnik k,String novaSifra){
-			k.setSifra(novaSifra);
+			k.setSifra(Plus4Hash(novaSifra));
 			izmjeniKorisnika(k);		
 		return true;
+	}
+	
+	public String Plus4Hash(String pass){
+		char [] passC = pass.toCharArray();
+		for(int i =0; i<pass.length(); i++){
+			passC[i] = (char) (i + passC[i]);
+		}
+		return String.valueOf(passC);
+	}
+	
+	public boolean ProvjeriPass(String pass1, String passZaProvjeru){
+		passZaProvjeru = Plus4Hash(passZaProvjeru);
+		if(pass1.equals(passZaProvjeru)) return true;
+		else return false;
 	}
 
 }

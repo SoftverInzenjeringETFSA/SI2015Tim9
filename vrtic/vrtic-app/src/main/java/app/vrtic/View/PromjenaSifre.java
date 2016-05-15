@@ -74,7 +74,7 @@ public class PromjenaSifre {
 		JButton btnPrijava = new JButton("Promijeni \u0161ifru");
 		btnPrijava.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//labela koja proslijeduje da li je ispravno proslijeden user sa glavne forme
+				
 				KorisnikServis ks = new KorisnikServis(s);
 				if(String.valueOf(nova.getPassword()).equals("") || String.valueOf(stara.getPassword()).equals("") || String.valueOf(ponovljenaNova.getPassword()).equals("")){
 					frmVrti.setAlwaysOnTop(false);
@@ -100,7 +100,7 @@ public class PromjenaSifre {
 						    JOptionPane.WARNING_MESSAGE);
 					frmVrti.setAlwaysOnTop(true);
 				}
-				else if(String.valueOf(stara.getPassword()).equals(ks.dajKorisnika(id).getSifra()) == false){
+				else if(ks.Plus4Hash(String.valueOf(stara.getPassword())).equals(ks.dajKorisnika(id).getSifra()) == false){
 					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null,
 						    "Unijeli ste pogrešnu staru šifru!",

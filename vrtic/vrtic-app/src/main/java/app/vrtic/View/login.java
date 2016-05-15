@@ -120,7 +120,7 @@ public class login {
 
 		KorisnikServis userS = new KorisnikServis(s);
 		String passText = new String(passwordField.getPassword());
-		if (userS.provjeriSifruKorisnika(textField.getText(), passText)) {
+		if (userS.provjeriSifruKorisnika(textField.getText(), userS.Plus4Hash(passText))) {
 			ArrayList<Korisnik> korisnici = userS.dajKorisnike();
 			for (int i = 0; i < korisnici.size(); i++) {
 				if (korisnici.get(i).getKorisnickoIme().equals(textField.getText())) {
@@ -130,14 +130,10 @@ public class login {
 			if (user.getPrivilegije().equals("blagajnik")) {
 				GlavniProzorBlagajnik mainFormaBlagajnik = new GlavniProzorBlagajnik(s, user.getIdKorisnika());
 				mainFormaBlagajnik.OtvoriFormu();
-				// Ovim cemo sakriti login, pa nam moze posluziti kao
-				// glavna forma
 				frmVrti.setVisible(false);
 			} else if (user.getPrivilegije().equals("direktor")) {
 				GlavniProzorDirektor mainForma = new GlavniProzorDirektor(s, user.getIdKorisnika());
 				mainForma.OtvoriFormu();
-				// Ovim cemo sakriti login, pa nam moze posluziti kao
-				// glavna forma
 				frmVrti.setVisible(false);
 			} else
 				JOptionPane.showMessageDialog(null, "Greška!");
