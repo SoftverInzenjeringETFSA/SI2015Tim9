@@ -50,7 +50,7 @@ public class TerminServisTest {
 	    	
 	    	Set<Termin> set_t = new HashSet<Termin>();
 	    	Set<Aktivnostidjeca> set_ad = new HashSet<Aktivnostidjeca>();
-	    	Aktivnost a = new Aktivnost("Aktivnost", 12, 12, set_t, set_ad);
+	    	
 	    	
 	    	
 	    	Set<Vaspitac> set_v = new HashSet<Vaspitac>();
@@ -62,11 +62,14 @@ public class TerminServisTest {
 	    	Vaspitac v= new Vaspitac(g, "Ime", "Przime", "033225883", "Adresa");
 	    	set_v.add(v);
 	    	g.setVaspitacs(set_v);
+	    	Aktivnost a = new Aktivnost("Aktivnost", 12, 12, set_t, set_ad);
 	    	Termin t = new Termin(a, g, "17:00", "20:00", "ponedjeljak");
+	    	t.setIdTermin(1);
 	    	set_t.add(t);
 	    	g.setTermins(set_t);
-	    	 
-	       	
+	    	a.setTermins(set_t);
+	    	
+	    	
 	       	Set<Zaduzenja> set_z = new HashSet<Zaduzenja>();
 	       	
 	    	Set<Uplata> set_u = new HashSet<Uplata>();
@@ -88,11 +91,12 @@ public class TerminServisTest {
 	    	v.setIdVaspitac(1);
 	    	a.setIdAktivnosti(1);
 	    	t.setIdTermin(1);
+	    	
 	    	  
  
-	if(as.pretragaPoIDu(1) == null){
-	as.dodajAktivnost(a);
-	}
+	    	if(as.pretragaPoIDu(1) == null){
+	    		as.dodajAktivnost(a);
+	    	}
 	    	if(gs.PretragaPoIDu(1) == null){
 		    	gs.dodajGrupu(g);
 		    	}
