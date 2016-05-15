@@ -19,6 +19,7 @@ import app.vrtic.Service.KorisnikServis;
 import app.vrtic.Service.TerminServis;
 import app.vrtic.Service.UplataServis;
 import app.vrtic.Service.VaspitacServis;
+import app.vrtic.Service.ZaduzenjeServis;
 import app.vrtic.Util.HibernateUtil;
 
 public class SetUpTest {
@@ -34,6 +35,7 @@ public class SetUpTest {
 	    	TerminServis ts = new TerminServis(sesija);
 	    	UplataServis us = new UplataServis(sesija);
 	    	VaspitacServis vs = new VaspitacServis(sesija);
+	    	ZaduzenjeServis zs = new ZaduzenjeServis(sesija);
 	    	
 	    	Set<Termin> set_t = new HashSet<Termin>();
 	    	Set<Aktivnostidjeca> set_ad = new HashSet<Aktivnostidjeca>();
@@ -75,6 +77,14 @@ public class SetUpTest {
 	    	v.setIdVaspitac(1);
 	    	a.setIdAktivnosti(1);
 	    	t.setIdTermin(1);
+	    	
+	    	as.dodajAktivnost(a);
+	    	ds.evidentiraj(d);
+	    	gs.dodajGrupu(g);
+	    	ks.kreirajKorisnika(k);
+	    	ts.dodajTermin(t);
+	    	us.evidentirajUplatu(u);
+	    	vs.evidentiraj(v);
 	    	
 	 
 	    	
