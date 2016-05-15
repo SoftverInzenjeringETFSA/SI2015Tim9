@@ -3,6 +3,8 @@ package app.vrtic.View;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -72,65 +74,75 @@ public class login {
 		textField.setBounds(202, 92, 122, 20);
 		frmVrti.getContentPane().add(textField);
 		textField.setColumns(10);
+		textField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				loginAction();
+			}
+		});
 
 		passwordField = new JPasswordField();
 		passwordField.setBounds(203, 136, 121, 20);
 		frmVrti.getContentPane().add(passwordField);
+		passwordField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				loginAction();
+			}
+		});
 
 		JButton btnPrijava = new JButton("Prijava");
 		btnPrijava.setBounds(235, 184, 89, 23);
 		frmVrti.getContentPane().add(btnPrijava);
 		btnPrijava.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Korisnik user = new Korisnik();
-
-				KorisnikServis userS = new KorisnikServis(s);
-				String passText = new String(passwordField.getPassword());
-				if (userS.provjeriSifruKorisnika(textField.getText(), passText)) {
-					ArrayList<Korisnik> korisnici = userS.dajKorisnike();
-					for (int i = 0; i < korisnici.size(); i++) {
-						if (korisnici.get(i).getKorisnickoIme().equals(textField.getText())) {
-							user = korisnici.get(i);
-						}
-					}
-					if (user.getPrivilegije().equals("blagajnik")) {
-						GlavniProzorBlagajnik mainFormaBlagajnik = new GlavniProzorBlagajnik(s, user.getIdKorisnika());
-						mainFormaBlagajnik.OtvoriFormu();
-						// Ovim cemo sakriti login, pa nam moze posluziti kao
-						// glavna forma
-						frmVrti.setVisible(false);
-					} else if (user.getPrivilegije().equals("direktor")) {
-						GlavniProzorDirektor mainForma = new GlavniProzorDirektor(s, user.getIdKorisnika());
-						mainForma.OtvoriFormu();
-						// Ovim cemo sakriti login, pa nam moze posluziti kao
-						// glavna forma
-						frmVrti.setVisible(false);
-					} else
-						JOptionPane.showMessageDialog(null, "Greška!");
-				} else
-					JOptionPane.showMessageDialog(null, "Neispravna šifra!");
-
-				/*
-				 * // ovaj dio Ä‡e za sad biti hardcode da bi se moglo sve
-				 * otvarati // kad se doda baza i korisnici izmjeniti ovo !!! //
-				 * !!! if(textField.getText().equals("direktor")) {
-				 * GlavniProzorDirektor mainFormaDirektor = new
-				 * GlavniProzorDirektor(s); mainFormaDirektor.OtvoriFormu();
-				 * //Ovim cemo sakriti login, pa nam moze posluziti kao glavna
-				 * forma frmVrti.setVisible(false); } else
-				 * if(textField.getText().equals("blagajnik")) { //a ovo cemo
-				 * ubaciti ako se loguje kao blagajnik GlavniProzorBlagajnik
-				 * mainFormaBlagajnik = new GlavniProzorBlagajnik(s);
-				 * mainFormaBlagajnik.OtvoriFormu(); //Ovim cemo sakriti login,
-				 * pa nam moze posluziti kao glavna forma
-				 * frmVrti.setVisible(false); } else {
-				 * JOptionPane.showMessageDialog(null,
-				 * "Unesi direktor ili blagajnik, u zavisnosti sta ti treba"); }
-				 */
-
+				loginAction();
+			}
+		});
+		btnPrijava.addKeyListener(new KeyListener(){
+			
+			public void keyReleased(KeyEvent arg0) {
+				loginAction();
+				
 			}
 
+			public void keyTyped(KeyEvent arg0) {
+				loginAction();
+				
+			}
+
+			public void keyPressed(KeyEvent e) {
+				loginAction();
+				
+			}
 		});
+	}
+	public void loginAction() {
+		Korisnik user = new Korisnik();
+
+		KorisnikServis userS = new KorisnikServis(s);
+		String passText = new String(passwordField.getPassword());
+		if (userS.provjeriSifruKorisnika(textField.getText(), passText)) {
+			ArrayList<Korisnik> korisnici = userS.dajKorisnike();
+			for (int i = 0; i < korisnici.size(); i++) {
+				if (korisnici.get(i).getKorisnickoIme().equals(textField.getText())) {
+					user = korisnici.get(i);
+				}
+			}
+			if (user.getPrivilegije().equals("blagajnik")) {
+				GlavniProzorBlagajnik mainFormaBlagajnik = new GlavniProzorBlagajnik(s, user.getIdKorisnika());
+				mainFormaBlagajnik.OtvoriFormu();
+				// Ovim cemo sakriti login, pa nam moze posluziti kao
+				// glavna forma
+				frmVrti.setVisible(false);
+			} else if (user.getPrivilegije().equals("direktor")) {
+				GlavniProzorDirektor mainForma = new GlavniProzorDirektor(s, user.getIdKorisnika());
+				mainForma.OtvoriFormu();
+				// Ovim cemo sakriti login, pa nam moze posluziti kao
+				// glavna forma
+				frmVrti.setVisible(false);
+			} else
+				JOptionPane.showMessageDialog(null, "Greška!");
+		} else
+			JOptionPane.showMessageDialog(null, "Neispravna šifra!");
 	}
 
 }

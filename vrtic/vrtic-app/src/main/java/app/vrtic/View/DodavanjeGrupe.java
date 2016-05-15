@@ -158,6 +158,7 @@ public class DodavanjeGrupe {
 					frmVrti.setAlwaysOnTop(false);
 					dialog.setAlwaysOnTop(true);
 					JOptionPane.showMessageDialog(dialog, "Uspješno ste dodali novu grupu!");
+					frmVrti.setAlwaysOnTop(true);
 					frmVrti.dispose();
 					
 										

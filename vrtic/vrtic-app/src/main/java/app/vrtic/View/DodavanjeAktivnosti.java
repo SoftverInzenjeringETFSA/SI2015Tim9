@@ -77,18 +77,24 @@ public class DodavanjeAktivnosti {
 			public void actionPerformed(ActionEvent e)
 			{
 					if(textField.getText().isEmpty()) {
+						frmVrti.setAlwaysOnTop(false);
 						JOptionPane.showMessageDialog(null, "Niste unijeli naziv aktivnosti.");
+						frmVrti.setAlwaysOnTop(true);
 						return;
 					}
 					try {
 						if(textField_1.getText().isEmpty() || Integer.parseInt(textField_1.getText()) <0) {
+							frmVrti.setAlwaysOnTop(false);
 							JOptionPane.showMessageDialog(null, "Niste unijeli validnu cijenu aktivnosti.");
+							frmVrti.setAlwaysOnTop(true);
 							return;
 						}
 					     
 					}
 					catch (NumberFormatException e1) {
+						frmVrti.setAlwaysOnTop(false);
 						JOptionPane.showMessageDialog(null, "Niste unijeli validnu cijenu aktivnosti.");
+						frmVrti.setAlwaysOnTop(true);
 						return;
 					}
 					
@@ -99,7 +105,9 @@ public class DodavanjeAktivnosti {
 					a.setBrojDjece(0);
 					boolean uspjesnoDodavanje = akts.dodajAktivnost(a);
 					if(uspjesnoDodavanje) { 
+						frmVrti.setAlwaysOnTop(false);
 						JOptionPane.showMessageDialog(null, "Uspješno ste dodali novu aktivnost"); 
+						frmVrti.setAlwaysOnTop(true);
 						textField.setText(null);
 						textField_1.setText(null);
 					}
