@@ -125,7 +125,7 @@ private JTextField textField_6;
 	 */
 	private void initialize() {
 		frmVrti = new JFrame();
-		frmVrti.setTitle("Vrti\u0107");
+		frmVrti.setTitle("Izmjena djeteta");
 		frmVrti.setBounds(100, 100, 517, 726);
 		frmVrti.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmVrti.getContentPane().setLayout(null);
@@ -205,13 +205,18 @@ private JTextField textField_6;
 		comboBox.setBounds(167, 445, 188, 20);
 		frmVrti.getContentPane().add(comboBox);
 		
+		Date d1 = Calendar.getInstance().getTime();
 		final JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerDateModel(new Date(1463176800000L), null, null, Calendar.DAY_OF_YEAR));
+		spinner.setModel(new SpinnerDateModel(d1, null, null, Calendar.DAY_OF_YEAR));
+		spinner.setEditor(new JSpinner.DateEditor(spinner, "dd-MM-yyyy"));
 		spinner.setBounds(166, 481, 189, 20);
 		frmVrti.getContentPane().add(spinner);
 		
+		Date d2 = d1;
+		d2.setYear(d1.getYear()+1);
 		final JSpinner spinner_1 = new JSpinner();
-		spinner_1.setModel(new SpinnerDateModel(new Date(1463176800000L), null, null, Calendar.DAY_OF_YEAR));
+		spinner_1.setModel(new SpinnerDateModel(d2, null, null, Calendar.DAY_OF_YEAR));
+		spinner_1.setEditor(new JSpinner.DateEditor(spinner_1, "dd-MM-yyyy"));
 		spinner_1.setBounds(166, 517, 189, 20);
 		frmVrti.getContentPane().add(spinner_1);
 		//Popunjavamo podatke

@@ -54,6 +54,7 @@ import java.util.Calendar;
 import java.awt.Font;
 import javax.swing.AbstractListModel;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 
 public class EvidentiranjeDjeteta {
 	private Session s;
@@ -128,7 +129,7 @@ public class EvidentiranjeDjeteta {
 		lblNewLabel.setBounds(45, 106, 95, 14);
 		
 		JLabel lblBrojTelefona = new JLabel("Ime staratelja:");
-		lblBrojTelefona.setBounds(51, 152, 79, 14);
+		lblBrojTelefona.setBounds(51, 152, 112, 14);
 		
 		JLabel lblUloga = new JLabel("Prezime staratelja:");
 		lblUloga.setBounds(33, 194, 130, 14);
@@ -164,6 +165,7 @@ public class EvidentiranjeDjeteta {
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(85, 347, 110, 68);
 		frmVrti.getContentPane().add(scrollPane_1);
+		
 		frmVrti.getContentPane().setLayout(null);
 		frmVrti.getContentPane().add(lblIme);
 		frmVrti.getContentPane().add(lblPrezime);

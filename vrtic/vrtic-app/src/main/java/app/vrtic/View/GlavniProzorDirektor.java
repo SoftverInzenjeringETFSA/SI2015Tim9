@@ -259,7 +259,7 @@ public class GlavniProzorDirektor {
 		panel_1.add(scrollPane_1);
 
 		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(new Object[][] {},
+		table_1.setModel(new DefaultTableModel(new Object[][] {{ null, null, null, null }, { null, null, null, null }},
 				new String[] { "Ime djeteta", "Prezime djeteta", "Grupa", "ID" }));
 
 		table_1.setDefaultEditor(Object.class, null);
