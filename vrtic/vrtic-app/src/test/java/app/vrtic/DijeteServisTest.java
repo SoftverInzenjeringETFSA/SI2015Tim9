@@ -42,22 +42,11 @@ public class DijeteServisTest {
     Grupa g = new Grupa();
     @Before
     public void setUp() throws Exception{
-    	boolean nasli = false;
-    	ArrayList<Dijete> svaDjeca = ds.svaDjeca();
-    	for(Dijete dijete:svaDjeca){
-    		if(dijete.getIdDijete()==1){
-    			nasli=true;
-    			break;
-    		}
-    	}
-    	if(!nasli){
-    	g.setIdGrupe(1);
-    	g.setKapacitet(12);
-    	g.setNaziv("Grupica");
+    	Grupa g = new Grupa();
+    	g.setKapacitet(10);
+    	g.setNaziv("grupica");
     	g.setRedniBroj(1);
-    	gs.dodajGrupu(g);
-    	}
-    	
+    	gs.dodajGrupu(g); 	
     	
     	
     	
@@ -92,16 +81,16 @@ public class DijeteServisTest {
 			}
 		}
 		
-		assertTrue(d.getAdresaPrebivalista().equals("test"));
-		assertTrue(d.getBrojTelefona().equals("033225883"));
-		assertEquals(d.getDatumIsteka().compareTo(datum), 0);
-		assertTrue(d.getDatumRodjenja().equals("1999-02-02"));
-		assertEquals(d.getDatumUpisa().compareTo(datum), 0);
-		assertEquals(d.getGrupa(), gs.PretragaPoIDu(1));
-		assertTrue(d.getIme().equals("TestDijete"));
-		assertTrue(d.getImeRoditelja().equals("TestRoditelj"));
-		assertTrue(d.getPrezimeRoditelja().equals("prezimeRoditelja"));
-		assertTrue(d.getPrezime().equals("testPrezime"));
+		assertTrue(nadjeno.getAdresaPrebivalista().equals("test"));
+		assertTrue(nadjeno.getBrojTelefona().equals("033225883"));
+		assertEquals(nadjeno.getDatumIsteka().compareTo(datum), 0);
+		assertTrue(nadjeno.getDatumRodjenja().equals("1999-02-02"));
+		assertEquals(nadjeno.getDatumUpisa().compareTo(datum), 0);
+		assertTrue(nadjeno.getGrupa().equals(g));
+		assertTrue(nadjeno.getIme().equals("TestDijete"));
+		assertTrue(nadjeno.getImeRoditelja().equals("TestRoditelj"));
+		assertTrue(nadjeno.getPrezimeRoditelja().equals("prezimeRoditelja"));
+		assertTrue(nadjeno.getPrezime().equals("testPrezime"));
 		
 		
 		
