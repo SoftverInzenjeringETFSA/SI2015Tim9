@@ -11,6 +11,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -53,7 +54,29 @@ public class KorisnikServisTest {
 		}
 	}
 	*/
-   
+    @Before
+    public void setUp() throws Exception{
+    	ArrayList<Korisnik> svi_korisnici = ks.dajKorisnike();
+    	boolean ima=false;
+    	for(Korisnik kor: svi_korisnici){
+    		if(kor.getIdKorisnika()==123){
+    			ima=true;
+    			break;
+    		}
+    			
+    	}
+    	if(ima==false){
+    		Korisnik k = new Korisnik();
+    		k.setBrojTelefona("033225883");
+    		k.setIdKorisnika(123);
+    		k.setIme("NekoIme");
+    		k.setKorisnickoIme("username_unique");
+    		k.setPrezime("Prezime");
+    		k.setPrivilegije("direktor");
+    		k.setSifra("Sifra");
+    		ks.kreirajKorisnika(k);
+    	}
+    }
     @Test
     public void KreirajKorisnikaTest() throws Exception{
     	
@@ -70,14 +93,14 @@ public class KorisnikServisTest {
     @Test 
     public void IzmjenaKorisnikaTest() throws Exception{
     	
-    		Korisnik k = ks.dajKorisnika(1);
+    		Korisnik k = ks.dajKorisnika(123);
     		k.setKorisnickoIme("HamdoTest");
     		ks.izmjeniKorisnika(k);
-    		Korisnik korisnikOpet = ks.dajKorisnika(1);
+    		Korisnik korisnikOpet = ks.dajKorisnika(123);
     		assertEquals(korisnikOpet.getKorisnickoIme(), "HamdoTest");
     	
     }
-    @Test 
+    /*@Test 
     public void IzbrisiKorisnika() throws Exception{
     	
 
@@ -86,13 +109,13 @@ public class KorisnikServisTest {
     		boolean different = brisemo.getKorisnickoIme() != ks.dajKorisnika(1).getKorisnickoIme();
     		assertTrue(different);
     	
-    }
+    }*/
     
     @Test
     public void DajKorisnikaTest() throws Exception{
     	
     		
-    		assertEquals(ks.dajKorisnika(1).getIdKorisnika(), Integer.valueOf(1));
+    		assertEquals(ks.dajKorisnika(123).getIdKorisnika(), Integer.valueOf(123));
 
     }
     
@@ -101,11 +124,11 @@ public class KorisnikServisTest {
     @Test 
     public void ProvjeriIstiImaTest() throws Exception{
     
-    		Korisnik k = new Korisnik("Hamdo", "Hamdic", ks.dajKorisnika(1).getKorisnickoIme() , "hamid123",
+    		Korisnik k = new Korisnik("Hamdo", "Hamdic", ks.dajKorisnika(123).getKorisnickoIme() , "hamid123",
     				"direktor", "225883" );
     		brisati.add(k);
     		ks.kreirajKorisnika(k);
-    		assertTrue(ks.provjeriDaLiPostojiIstiKorisnik(ks.dajKorisnika(1).getKorisnickoIme()));
+    		assertTrue(ks.provjeriDaLiPostojiIstiKorisnik(ks.dajKorisnika(123).getKorisnickoIme()));
     	
     }
     
@@ -184,12 +207,9 @@ public class KorisnikServisTest {
     		
     		
     }
-    @AfterClass
-    public static void tearDown() throws Exception{
-    	for(Korisnik k:brisati){
-    		ks.izbrisiKorisnika(k.getIdKorisnika());
-    		System.out.println(k.getIme());
-    	}
+    @After
+    public void tearDown() throws Exception{
+    	ks.izbrisiKorisnika(123);
     }
     
 }
