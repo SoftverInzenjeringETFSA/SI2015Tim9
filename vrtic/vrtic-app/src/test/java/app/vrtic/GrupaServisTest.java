@@ -2,6 +2,7 @@ package app.vrtic;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -9,6 +10,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -35,7 +37,7 @@ import app.vrtic.View.login;
 public class GrupaServisTest {
 	final static Logger logger = Logger.getLogger(login.class);
     static Session sesija = HibernateUtil.getSessionFactory().openSession();
-   
+    GrupaServis gs = new GrupaServis(sesija);
 	/*
 	@Test
 	public void testGrupaKonst() {
@@ -48,12 +50,23 @@ public class GrupaServisTest {
 		}
 	}
 	*/
+    
+    @Before
+    public void SetUp() throws Exception{
+    	Grupa g = new Grupa();
+    	g.setIdGrupe(123);
+    	g.setKapacitet(12);
+    	g.setNaziv("Grupica");
+    	g.setRedniBroj(2);
+    	gs.dodajGrupu(g);
+    	
+    }
 	@Test 
 	public void testGrupaPretragaID() throws Exception{
 		
 			GrupaServis gs = new GrupaServis(sesija);
-			Grupa g = gs.PretragaPoIDu(1);
-			assertEquals(g.getIdGrupe(), Integer.valueOf(1));
+			Grupa g = gs.PretragaPoIDu(123);
+			assertEquals(g.getIdGrupe(), Integer.valueOf(123));
 		
 	}
 	
@@ -61,35 +74,33 @@ public class GrupaServisTest {
 	public void testBrisanjeGrupe() throws Exception{
 		
 			GrupaServis gs = new GrupaServis(sesija);
-			Grupa ovasebrise = gs.PretragaPoIDu(1);
-			gs.ObrisiGrupu(1);
-			Grupa sovomporedimo = gs.PretragaPoIDu(1);
-			boolean different = ovasebrise.getNaziv() != sovomporedimo.getNaziv();
-			assertTrue(different);
+			Grupa ovasebrise = gs.PretragaPoIDu(123);
+			gs.ObrisiGrupu(123);
+			ArrayList<Grupa> sve_grupe = gs.sveGrupe();
+			boolean ImaJe=false;
+			for(Grupa gr:sve_grupe){
+				if(gr.getIdGrupe()==123){
+					ImaJe=true;
+					break;
+				}
+			}
+			assertFalse(ImaJe);
 		
 	}
 
 	@Test
 	public void testDodavanjeGrupe() throws Exception{
 		
-			GrupaServis gs = new GrupaServis(sesija);
-			VaspitacServis vs = new VaspitacServis(sesija);
-			Vaspitac v = vs.nadji(1);
-			Set<Vaspitac> set_vaspitaca = new HashSet<Vaspitac>();
-			set_vaspitaca.add(v);
-			TerminServis ts = new TerminServis(sesija);
-			Termin t = ts.vratiTerminPoId(1);
-			Set<Termin> set_termina = new HashSet<Termin>();
-			set_termina.add(t);
-			DijeteServis ds = new DijeteServis(sesija);
-			Dijete d = ds.nadji(1);
-			Set<Dijete> set_djece = new HashSet<Dijete>();
-			set_djece.add(d);
-			Grupa g = new Grupa("imeGrupe", Integer.valueOf(1), Integer.valueOf(20),
-					set_vaspitaca, set_djece, set_termina );
+			Grupa g = new Grupa();
+			g.setKapacitet(10);
+			g.setNaziv("NekiJedinstveniNaziv");
+			g.setRedniBroj(2);
+			
 			gs.dodajGrupu(g);
 			Grupa nadjena = gs.PretragaPoImenu(g.getNaziv());
-			assertEquals(nadjena.getNaziv(), g.getNaziv());
+			assertTrue(nadjena.getNaziv().equals(g.getNaziv()));
+			
+			
 			
 		
 	}
@@ -98,8 +109,8 @@ public class GrupaServisTest {
 	public void testPretragaPoImenu() throws Exception{
 		
 			GrupaServis gs = new GrupaServis(sesija);
-			Grupa g = gs.PretragaPoImenu("imeGrupe");//ovo je ovisno o testu prije
-			assertEquals(g.getNaziv(), "imeGrupe");
+			Grupa g = gs.PretragaPoImenu("Grupica");//ovo je ovisno o testu prije
+			assertEquals(g.getNaziv(), "Grupica");
 		
 	}
 }
