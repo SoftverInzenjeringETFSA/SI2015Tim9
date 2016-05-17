@@ -68,7 +68,7 @@ public class GlavniProzorDirektor {
 	private JTable table_5;
 	private JTable table_6;
 	private JList listGrupe;
-	private boolean pokretanje = false;
+	private Boolean pokretanje = true;
 	final static Logger logger = Logger.getLogger(login.class);
 	private Session s;
 	int id;
@@ -130,47 +130,7 @@ public class GlavniProzorDirektor {
 		tabbedPane.setBounds(10, 42, 702, 239);
 		frmVrti.getContentPane().add(tabbedPane);
 
-		tabbedPane.addChangeListener(new ChangeListener() {
-
-			public void stateChanged(ChangeEvent e) {
-				if (e.getSource() instanceof JTabbedPane) {
-					JTabbedPane pane = (JTabbedPane) e.getSource();
-					// korisnik
-					if (pane.getSelectedIndex() == 0 && !pokretanje) {
-						// popuniTabeluKorisnici();
-					}
-					// djeca
-					else if (pane.getSelectedIndex() == 1) {
-						popuniTabeluDjeca();
-					}
-					// grupe
-					else if (pane.getSelectedIndex() == 2) {
-						postaviListuGrupa();
-					}
-					// aktivnosti
-					else if (pane.getSelectedIndex() == 3) {
-						popuniTabeluAktivnosti();
-					}
-					// vaspitaci
-					else if (pane.getSelectedIndex() == 4) {
-						popuniTabeluVaspitaci();
-					}
-
-					else if (pane.getSelectedIndex() == 5) {
-						refreshujRaspored();
-					}
-
-					else if (pane.getSelectedIndex() == 6) {
-
-					}
-					// pregled svih uplata
-					else {
-
-					}
-
-				}
-			}
-		});
+		
 
 		JPanel panel = new JPanel();
 		tabbedPane.addTab("Korisnici", panel);
@@ -203,6 +163,48 @@ public class GlavniProzorDirektor {
 					JOptionPane.showMessageDialog(null, "Odaberite korisnika u tabeli kojeg je potrebno prikazati");
 			}
 
+		});
+		
+		tabbedPane.addChangeListener(new ChangeListener() {
+
+			public void stateChanged(ChangeEvent e) {
+				if (e.getSource() instanceof JTabbedPane) {
+					JTabbedPane pane = (JTabbedPane) e.getSource();
+					// korisnik
+					if (pane.getSelectedIndex() == 0) {
+						if(!pokretanje) refreshujKorisnike();
+					}
+					// djeca
+					else if (pane.getSelectedIndex() == 1) {
+						popuniTabeluDjeca();
+					}
+					// grupe
+					else if (pane.getSelectedIndex() == 2) {
+						postaviListuGrupa();
+					}
+					// aktivnosti
+					else if (pane.getSelectedIndex() == 3) {
+						popuniTabeluAktivnosti();
+					}
+					// vaspitaci
+					else if (pane.getSelectedIndex() == 4) {
+						popuniTabeluVaspitaci();
+					}
+
+					else if (pane.getSelectedIndex() == 5) {
+						refreshujRaspored();
+					}
+
+					else if (pane.getSelectedIndex() == 6) {
+
+					}
+					// pregled svih uplata
+					else {
+
+					}
+
+				}
+			}
 		});
 
 		JButton btnIzmijeni = new JButton("Izmijeni");
@@ -839,6 +841,7 @@ public class GlavniProzorDirektor {
 	}
 
 	private void refreshujKorisnike() {
+		if(pokretanje == true) pokretanje = false;
 		ArrayList<Korisnik> korisnici = serviskorisnik.dajKorisnike();
 		Object[][] data = new Object[korisnici.size()][];
 		for (int i = 0; i < korisnici.size(); i++)

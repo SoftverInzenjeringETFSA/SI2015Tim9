@@ -137,8 +137,8 @@ public class DodavanjeKorisnika {
 					comboBox.setSelectedIndex(0);
 					ocistiKontrole();
 					JOptionPane.showMessageDialog(null,
-						    "Uspje�no ste dodali novog korisnika",
-						    "Obavje�tenje",
+						    "Uspješno ste dodali novog korisnika",
+						    "Obavještenje",
 						    JOptionPane.PLAIN_MESSAGE);
 				}
 				else if (!validirajFormu(comboBox).equals(""))
@@ -163,23 +163,24 @@ public class DodavanjeKorisnika {
 	
 	private String validirajFormu(JComboBox comboBox){
 		porukaValidacija="";
-		if(textField.getText().equals(""))
+		Pattern patternIme = Pattern.compile("[a-zA-ZĐđŠšČčĆćŽž]{3,}");
+		if(textField.getText().equals("") || !patternIme.matcher(textField.getText()).matches())
 			porukaValidacija="Unesite ime korisnika!";
-		else if(textField_1.getText().equals(""))
+		else if(textField_1.getText().equals("") || !patternIme.matcher(textField_1.getText()).matches())
 			porukaValidacija="Unesite prezime korisnika!";
 		else if(textField_2.getText().equals(""))
-			porukaValidacija="Unesite korisni�ko ime korisnika!";
-		else if(textField_3.getText().equals(""))
+			porukaValidacija="Unesite korisnièko ime korisnika!";
+		else if(textField_3.getText().equals("") || !validirajBroj(textField_3.getText()))
 			porukaValidacija="Unesite broj telefona korisnika!";
 		else if(!validirajBrojTelefona(textField_3.getText()).equals(""))
 			porukaValidacija=validirajBrojTelefona(textField_3.getText());
 		else if(textField_4.getText().equals(""))
-			porukaValidacija="Unesite korisni�ku �ifru korisnika!";
+			porukaValidacija="Unesite korisnièku šifru korisnika!";
 		else if (comboBox.getSelectedIndex()==-1){
 			porukaValidacija="Odaberite privilegiju korisnika!";
 		}
 		else if(textField_2.getText().length()<5 ||textField_2.getText().length()>10)
-			porukaValidacija="Korisni�ko ime mora sadr�avati vi�e od 5 a manje od 10 znakova!";
+			porukaValidacija="Korisnièko ime mora sadržavati više od 5 a manje od 10 znakova!";
 		return porukaValidacija;		
 	}
 
@@ -200,5 +201,21 @@ public class DodavanjeKorisnika {
 		textField_3.setText("");
 		textField_4.setText("");	
 	}
+	
+	public Boolean validirajBroj(String broj) {
+		
+		if (broj.length()!=9) return false;
+		
+		//String[] brojTel = broj.split("");
+		int[] br = new int[broj.length()];
+		
+		for(int i=0; i<broj.length(); i++) {
+			if (!Character.isDigit(broj.charAt(i))) return false;
+			if(i==0 && broj.charAt(i)!='0') return false;
+			if(i==1 && (broj.charAt(i)!='3' && broj.charAt(i)!='6')) return false;
+			if(broj.charAt(i)<'0' && broj.charAt(i)>'9') return false;
+		}
+	    return true;
+}
 	
 }
