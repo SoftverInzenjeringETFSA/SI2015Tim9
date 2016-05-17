@@ -307,34 +307,90 @@ public class EvidentiranjeDjeteta {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				Pattern patternIme = Pattern.compile("[a-zA-ZĐđŠšČčĆćŽž]{3,}"); //mogu se unijeti velika,mala slova,brojevi
+				Pattern patternJmbg = Pattern.compile("^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{9}$");
+				Pattern patternAdresa = Pattern.compile("[a-zA-Z0-9\\,\\sĐđŠšČčĆćŽž]{5,}");
+				Pattern patternDatum  = Pattern.compile("^[0-3]?[0-9]-[0-3]?[0-9]-(?:[0-9]{2})?[0-9]{2}$");
+				
 				// validacije
 				if(textField.getText().length() < 4) {
 					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Ime mora sadr�avati barem 3 slova.");
+					JOptionPane.showMessageDialog(null, "Ime mora sadržavati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
 					return;
+				}
+				else { 
+					if(!patternIme.matcher(textField.getText()).matches()) {
+						frmVrti.setAlwaysOnTop(false);
+						JOptionPane.showMessageDialog(null, "Neispravan unos imena.");
+						frmVrti.setAlwaysOnTop(true);
+						return;
+					}
 				}
 				
 				if(textField_1.getText().length() < 4) {
 					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Prezime mora sadr�avati barem 3 slova.");
+					JOptionPane.showMessageDialog(null, "Prezime mora sadržavati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
 					return;
+				}
+				else { 
+					if(!patternIme.matcher(textField_1.getText()).matches()) {
+						frmVrti.setAlwaysOnTop(false);
+						JOptionPane.showMessageDialog(null, "Neispravan unos prezimena.");
+						frmVrti.setAlwaysOnTop(true);
+						return;
+					}
+				}
+				
+				
+				if(textField_6.getText().isEmpty() || !patternDatum.matcher(textField_6.getText()).matches()) { 
+					frmVrti.setAlwaysOnTop(false);
+					JOptionPane.showMessageDialog(null, "Unesite validan datum.");
+					frmVrti.setAlwaysOnTop(true);
+					return;
+				}
+				else {
+					String[] datum = textField_6.getText().split("-");
+					String ispravanDatum = validirajDatum(datum[0], datum[1], datum[2]);
+					if (!ispravanDatum.isEmpty()) {
+						frmVrti.setAlwaysOnTop(false);
+						JOptionPane.showMessageDialog(null, ispravanDatum);
+						frmVrti.setAlwaysOnTop(true);
+				        return;
+				    }
 				}
 				
 			
 				if(textField_2.getText().length() < 4) {
 					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Ime roditelja mora sadr�avati barem 3 slova.");
+					JOptionPane.showMessageDialog(null, "Ime roditelja mora sadržavati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
+				else { 
+					if(!patternIme.matcher(textField_2.getText()).matches()) {
+						frmVrti.setAlwaysOnTop(false);
+						JOptionPane.showMessageDialog(null, "Neispravan unos imena roditelja.");
+						frmVrti.setAlwaysOnTop(true);
+						return;
+					}
+				}
+				
 				
 				if(textField_3.getText().length() < 4) {
 					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Prezime roditelja mora sadr�avati barem 3 slova.");
+					JOptionPane.showMessageDialog(null, "Prezime roditelja mora sadržavati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
 					return;
+				}
+				else { 
+					if(!patternIme.matcher(textField_3.getText()).matches()) {
+						frmVrti.setAlwaysOnTop(false);
+						JOptionPane.showMessageDialog(null, "Neispravan unos prezimena roditelja.");
+						frmVrti.setAlwaysOnTop(true);
+						return;
+					}
 				}
 				
 				if(textField_4.getText().isEmpty()) {
@@ -343,21 +399,24 @@ public class EvidentiranjeDjeteta {
 					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
+				else { 
+					if(!patternAdresa.matcher(textField_4.getText()).matches()) {
+						frmVrti.setAlwaysOnTop(false);
+						JOptionPane.showMessageDialog(null, "Neispravan unos adrese.");
+						frmVrti.setAlwaysOnTop(true);
+						return;
+					}
+				}
 				
-				if(textField_5.getText().length() <= 8) {
+				if(!validirajBroj(textField_5.getText())) {
 					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Broj telefona nije u ispravnom formatu.");
 					frmVrti.setAlwaysOnTop(true);
 					return;
-				}
+				}	
 				
-				Pattern datum  = Pattern.compile("^[0-3]?[0-9]-[0-3]?[0-9]-(?:[0-9]{2})?[0-9]{2}$");
-				if (!datum.matcher(textField_6.getText()).matches()) {
-					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Datum rodjenja nije u ispravnom datumu.");
-					frmVrti.setAlwaysOnTop(true);
-			        return;
-			    }
+				
+				
 		int diffM;
 		Date upis = (Date)spinner_1.getValue();
 		Date kraj = (Date)spinner_2.getValue();
@@ -462,5 +521,58 @@ public class EvidentiranjeDjeteta {
 		spinner_2.setModel(new SpinnerDateModel(d2, null, null, Calendar.DAY_OF_YEAR));
 		spinner_2.setEditor(new JSpinner.DateEditor(spinner_2, "dd-MM-yyyy"));
 		
+	}
+	
+	public String validirajDatum(String dan, String mjesec, String godina){
+		try {
+			int d = Integer.parseInt(dan);
+			int m = Integer.parseInt(mjesec);
+			int g = Integer.parseInt(godina);	
+			int monthLength[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+			if(g % 400 == 0 || (g % 100 != 0 && g % 4 == 0)) monthLength[1] = 29;
+			
+			Date treunutniDatum = Calendar.getInstance().getTime();
+			
+			if(d < 1 || d > 31) return "Neispravan datum";
+			if (m < 1 || m > 12) return "Neispravan datum";
+			if(d>monthLength[m-1]) return "Neispravan datum";
+			
+			int g2 = treunutniDatum.getYear()+1900;
+			int m2 = treunutniDatum.getMonth()+1;
+			int d2 = treunutniDatum.getDate();
+	
+			if(g < g2-6) return "Dijete je prestaro za vrtic";
+			if(g > g2) return "Dijete jos uvijek nije rodjeno, unesi ispravan datum.";
+			
+			
+			if(g==g2) {
+				if(m>m2) return "Dijete jos uvijek nije rodjeno, unesi ispravan datum.";
+				else {
+					if(d>d2) return "Dijete jos uvijek nije rodjeno, unesi ispravan datum.";
+				}
+			}
+			
+		} catch (Exception e) {
+			logger.error(e);
+			return "Neispravan datum";
+		}
+		
+		return "";
+	}
+	
+	public Boolean validirajBroj(String broj) {
+		
+			if (broj.length()!=9) return false;
+			
+			//String[] brojTel = broj.split("");
+			int[] br = new int[broj.length()];
+			
+			for(int i=0; i<broj.length(); i++) {
+				if (!Character.isDigit(broj.charAt(i))) return false;
+				if(i==0 && broj.charAt(i)!='0') return false;
+				if(i==1 && (broj.charAt(i)!='3' && broj.charAt(i)!='6')) return false;
+				if(broj.charAt(i)<'0' && broj.charAt(i)>'9') return false;
+			}
+		    return true;
 	}
 }
