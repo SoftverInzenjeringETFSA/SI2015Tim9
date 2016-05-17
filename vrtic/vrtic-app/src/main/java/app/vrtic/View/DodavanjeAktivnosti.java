@@ -103,7 +103,16 @@ public class DodavanjeAktivnosti {
 					a.setNaziv(textField.getText());
 					a.setCijena(Integer.valueOf(textField_1.getText()));
 					a.setBrojDjece(0);
-					boolean uspjesnoDodavanje = akts.dodajAktivnost(a);
+					boolean proslo = validiraj(akts);
+					boolean uspjesnoDodavanje=false;
+					if(proslo) uspjesnoDodavanje = akts.dodajAktivnost(a);
+					else {
+						frmVrti.setAlwaysOnTop(false);
+						JOptionPane.showMessageDialog(null, "Aktivnost veæ postoji ili ste unijeli neispravnu cijenu!"); 
+						frmVrti.setAlwaysOnTop(true);
+						textField.setText(null);
+						textField_1.setText(null);
+					}
 					if(uspjesnoDodavanje) { 
 						frmVrti.setAlwaysOnTop(false);
 						JOptionPane.showMessageDialog(null, "Uspješno ste dodali novu aktivnost"); 
@@ -111,7 +120,7 @@ public class DodavanjeAktivnosti {
 						textField.setText(null);
 						textField_1.setText(null);
 					}
-//					frmVrti.dispose();
+ 				
 										
 			}
 
@@ -130,6 +139,14 @@ public class DodavanjeAktivnosti {
 		JLabel lblKm = new JLabel("KM");
 		lblKm.setBounds(352, 114, 46, 14);
 		frmVrti.getContentPane().add(lblKm);
+	}
+	
+	public boolean validiraj(AktivnostServis akts){
+
+		if(akts.provjeriDaLiPostojiAktivnost(textField.getText())==false && (Integer.valueOf(textField_1.getText())>0)){
+			return true;
+		}
+		else return false;
 	}
 
 }

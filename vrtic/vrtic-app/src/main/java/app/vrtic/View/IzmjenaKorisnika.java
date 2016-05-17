@@ -174,6 +174,9 @@ public class IzmjenaKorisnika {
 		}
 		else if(textField_2.getText().length()<5 ||textField_2.getText().length()>10)
 			porukaValidacija="Korisnièko ime mora sadržavati više od 5 a manje od 10 znakova!";
+		else if(korisnikServis.provjeriDaLiPostojiIstiKorisnik(textField_2.getText())){
+			porukaValidacija="Korisnièo ime veæ postoji!";
+		}
 		return porukaValidacija;		
 	}
 	

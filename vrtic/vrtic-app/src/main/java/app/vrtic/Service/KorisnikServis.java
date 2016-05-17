@@ -62,10 +62,10 @@ public class KorisnikServis {
 	}
 
 	public boolean provjeriDaLiPostojiIstiKorisnik(String username){
-		List<Korisnik> k=dajKorisnike();
+		ArrayList<Korisnik> k=dajKorisnike();
 		for(int i=0;i<k.size();i++)
 		{
-			if(k.get(i).getKorisnickoIme()==username) {
+			if(k.get(i).getKorisnickoIme().equals(username)) {
 				return true;
 			}
 		}

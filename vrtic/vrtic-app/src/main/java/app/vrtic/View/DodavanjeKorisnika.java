@@ -163,24 +163,27 @@ public class DodavanjeKorisnika {
 	
 	private String validirajFormu(JComboBox comboBox){
 		porukaValidacija="";
-		Pattern patternIme = Pattern.compile("[a-zA-ZĐđŠšČčĆćŽž]{3,}");
+		Pattern patternIme = Pattern.compile("[a-zA-ZÄ�Ä‘Ĺ ĹˇÄŚÄŤÄ†Ä‡Ĺ˝Ĺľ]{3,}");
 		if(textField.getText().equals("") || !patternIme.matcher(textField.getText()).matches())
 			porukaValidacija="Unesite ime korisnika!";
 		else if(textField_1.getText().equals("") || !patternIme.matcher(textField_1.getText()).matches())
 			porukaValidacija="Unesite prezime korisnika!";
 		else if(textField_2.getText().equals(""))
-			porukaValidacija="Unesite korisnièko ime korisnika!";
+			porukaValidacija="Unesite korisničko ime korisnika!";
 		else if(textField_3.getText().equals("") || !validirajBroj(textField_3.getText()))
 			porukaValidacija="Unesite broj telefona korisnika!";
 		else if(!validirajBrojTelefona(textField_3.getText()).equals(""))
 			porukaValidacija=validirajBrojTelefona(textField_3.getText());
 		else if(textField_4.getText().equals(""))
-			porukaValidacija="Unesite korisnièku šifru korisnika!";
+			porukaValidacija="Unesite korisničku šifru korisnika!";
 		else if (comboBox.getSelectedIndex()==-1){
 			porukaValidacija="Odaberite privilegiju korisnika!";
 		}
 		else if(textField_2.getText().length()<5 ||textField_2.getText().length()>10)
-			porukaValidacija="Korisnièko ime mora sadržavati više od 5 a manje od 10 znakova!";
+			porukaValidacija="Korisničo ime mora sadržavati više od 5 a manje od 10 znakova!";
+		else if(ks.provjeriDaLiPostojiIstiKorisnik(textField_2.getText())){
+			porukaValidacija="Korisničo ime već postoji!";
+		}
 		return porukaValidacija;		
 	}
 

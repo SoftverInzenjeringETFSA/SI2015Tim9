@@ -95,6 +95,17 @@ public class AktivnostServis {
 		return model;
 	}
 	
+	public boolean provjeriDaLiPostojiAktivnost(String naz){
+		ArrayList<Aktivnost> ak=SveAktivnosti();
+		for(int i=0;i<ak.size();i++)
+		{
+			if(ak.get(i).getNaziv().equals(naz)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public DefaultListModel<Aktivnost> vratiAktivnostiDjetetaZaListu(Dijete d){
 		DefaultListModel<Aktivnost> model = new DefaultListModel<Aktivnost>();
 		ArrayList<Aktivnost> niz = vratiAktivnostiDjeteta(d);
