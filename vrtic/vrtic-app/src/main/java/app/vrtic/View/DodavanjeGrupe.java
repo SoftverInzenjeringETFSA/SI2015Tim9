@@ -34,6 +34,7 @@ public class DodavanjeGrupe {
 	private JFrame frmVrti;
 	private Session s;
 	private JTextField nazivGrupe;
+	private GlavniProzorDirektor ref;
 	final static Logger logger = Logger.getLogger(login.class);
 	/**
 	 * Launch the application.
@@ -42,7 +43,7 @@ public class DodavanjeGrupe {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DodavanjeGrupe window = new DodavanjeGrupe(s);
+					DodavanjeGrupe window = new DodavanjeGrupe(s, ref);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -55,8 +56,9 @@ public class DodavanjeGrupe {
 	/**
 	 * Create the application.
 	 */
-	public DodavanjeGrupe(Session s) {
+	public DodavanjeGrupe(Session s, GlavniProzorDirektor ref) {
 		this.s = s;
+		this.ref = ref;
 		initialize();
 	}
 
@@ -161,9 +163,9 @@ public class DodavanjeGrupe {
 					frmVrti.setAlwaysOnTop(true);
 					frmVrti.dispose();
 					
-										
+					ref.postaviListuGrupa();					
 			}
-
+			
 		});
 
 		sviVaspitaci(vaspitac1);

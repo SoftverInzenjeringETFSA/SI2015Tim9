@@ -24,6 +24,7 @@ public class DodavanjeVaspitaca {
 	private JTextField textFieldIme;
 	private JTextField textFieldPrezime;
 	private JTextField textFieldBroj;
+	private GlavniProzorDirektor ref;
 	final static Logger logger = Logger.getLogger(login.class);
 	private JTextField textFieldAdresa;
 	/**
@@ -33,7 +34,7 @@ public class DodavanjeVaspitaca {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DodavanjeVaspitaca window = new DodavanjeVaspitaca(s);
+					DodavanjeVaspitaca window = new DodavanjeVaspitaca(s, ref);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -46,8 +47,9 @@ public class DodavanjeVaspitaca {
 	/**
 	 * Create the application.
 	 */
-	public DodavanjeVaspitaca(Session s) {
+	public DodavanjeVaspitaca(Session s, GlavniProzorDirektor ref) {
 		this.s = s;
+		this.ref = ref;
 		initialize();
 	}
 
@@ -98,7 +100,7 @@ public class DodavanjeVaspitaca {
 		textFieldAdresa.setBounds(160, 191, 182, 20);
 		frmVrti.getContentPane().add(textFieldAdresa);
 		
-		JLabel labelAdresa = new JLabel("Adresa prebivali�ta:");
+		JLabel labelAdresa = new JLabel("Adresa prebivališta:");
 		labelAdresa.setBounds(12, 194, 126, 14);
 		frmVrti.getContentPane().add(labelAdresa);
 		
@@ -106,16 +108,42 @@ public class DodavanjeVaspitaca {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(textFieldPrezime.getText().length() < 4) {
+				Pattern patternIme = Pattern.compile("[a-zA-ZĐđŠšČčĆćŽž ]{3,}"); //mogu se unijeti velika,mala slova,brojevi
+				if(textFieldIme.getText().length() < 4) {
 					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Ime mora sadr�avati barem 3 slova.");
+					JOptionPane.showMessageDialog(null, "Ime mora sadržavati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
 					return;
+				}
+				else { 
+					if(!patternIme.matcher(textFieldIme.getText()).matches()) {
+						frmVrti.setAlwaysOnTop(false);
+						JOptionPane.showMessageDialog(null, "Neispravan unos imena.");
+						frmVrti.setAlwaysOnTop(true);
+						return;
+					}
 				}
 				
 				if(textFieldPrezime.getText().length() < 4) {
 					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Prezime mora sadr�avati barem 3 slova.");
+					JOptionPane.showMessageDialog(null, "Prezime mora sadržavati barem 3 slova.");
+					frmVrti.setAlwaysOnTop(true);
+					return;
+				}
+				else { 
+					if(!patternIme.matcher(textFieldPrezime.getText()).matches()) {
+						frmVrti.setAlwaysOnTop(false);
+						JOptionPane.showMessageDialog(null, "Neispravan unos imena.");
+						frmVrti.setAlwaysOnTop(true);
+						return;
+					}
+				}
+				
+				// Pattern patternTelefon = Pattern.compile("(\\+|00)?387\\d{2}\\-?\\d{3,4}\\-?\\d{3,4}");
+				// dodati validaciju za broj telefona
+				if(!validirajBroj(textFieldBroj.getText())) {
+					frmVrti.setAlwaysOnTop(false);
+					JOptionPane.showMessageDialog(null, "Broj telefona nije u ispravnom formatu.");
 					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
@@ -126,15 +154,16 @@ public class DodavanjeVaspitaca {
 					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
-				
-				// Pattern patternTelefon = Pattern.compile("(\\+|00)?387\\d{2}\\-?\\d{3,4}\\-?\\d{3,4}");
-				// dodati validaciju za broj telefona
-				if(textFieldBroj.getText().length() <= 8) {
-					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Broj telefona nije u ispravnom formatu.");
-					frmVrti.setAlwaysOnTop(true);
-					return;
+				else { 
+					if(!patternIme.matcher(textFieldAdresa.getText()).matches()) {
+						frmVrti.setAlwaysOnTop(false);
+						JOptionPane.showMessageDialog(null, "Neispravan unos imena.");
+						frmVrti.setAlwaysOnTop(true);
+						return;
+					}
 				}
+				
+				
 				
 				VaspitacServis vs = new VaspitacServis(s);
 				
@@ -149,7 +178,24 @@ public class DodavanjeVaspitaca {
 				JOptionPane.showMessageDialog(null, "Uspjesno ste dodali novog vaspitaca.");
 				frmVrti.setAlwaysOnTop(true);
 				frmVrti.dispose();
+				ref.popuniTabeluVaspitaci();
 			}
 		});
 	}
+	
+	public Boolean validirajBroj(String broj) {
+		
+		if (broj.length()!=9) return false;
+		
+		//String[] brojTel = broj.split("");
+		int[] br = new int[broj.length()];
+		
+		for(int i=0; i<broj.length(); i++) {
+			if (!Character.isDigit(broj.charAt(i))) return false;
+			if(i==0 && broj.charAt(i)!='0') return false;
+			if(i==1 && (broj.charAt(i)!='3' && broj.charAt(i)!='6')) return false;
+			if(broj.charAt(i)<'0' && broj.charAt(i)>'9') return false;
+		}
+	    return true;
+}
 }

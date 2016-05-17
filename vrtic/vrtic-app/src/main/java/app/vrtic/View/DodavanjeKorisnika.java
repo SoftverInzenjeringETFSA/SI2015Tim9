@@ -27,6 +27,7 @@ public class DodavanjeKorisnika {
 	private String porukaValidacija;
 	final static Logger logger = Logger.getLogger(login.class);
 	private Session s;
+	private GlavniProzorDirektor ref;
 	private JFrame frmVrti;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -41,7 +42,7 @@ public class DodavanjeKorisnika {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DodavanjeKorisnika window = new DodavanjeKorisnika(s);
+					DodavanjeKorisnika window = new DodavanjeKorisnika(s, ref);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -54,8 +55,9 @@ public class DodavanjeKorisnika {
 	/**
 	 * Create the application.
 	 */
-	public DodavanjeKorisnika(Session s) {
+	public DodavanjeKorisnika(Session s, GlavniProzorDirektor ref) {
 		this.s = s;
+		this.ref = ref;
 		this.ks=new KorisnikServis(s);		
 		initialize();
 	}
@@ -146,6 +148,7 @@ public class DodavanjeKorisnika {
 						    porukaValidacija,
 						    "Warning",
 						    JOptionPane.WARNING_MESSAGE);
+				ref.refreshujKorisnike();
 			}
 		});
 		btnIzmijeni.setBounds(322, 281, 126, 23);
@@ -163,7 +166,7 @@ public class DodavanjeKorisnika {
 	
 	private String validirajFormu(JComboBox comboBox){
 		porukaValidacija="";
-		Pattern patternIme = Pattern.compile("[a-zA-ZÄ�Ä‘Ĺ ĹˇÄŚÄŤÄ†Ä‡Ĺ˝Ĺľ]{3,}");
+		Pattern patternIme = Pattern.compile("[a-zA-ZĐđŠšČčĆćŽž ]{3,}");
 		if(textField.getText().equals("") || !patternIme.matcher(textField.getText()).matches())
 			porukaValidacija="Unesite ime korisnika!";
 		else if(textField_1.getText().equals("") || !patternIme.matcher(textField_1.getText()).matches())
@@ -219,6 +222,6 @@ public class DodavanjeKorisnika {
 			if(broj.charAt(i)<'0' && broj.charAt(i)>'9') return false;
 		}
 	    return true;
-}
+	}
 	
 }

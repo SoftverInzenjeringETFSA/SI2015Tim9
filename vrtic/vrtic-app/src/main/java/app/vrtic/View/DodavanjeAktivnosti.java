@@ -19,6 +19,7 @@ import app.vrtic.Service.AktivnostServis;
 public class DodavanjeAktivnosti {
 	final static Logger logger = Logger.getLogger(login.class);
 	private Session s;
+	private GlavniProzorDirektor ref;
 	private JFrame frmVrti;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -30,7 +31,7 @@ public class DodavanjeAktivnosti {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DodavanjeAktivnosti window = new DodavanjeAktivnosti(s);
+					DodavanjeAktivnosti window = new DodavanjeAktivnosti(s, ref);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -43,8 +44,9 @@ public class DodavanjeAktivnosti {
 	/**
 	 * Create the application.
 	 */
-	public DodavanjeAktivnosti(Session s) {
+	public DodavanjeAktivnosti(Session s, GlavniProzorDirektor ref) {
 		this.s = s;
+		this.ref = ref;
 		initialize();
 	}
 
@@ -120,6 +122,7 @@ public class DodavanjeAktivnosti {
 						textField.setText(null);
 						textField_1.setText(null);
 					}
+					ref.popuniTabeluAktivnosti();
  				
 										
 			}

@@ -307,9 +307,9 @@ public class EvidentiranjeDjeteta {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				Pattern patternIme = Pattern.compile("[a-zA-ZĐđŠšČčĆćŽž]{3,}"); //mogu se unijeti velika,mala slova,brojevi
+				Pattern patternIme = Pattern.compile("[a-zA-ZĐđŠšČčĆćŽž ]{3,}"); //mogu se unijeti velika,mala slova,brojevi
 				Pattern patternJmbg = Pattern.compile("^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{9}$");
-				Pattern patternAdresa = Pattern.compile("[a-zA-Z0-9\\,\\sĐđŠšČčĆćŽž]{5,}");
+				Pattern patternAdresa = Pattern.compile("[a-zA-Z0-9\\,\\sĐđŠšČčĆćŽž ]{5,}");
 				Pattern patternDatum  = Pattern.compile("^[0-3]?[0-9]-[0-3]?[0-9]-(?:[0-9]{2})?[0-9]{2}$");
 				
 				// validacije
@@ -489,8 +489,9 @@ public class EvidentiranjeDjeteta {
 		    	//	transakcija.commit(); 
 		    		ads.dodajAktivnostDijete(ad);
 		    		
+		    		
 		    	 }
-				//refreshableRoditelj.refreshajTabeluDjece();
+				refreshableRoditelj.refreshajTabeluDjece();
 			zs.generisiZaduzenjeZaPeriod(id,((Date)spinner_1.getValue()).getMonth(),((Date)spinner_1.getValue()).getYear());	
 			//zs.generisiZaduzenje(id,2011);
 				//refreshableRoditelj.refreshajTabeluDjece();
@@ -498,6 +499,7 @@ public class EvidentiranjeDjeteta {
 			JOptionPane.showMessageDialog(null,"Uspjesno ste evidentirali dijete");	
 			frmVrti.setAlwaysOnTop(true);
 			obrisiPolja();
+			refreshableRoditelj.refreshajTabeluDjece();
 			}
 		});
 	

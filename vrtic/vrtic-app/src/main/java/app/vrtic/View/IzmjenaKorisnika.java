@@ -26,7 +26,7 @@ public class IzmjenaKorisnika {
     private KorisnikServis korisnikServis;
     private Korisnik k;
     private String porukaValidacija;
-    
+    private GlavniProzorDirektor ref;
 	private JFrame frmVrti;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -40,7 +40,7 @@ public class IzmjenaKorisnika {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					IzmjenaKorisnika window = new IzmjenaKorisnika(s,k);
+					IzmjenaKorisnika window = new IzmjenaKorisnika(s,k, ref);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -53,8 +53,9 @@ public class IzmjenaKorisnika {
 	/**
 	 * Create the application.
 	 */
-	public IzmjenaKorisnika(Session s,Korisnik kor) {
+	public IzmjenaKorisnika(Session s,Korisnik kor, GlavniProzorDirektor ref) {
 		this.s = s;
+		this.ref = ref;
 		k=kor;
 		korisnikServis=new KorisnikServis(this.s);
 		initialize();
@@ -142,15 +143,16 @@ public class IzmjenaKorisnika {
 					}			
 					korisnikServis.izmjeniKorisnika(k);
 					JOptionPane.showMessageDialog(null,
-						    "Uspje�no ste izmjenili korisnika",
-						    "Obavje�tenje",
+						    "Uspješno ste izmjenili korisnika",
+						    "Obavještenje",
 						    JOptionPane.PLAIN_MESSAGE);
 				}
 				else if (!validirajFormu(comboBox).equals(""))
 					JOptionPane.showMessageDialog(null,
 						    porukaValidacija,
 						    "Warning",
-						    JOptionPane.WARNING_MESSAGE);				
+						    JOptionPane.WARNING_MESSAGE);	
+				ref.refreshujKorisnike();
 			}
 		});
 		btnIzmijeni.setBounds(322, 250, 126, 23);
@@ -159,25 +161,27 @@ public class IzmjenaKorisnika {
 	
 	private String validirajFormu(JComboBox comboBox){
 		porukaValidacija="";
-		if(textField.getText().equals(""))
+		Pattern patternIme = Pattern.compile("[a-zA-ZĐđŠšČčĆćŽž ]{3,}");
+		if(textField.getText().equals("") || !patternIme.matcher(textField.getText()).matches())
 			porukaValidacija="Unesite ime korisnika!";
-		else if(textField_1.getText().equals(""))
+		else if(textField_1.getText().equals("") || !patternIme.matcher(textField_1.getText()).matches())
 			porukaValidacija="Unesite prezime korisnika!";
 		else if(textField_2.getText().equals(""))
-			porukaValidacija="Unesite korisni�ko ime korisnika!";
-		else if(textField_3.getText().equals(""))
+			porukaValidacija="Unesite korisničko ime korisnika!";
+		else if(textField_3.getText().equals("") || !validirajBroj(textField_3.getText()))
 			porukaValidacija="Unesite broj telefona korisnika!";
 		else if(!validirajBrojTelefona(textField_3.getText()).equals(""))
 			porukaValidacija=validirajBrojTelefona(textField_3.getText());
+		
 		else if (comboBox.getSelectedIndex()==-1){
 			porukaValidacija="Odaberite privilegiju korisnika!";
 		}
 		else if(textField_2.getText().length()<5 ||textField_2.getText().length()>10)
-			porukaValidacija="Korisni�ko ime mora sadr�avati vi�e od 5 a manje od 10 znakova!";
-		else if(korisnikServis.provjeriDaLiPostojiIstiKorisnik(textField_2.getText())){
-			porukaValidacija="Korisni�o ime ve� postoji!";
+			porukaValidacija="Korisničo ime mora sadržavati više od 5 a manje od 10 znakova!";
+		else if(!korisnikServis.provjeriDaLiPostojiIstiKorisnik(textField_2.getText())){
+			porukaValidacija="Korisničo ime ne postoji!";
 		}
-		return porukaValidacija;		
+		return porukaValidacija;
 	}
 	
 	private  String validirajBrojTelefona(String str)
@@ -189,6 +193,22 @@ public class IzmjenaKorisnika {
 	    poruka="Broj telefona bi se trebao sastojati od 9 ili 10 cifara";	 
 	     return poruka;
 	 }
+	
+	public Boolean validirajBroj(String broj) {
+		
+		if (broj.length()!=9) return false;
+		
+		//String[] brojTel = broj.split("");
+		int[] br = new int[broj.length()];
+		
+		for(int i=0; i<broj.length(); i++) {
+			if (!Character.isDigit(broj.charAt(i))) return false;
+			if(i==0 && broj.charAt(i)!='0') return false;
+			if(i==1 && (broj.charAt(i)!='3' && broj.charAt(i)!='6')) return false;
+			if(broj.charAt(i)<'0' && broj.charAt(i)>'9') return false;
+		}
+	    return true;
+}
 
 }
 

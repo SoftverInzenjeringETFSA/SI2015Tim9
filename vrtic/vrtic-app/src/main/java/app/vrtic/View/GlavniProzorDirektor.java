@@ -171,6 +171,7 @@ public class GlavniProzorDirektor {
 				if (e.getSource() instanceof JTabbedPane) {
 					JTabbedPane pane = (JTabbedPane) e.getSource();
 					// korisnik
+					
 					if (pane.getSelectedIndex() == 0) {
 						if(!pokretanje) refreshujKorisnike();
 					}
@@ -190,7 +191,7 @@ public class GlavniProzorDirektor {
 					else if (pane.getSelectedIndex() == 4) {
 						popuniTabeluVaspitaci();
 					}
-
+					//termini/raspored
 					else if (pane.getSelectedIndex() == 5) {
 						refreshujRaspored();
 					}
@@ -215,7 +216,7 @@ public class GlavniProzorDirektor {
 				if (table_0.getSelectedRow() != -1) {
 					Korisnik k = serviskorisnik
 							.dajKorisnika((Integer) table_0.getModel().getValueAt(table_0.getSelectedRow(), 2));
-					IzmjenaKorisnika novifrejm = new IzmjenaKorisnika(s, k);
+					IzmjenaKorisnika novifrejm = new IzmjenaKorisnika(s, k, ref);
 					novifrejm.OtvoriFormu();
 				} else
 					JOptionPane.showMessageDialog(null, "Odaberite korisnika u tabeli kojeg je potrebno izmjeniti");
@@ -245,7 +246,7 @@ public class GlavniProzorDirektor {
 		panel.add(btnDodajKorisnika);
 		btnDodajKorisnika.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DodavanjeKorisnika novifrejm = new DodavanjeKorisnika(s);
+				DodavanjeKorisnika novifrejm = new DodavanjeKorisnika(s, ref);
 				novifrejm.OtvoriFormu();
 				refreshujKorisnike();
 
@@ -419,7 +420,7 @@ public class GlavniProzorDirektor {
 		});
 		btnDodajGrupu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DodavanjeGrupe novifrejm = new DodavanjeGrupe(s);
+				DodavanjeGrupe novifrejm = new DodavanjeGrupe(s, ref);
 				novifrejm.OtvoriFormu();
 
 			}
@@ -486,7 +487,7 @@ public class GlavniProzorDirektor {
 		panel_3.add(btnDodajAktivnost);
 		btnDodajAktivnost.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DodavanjeAktivnosti novifrejm = new DodavanjeAktivnosti(s);
+				DodavanjeAktivnosti novifrejm = new DodavanjeAktivnosti(s, ref);
 				novifrejm.OtvoriFormu();
 
 			}
@@ -516,7 +517,7 @@ public class GlavniProzorDirektor {
 		panel_4.add(btnDodajVaspitaca);
 		btnDodajVaspitaca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DodavanjeVaspitaca novifrejm = new DodavanjeVaspitaca(s);
+				DodavanjeVaspitaca novifrejm = new DodavanjeVaspitaca(s, ref);
 				novifrejm.OtvoriFormu();
 			}
 
@@ -565,7 +566,7 @@ public class GlavniProzorDirektor {
 		btnKreirajRaspored.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				DodavanjeTermina novifrejm = new DodavanjeTermina(s);
+				DodavanjeTermina novifrejm = new DodavanjeTermina(s, ref);
 				novifrejm.OtvoriFormu();
 
 			}
@@ -794,7 +795,13 @@ public class GlavniProzorDirektor {
 		Object[][] data = new Object[aktivnosti.size()][];
 		for (int i = 0; i < aktivnosti.size(); i++) {
 			String naziv = (String) aktivnosti.get(i).getNaziv();
-			String broj = "" + (aktivnosti.get(i).getAktivnostidjecas().size());
+			String broj="0";
+			try  {
+				 broj = "" + (aktivnosti.get(i).getAktivnostidjecas().size());
+			} catch (NullPointerException e) {
+				logger.info(e);
+			}
+			
 
 			data[i] = new Object[] { naziv, broj };
 		}
@@ -840,7 +847,7 @@ public class GlavniProzorDirektor {
 
 	}
 
-	private void refreshujKorisnike() {
+	public void refreshujKorisnike() {
 		if(pokretanje == true) pokretanje = false;
 		ArrayList<Korisnik> korisnici = serviskorisnik.dajKorisnike();
 		Object[][] data = new Object[korisnici.size()][];

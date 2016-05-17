@@ -27,6 +27,7 @@ import javax.swing.JFormattedTextField;
 public class DodavanjeTermina {
 	final static Logger logger = Logger.getLogger(login.class);
 	private Session s;
+	private GlavniProzorDirektor ref;
 	private JFrame frmVrti;
 	
 
@@ -37,7 +38,7 @@ public class DodavanjeTermina {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DodavanjeTermina window = new DodavanjeTermina(s);
+					DodavanjeTermina window = new DodavanjeTermina(s, ref);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
@@ -50,8 +51,9 @@ public class DodavanjeTermina {
 	/**
 	 * Create the application.
 	 */
-	public DodavanjeTermina(Session s) {
+	public DodavanjeTermina(Session s, GlavniProzorDirektor ref) {
 		this.s = s;
+		this.ref = ref;
 		initialize();
 	}
 
@@ -186,6 +188,7 @@ public class DodavanjeTermina {
 				frmVrti.setAlwaysOnTop(false);
 				JOptionPane.showMessageDialog(null, "Dodali ste novi termin u raspored!");
 				frmVrti.setAlwaysOnTop(true);
+				ref.refreshujRaspored();
 				}
 									
 			}
