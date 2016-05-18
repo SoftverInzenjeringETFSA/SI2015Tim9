@@ -68,4 +68,26 @@ public class GrupaServis {
 		transakcija.commit();
 		return akt;
 	}
+	
+	public boolean provjeriDaLiPostojiIstiNaziv(String naziv){
+		ArrayList<Grupa> k = sveGrupe();
+		for(int i=0;i<k.size();i++)
+		{
+			if(k.get(i).getNaziv().equals(naziv)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean provjeriDaLiPostojiIstiRedniBroj(String rb){
+		ArrayList<Grupa> k = sveGrupe();
+		for(int i=0;i<k.size();i++)
+		{
+			if(k.get(i).getRedniBroj() == Integer.valueOf(rb)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

@@ -176,13 +176,12 @@ public class DodavanjeTermina {
 			//    NoviTermin.setGrupa(gs.PretragaPoImenu(grupeComboBox.getSelectedItem().toString()));
 			//    NoviTermin.setAktivnost(as.pretragaPoNazivu(comboBox.getSelectedItem().toString()));
 				if(DaLiJeIspravnoVrijeme(VrijemePocetka.getText())==false || DaLiJeIspravnoVrijeme(VrijemeZavrsetka.getText())==false) JOptionPane.showMessageDialog(null, "Neispravan format vremena!");
-				if(DaLiJeIspravnaSatnica(VrijemeZavrsetka.getText(), VrijemePocetka.getText())) JOptionPane.showMessageDialog(null, "Neispravna satnica!");
+				if(DaLiJeIspravnaSatnica(VrijemePocetka.getText(), VrijemeZavrsetka.getText())==false) JOptionPane.showMessageDialog(null, "Neispravna satnica!");
 				NoviTermin.setVrijemePocetka(VrijemePocetka.getText());
 				NoviTermin.setVrijemeZavrsetka(VrijemeZavrsetka.getText());
 				TerminServis ts = new TerminServis(s);
-				if(DaLiJeIspravnoVrijeme(VrijemePocetka.getText()) && DaLiJeIspravnoVrijeme(VrijemeZavrsetka.getText())){
-					ts.dodajTermin(NoviTermin);
-				
+				if(DaLiJeIspravnoVrijeme(VrijemePocetka.getText()) && DaLiJeIspravnoVrijeme(VrijemeZavrsetka.getText()) && DaLiJeIspravnaSatnica(VrijemePocetka.getText(), VrijemeZavrsetka.getText())){
+				ts.dodajTermin(NoviTermin);
 				VrijemePocetka.setText("");
 				VrijemeZavrsetka.setText("");
 				frmVrti.setAlwaysOnTop(false);

@@ -97,11 +97,13 @@ public class DodavanjeGrupe {
 		frmVrti.getContentPane().add(lblVaspita_1);
 		
 		final JComboBox vaspitac1 = new JComboBox();
+		vaspitac1.setSelectedIndex(-1);
 		vaspitac1.setToolTipText("Odabir prvog vaspita\u010Da za ovu grupu");
 		vaspitac1.setBounds(217, 174, 173, 20);
 		frmVrti.getContentPane().add(vaspitac1);
 		
 		final JComboBox vaspitac2 = new JComboBox();
+		vaspitac2.setSelectedIndex(-1);
 		vaspitac2.setToolTipText("Odabir drugog vaspita\u010Da za ovu grupu");
 		vaspitac2.setBounds(217, 211, 173, 20);
 		frmVrti.getContentPane().add(vaspitac2);
@@ -113,7 +115,7 @@ public class DodavanjeGrupe {
 		frmVrti.getContentPane().add(kapacitetGrupe);
 		
 		final JSpinner redniBrojGrupe = new JSpinner();
-		redniBrojGrupe.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+		redniBrojGrupe.setModel(new SpinnerNumberModel(1, 1, 20, 1));
 		redniBrojGrupe.setBounds(217, 101, 92, 20);
 		frmVrti.getContentPane().add(redniBrojGrupe);
 		
@@ -131,6 +133,7 @@ public class DodavanjeGrupe {
 			public void actionPerformed(ActionEvent e)
 			{
 					Grupa g = new Grupa();
+					if(validiraj(nazivGrupe.getText(), kapacitetGrupe.getValue().toString()) && vaspitac1.getSelectedIndex()!=-1 && vaspitac2.getSelectedIndex()!=-1){
 					g.setNaziv(nazivGrupe.getText());
 					g.setKapacitet((Integer)kapacitetGrupe.getValue());
 					g.setRedniBroj((Integer)redniBrojGrupe.getValue());
@@ -163,7 +166,13 @@ public class DodavanjeGrupe {
 					frmVrti.setAlwaysOnTop(true);
 					frmVrti.dispose();
 					
-					ref.postaviListuGrupa();					
+					ref.postaviListuGrupa();	
+					}
+					else{
+					frmVrti.setAlwaysOnTop(false);
+					JOptionPane.showMessageDialog(null, "Naziv grupe ili redni broj veæ postoje!");
+					frmVrti.setAlwaysOnTop(true);
+					}
 			}
 			
 		});
@@ -188,4 +197,13 @@ public class DodavanjeGrupe {
 		}
 		
 	}
+	
+	public boolean validiraj(String naziv, String redniBroj){
+		GrupaServis gs = new GrupaServis(s);
+		if(gs.provjeriDaLiPostojiIstiNaziv(naziv) || gs.provjeriDaLiPostojiIstiRedniBroj(redniBroj)){
+			return false;
+		}
+		else return true;
+	}
+	
 }
