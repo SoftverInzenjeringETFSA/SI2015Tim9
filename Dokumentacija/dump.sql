@@ -15,7 +15,7 @@ INSERT INTO `korisnik` (`idKorisnika`, `Ime`, `Prezime`, `KorisnickoIme`, `Sifra
 INSERT INTO `termin` (`idTermin`, `idAktivnosti`, `idGrupe`, `vrijemePocetka`, `vrijemeZavrsetka`, `dan`) VALUES (NULL, '1', '2', '12:00', '13:00', 'utorak'), (NULL, '2', '1', '13:00', '14:00', 'srijeda'), (NULL, '3', '1', '13:00', '14:00', 'utorak');
 
 INSERT INTO `uplata` (`idUplate`, `DatumUplate`, `VisinaUplate`, `idDijete`, `zaMjesec`, `zaGodinu`) VALUES (NULL, '2016-05-11', '200', '1', '5', '2015');
-INSERT INTO `vaspitac` (`idVaspitac`, `Ime`, `Prezime`, `BrojTelefona`, `AdresaPrebivalista`, `idGrupe`) VALUES (NULL, 'Dzenana', 'Kapetanovic', '061123333', 'mihrivode 134', '1'), (NULL, 'Ramiza', 'Ramizic', '061123333', 'mihrivode 134', '2'), (NULL, 'Hamida', 'Hamidic', '061123333', 'mihrivode 134', '2'), (NULL, 'Hamdo', 'Hamdic', '061123333', 'mihrivode 134', '3', (NULL, 'Ramo', 'Ramic', '061123333', 'mihrivode 134', NULL);
+INSERT INTO `vaspitac` (`idVaspitac`, `Ime`, `Prezime`, `BrojTelefona`, `AdresaPrebivalista`, `idGrupe`) VALUES (NULL, 'Dzenana', 'Kapetanovic', '061123333', 'mihrivode 134', '1'), (NULL, 'Ramiza', 'Ramizic', '061123333', 'mihrivode 134', '2'), (NULL, 'Hamida', 'Hamidic', '061123333', 'mihrivode 134', '2'), (NULL, 'Hamdo', 'Hamdic', '061123333', 'mihrivode 134', '3'), (NULL, 'Ramo', 'Ramic', '061123333', 'mihrivode 134', NULL);
 INSERT INTO `zaduzenja` (`idZaduzenja`, `idDijete`, `mjesec`, `godina`) VALUES (NULL, '1', 'Januar', '2016'), (NULL, '1', 'Februar', '2016'), (NULL, '1', 'Mart', '2016'), (NULL, '1', 'April', '2016'); 
 
 INSERT INTO `tim9`.`aktivnostidjeca` (`idDijete`, `idAktivnosti`) VALUES ('1', '1'), ('1', '2'), ('2', '1'), ('2', '2');
