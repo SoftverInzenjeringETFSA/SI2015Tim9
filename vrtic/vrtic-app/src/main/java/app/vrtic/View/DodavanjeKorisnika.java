@@ -190,7 +190,7 @@ public class DodavanjeKorisnika {
 		else if(textField_2.getText().length()<5 ||textField_2.getText().length()>10)
 			porukaValidacija="Korisničo ime mora sadržavati više od 5 a manje od 10 znakova!";
 		else if(ks.provjeriDaLiPostojiIstiKorisnik(textField_2.getText())){
-			porukaValidacija="Korisničo ime već postoji!";
+			porukaValidacija="Korisničko ime već postoji!";
 		}
 		return porukaValidacija;		
 	}

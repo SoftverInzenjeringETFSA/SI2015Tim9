@@ -32,6 +32,7 @@ public class IzmjenaKorisnika {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
+	private String trenutniUsername; 
 	final static Logger logger = Logger.getLogger(login.class);
 	/**
 	 * Launch the application.
@@ -53,7 +54,7 @@ public class IzmjenaKorisnika {
 	/**
 	 * Create the application.
 	 */
-	public IzmjenaKorisnika(Session s,Korisnik kor, GlavniProzorDirektor ref) {
+	public IzmjenaKorisnika(Session s, Korisnik kor, GlavniProzorDirektor ref) {
 		this.s = s;
 		this.ref = ref;
 		k=kor;
@@ -65,6 +66,7 @@ public class IzmjenaKorisnika {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		trenutniUsername = k.getKorisnickoIme();
 		frmVrti = new JFrame();
 		frmVrti.setTitle("Izmjena Korisnika");
 		frmVrti.setBounds(100, 100, 474, 323);
@@ -143,8 +145,8 @@ public class IzmjenaKorisnika {
 					}			
 					korisnikServis.izmjeniKorisnika(k);
 					JOptionPane.showMessageDialog(null,
-						    "Uspješno ste izmjenili korisnika",
-						    "Obavještenje",
+						    "Uspjesno ste izmjenili korisnika",
+						    "Obavjestenje",
 						    JOptionPane.PLAIN_MESSAGE);
 				}
 				else if (!validirajFormu(comboBox).equals(""))
@@ -161,13 +163,13 @@ public class IzmjenaKorisnika {
 	
 	private String validirajFormu(JComboBox comboBox){
 		porukaValidacija="";
-		Pattern patternIme = Pattern.compile("[a-zA-ZĐđŠšČčĆćŽž ]{3,}");
+		Pattern patternIme = Pattern.compile("[a-zA-ZÄ�Ä‘Å Å¡ÄŒÄ�Ä†Ä‡Å½Å¾ ]{3,}");
 		if(textField.getText().equals("") || !patternIme.matcher(textField.getText()).matches())
 			porukaValidacija="Unesite ime korisnika!";
 		else if(textField_1.getText().equals("") || !patternIme.matcher(textField_1.getText()).matches())
 			porukaValidacija="Unesite prezime korisnika!";
 		else if(textField_2.getText().equals(""))
-			porukaValidacija="Unesite korisničko ime korisnika!";
+			porukaValidacija="Unesite korisnicko ime korisnika!";
 		else if(textField_3.getText().equals("") || !validirajBroj(textField_3.getText()))
 			porukaValidacija="Unesite broj telefona korisnika!";
 		else if(!validirajBrojTelefona(textField_3.getText()).equals(""))
@@ -177,9 +179,9 @@ public class IzmjenaKorisnika {
 			porukaValidacija="Odaberite privilegiju korisnika!";
 		}
 		else if(textField_2.getText().length()<5 ||textField_2.getText().length()>10)
-			porukaValidacija="Korisničo ime mora sadržavati više od 5 a manje od 10 znakova!";
-		else if(!korisnikServis.provjeriDaLiPostojiIstiKorisnik(textField_2.getText())){
-			porukaValidacija="Korisničo ime ne postoji!";
+			porukaValidacija="Korisnicko ime mora sadrzavati vise od 5 a manje od 10 znakova!";
+		else if(!trenutniUsername.equals(textField_2.getText()) && korisnikServis.provjeriDaLiPostojiIstiKorisnik(textField_2.getText())){
+			porukaValidacija="Korisnicko ime vec postoji!";
 		}
 		return porukaValidacija;
 	}
