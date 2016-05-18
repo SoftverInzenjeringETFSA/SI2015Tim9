@@ -362,7 +362,7 @@ public class EvidentiranjeDjeteta {
 				}
 				
 			
-				if(textField_2.getText().length() < 4) {
+				if(textField_2.getText().length() < 3) {
 					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Ime roditelja mora sadrÅ¾avati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
@@ -378,7 +378,7 @@ public class EvidentiranjeDjeteta {
 				}
 				
 				
-				if(textField_3.getText().length() < 4) {
+				if(textField_3.getText().length() < 3) {
 					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Prezime roditelja mora sadrÅ¾avati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
@@ -410,7 +410,7 @@ public class EvidentiranjeDjeteta {
 				
 				if(!validirajBroj(textField_5.getText())) {
 					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Broj telefona nije u ispravnom formatu.");
+					JOptionPane.showMessageDialog(null, "Broj telefona nije u ispravnom formatu.Zahtjeva se u formatu:06xxxxxxx ili 03xxxxxxx,pri cemu je duzina 10 ili 9 cifara.");
 					frmVrti.setAlwaysOnTop(true);
 					return;
 				}	
@@ -561,10 +561,11 @@ public class EvidentiranjeDjeteta {
 		
 		return "";
 	}
-	
+
 	public Boolean validirajBroj(String broj) {
 		
-			if (broj.length()!=9) return false;
+			if (broj.length()>10) return false;
+			if (broj.length()<9) return false;
 			
 			//String[] brojTel = broj.split("");
 			int[] br = new int[broj.length()];
