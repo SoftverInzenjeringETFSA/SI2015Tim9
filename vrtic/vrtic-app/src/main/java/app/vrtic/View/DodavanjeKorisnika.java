@@ -174,7 +174,7 @@ public class DodavanjeKorisnika {
 		else if(textField_2.getText().equals(""))
 			porukaValidacija="Unesite korisničko ime korisnika!";
 		else if(textField_3.getText().equals("") || !validirajBroj(textField_3.getText()))
-			porukaValidacija="Unesite broj telefona korisnika!";
+			porukaValidacija="Unesite broj telefona korisnika!\nBroj treba da bude u formatu 06xxxxxxx ili 03xxxxxxx";
 		else if(!validirajBrojTelefona(textField_3.getText()).equals(""))
 			porukaValidacija=validirajBrojTelefona(textField_3.getText());
 		else if(textField_4.getText().equals(""))
