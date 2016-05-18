@@ -233,7 +233,7 @@ private JTextField textField_6;
 				Pattern patternDatum  = Pattern.compile("^[0-3]?[0-9]-[0-3]?[0-9]-(?:[0-9]{2})?[0-9]{2}$");
 				
 				// validacije
-				if(textField.getText().length() < 4) {
+				if(textField.getText().length() < 3) {
 					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Ime mora sadrÅ¾avati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
@@ -248,7 +248,7 @@ private JTextField textField_6;
 					}
 				}
 				
-				if(textField_1.getText().length() < 4) {
+				if(textField_1.getText().length() < 3) {
 					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Prezime mora sadrÅ¾avati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
@@ -282,7 +282,7 @@ private JTextField textField_6;
 				}
 				
 			
-				if(textField_3.getText().length() < 4) {
+				if(textField_3.getText().length() < 3) {
 					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Ime roditelja mora sadrÅ¾avati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
@@ -298,7 +298,7 @@ private JTextField textField_6;
 				}
 				
 				
-				if(textField_4.getText().length() < 4) {
+				if(textField_4.getText().length() < 3) {
 					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Prezime roditelja mora sadrÅ¾avati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
@@ -330,7 +330,7 @@ private JTextField textField_6;
 				
 				if(!validirajBroj(textField_6.getText())) {
 					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Broj telefona nije u ispravnom formatu.");
+					JOptionPane.showMessageDialog(null, "Broj telefona nije u ispravnom formatu.Zahtjeva se u formatu:06xxxxxxx ili 03xxxxxxx,pri cemu je duzina 10 ili 9 cifara.");
 					frmVrti.setAlwaysOnTop(true);
 					return;
 				}	
@@ -595,7 +595,8 @@ private JTextField textField_6;
 	
 	public Boolean validirajBroj(String broj) {
 		
-			if (broj.length()!=9) return false;
+			if (broj.length()<9) return false;
+			if (broj.length()>10) return false;
 			//String[] brojTel = broj.split("");
 			int[] br = new int[broj.length()];
 			
