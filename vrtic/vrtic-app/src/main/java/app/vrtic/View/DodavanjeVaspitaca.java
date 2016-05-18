@@ -133,7 +133,7 @@ public class DodavanjeVaspitaca {
 				else { 
 					if(!patternIme.matcher(textFieldPrezime.getText()).matches()) {
 						frmVrti.setAlwaysOnTop(false);
-						JOptionPane.showMessageDialog(null, "Neispravan unos imena.");
+						JOptionPane.showMessageDialog(null, "Neispravan unos prezimena.");
 						frmVrti.setAlwaysOnTop(true);
 						return;
 					}
