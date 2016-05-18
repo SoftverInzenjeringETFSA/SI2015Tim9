@@ -307,15 +307,15 @@ public class EvidentiranjeDjeteta {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				Pattern patternIme = Pattern.compile("[a-zA-ZĐđŠšČčĆćŽž ]{3,}"); //mogu se unijeti velika,mala slova,brojevi
+				Pattern patternIme = Pattern.compile("[a-zA-ZÄ�Ä‘Å Å¡ÄŒÄ�Ä†Ä‡Å½Å¾ ]{3,}"); //mogu se unijeti velika,mala slova,brojevi
 				Pattern patternJmbg = Pattern.compile("^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{9}$");
-				Pattern patternAdresa = Pattern.compile("[a-zA-Z0-9\\,\\sĐđŠšČčĆćŽž ]{5,}");
+				Pattern patternAdresa = Pattern.compile("[a-zA-Z0-9\\,\\sÄ�Ä‘Å Å¡ÄŒÄ�Ä†Ä‡Å½Å¾ ]{5,}");
 				Pattern patternDatum  = Pattern.compile("^[0-3]?[0-9]-[0-3]?[0-9]-(?:[0-9]{2})?[0-9]{2}$");
 				
 				// validacije
 				if(textField.getText().length() < 4) {
 					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Ime mora sadržavati barem 3 slova.");
+					JOptionPane.showMessageDialog(null, "Ime mora sadrÅ¾avati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
@@ -330,7 +330,7 @@ public class EvidentiranjeDjeteta {
 				
 				if(textField_1.getText().length() < 4) {
 					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Prezime mora sadržavati barem 3 slova.");
+					JOptionPane.showMessageDialog(null, "Prezime mora sadrÅ¾avati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
@@ -364,7 +364,7 @@ public class EvidentiranjeDjeteta {
 			
 				if(textField_2.getText().length() < 4) {
 					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Ime roditelja mora sadržavati barem 3 slova.");
+					JOptionPane.showMessageDialog(null, "Ime roditelja mora sadrÅ¾avati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
@@ -380,7 +380,7 @@ public class EvidentiranjeDjeteta {
 				
 				if(textField_3.getText().length() < 4) {
 					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Prezime roditelja mora sadržavati barem 3 slova.");
+					JOptionPane.showMessageDialog(null, "Prezime roditelja mora sadrÅ¾avati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
@@ -542,8 +542,8 @@ public class EvidentiranjeDjeteta {
 			int g2 = treunutniDatum.getYear()+1900;
 			int m2 = treunutniDatum.getMonth()+1;
 			int d2 = treunutniDatum.getDate();
-	
-			if(g < g2-6) return "Dijete je prestaro za vrtic";
+			int ocekivanoGodiste = g2-6;  // jer se do 6 godine valjda moze upisati u vrtic :D
+			if(g < ocekivanoGodiste) return "Dijete je prestaro za vrtic, ne smije biti starije od "+ ocekivanoGodiste + " godista.";
 			if(g > g2) return "Dijete jos uvijek nije rodjeno, unesi ispravan datum.";
 			
 			
