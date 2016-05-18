@@ -151,13 +151,18 @@ public class DodavanjeKorisnika {
 				ref.refreshujKorisnike();
 			}
 		});
+		
+		
+		
 		btnIzmijeni.setBounds(322, 281, 126, 23);
 		frmVrti.getContentPane().add(btnIzmijeni);
 		
 		JLabel lblKorisnikaifra = new JLabel("Korisni\u010Dka \u0161ifra:");
 		lblKorisnikaifra.setBounds(51, 208, 95, 14);
 		frmVrti.getContentPane().add(lblKorisnikaifra);
-		
+		  
+		  
+		  
 		textField_4 = new JTextField();
 		textField_4.setColumns(10);
 		textField_4.setBounds(166, 205, 149, 20);
