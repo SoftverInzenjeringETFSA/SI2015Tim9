@@ -313,7 +313,7 @@ public class EvidentiranjeDjeteta {
 				Pattern patternDatum  = Pattern.compile("^[0-3]?[0-9]-[0-3]?[0-9]-(?:[0-9]{2})?[0-9]{2}$");
 				
 				// validacije
-				if(textField.getText().length() < 4) {
+				if(textField.getText().length() < 3) {
 					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Ime mora sadrÅ¾avati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
@@ -328,7 +328,7 @@ public class EvidentiranjeDjeteta {
 					}
 				}
 				
-				if(textField_1.getText().length() < 4) {
+				if(textField_1.getText().length() < 3) {
 					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Prezime mora sadrÅ¾avati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
