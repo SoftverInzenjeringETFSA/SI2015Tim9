@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import app.vrtic.Model.Aktivnostidjeca;
 import app.vrtic.Model.Dijete;
 import app.vrtic.Model.Korisnik;
+import app.vrtic.Model.Zaduzenja;
 
 
 
@@ -120,6 +123,13 @@ public class DijeteServis {
 	    for(int i=0; i<medju.length;i++)
 		suma+=medju[i].getAktivnost().getCijena();
 	    return suma;
+	}
+	
+	public boolean mozeSeIzbrisati(Dijete d){
+		Criteria c = s.createCriteria(Zaduzenja.class);
+		c.add(Restrictions.eq("dijete", d));
+		int broj=c.list().size();
+		return broj==0;
 	}
 	
 

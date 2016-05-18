@@ -305,6 +305,8 @@ public class GlavniProzorDirektor {
 				int selektovani = table_1.getSelectedRow();
 				// ako je nešto selektvano
 				if (selektovani != -1) {
+					
+					
 					List<Dijete> svaDjeca = dijeteServis.svaDjeca();
 					int idSelektovanogDjeteta = svaDjeca.get(selektovani).getIdDijete();
 
@@ -312,7 +314,9 @@ public class GlavniProzorDirektor {
 					List<Aktivnostidjeca> sveAktivnostiDjeca = aktivnostDjecaServis.sveAktivnostiDjeca();
 
 					Dijete selektovanoDijete = dijeteServis.nadji(idSelektovanogDjeteta);
-
+                    if(!dijeteServis.mozeSeIzbrisati(selektovanoDijete))
+                    	JOptionPane.showMessageDialog(null, "Dijete ima zaduzenja, ne moze se izbrisati iz sistema.");
+                    else{
 					for (int i = 0; i < sveAktivnostiDjeca.size(); i++) {
 						if (sveAktivnostiDjeca.get(i).getDijete().getIdDijete() == selektovanoDijete.getIdDijete()) {
 							aktivnostDjecaServis.obrisi(sveAktivnostiDjeca.get(i));
@@ -324,6 +328,7 @@ public class GlavniProzorDirektor {
 					JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali dijete.");
 					frmVrti.setAlwaysOnTop(true);
 					popuniTabeluDjeca();
+                    }
 				} else
 					JOptionPane.showMessageDialog(null, "Niste odabrali dijete.");
 
