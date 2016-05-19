@@ -142,7 +142,7 @@ public class login {
 			}
 		} else{
 			frmVrti.setAlwaysOnTop(false);
-			JOptionPane.showMessageDialog(null, "Neispravna šifra!");
+			JOptionPane.showMessageDialog(null, "Neispravno korisnièko ime ili password!");
 			frmVrti.setAlwaysOnTop(true);
 		}
 			
