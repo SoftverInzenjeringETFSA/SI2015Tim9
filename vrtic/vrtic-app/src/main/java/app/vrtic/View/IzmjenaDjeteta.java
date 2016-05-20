@@ -477,7 +477,7 @@ private JTextField textField_6;
 		frmVrti.getContentPane().add(lblDostupne);
 		
 		JLabel lblPohadja = new JLabel("Pohadja:");
-		lblPohadja.setBounds(345, 343, 46, 14);
+		lblPohadja.setBounds(345, 343, 89, 14);
 		frmVrti.getContentPane().add(lblPohadja);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
