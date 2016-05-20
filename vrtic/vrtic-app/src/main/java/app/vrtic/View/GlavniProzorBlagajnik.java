@@ -3,6 +3,7 @@ package app.vrtic.View;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import javax.swing.JFrame;
@@ -155,6 +156,14 @@ public class GlavniProzorBlagajnik {
 		JButton btnPotvrdi = new JButton("Potvrdi");
 		btnPotvrdi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//provjera za datum uplate
+				
+				Calendar cal = Calendar.getInstance();
+				Date danasnjiDatum = cal.getTime();
+				if(((Date) spinner_2.getValue()).after(danasnjiDatum) ){
+					JOptionPane.showMessageDialog(null,"Datum uplate je u buducnosti!");
+					return;
+				}
 				// da li je mjesec cekiran
 				if (ProvjeriDaLiJeChekiran(listaCheckboxova)) {
 					// pohada aktivnost
@@ -166,51 +175,53 @@ public class GlavniProzorBlagajnik {
 							int godina = (Integer) spinner_3.getValue();
 							String mjesec = null;
 							for (int i = 0; i < listaCheckboxova.size(); i++) {
-								if (listaCheckboxova.get(i).isSelected())
+								if (listaCheckboxova.get(i).isSelected()){
 									mjesec = listaCheckboxova.get(i).getText();
-								zs.obrisiZaduzenje(((Dijete) comboBox_1.getSelectedItem()), godina, mjesec);
-							}
-							// Kod za evidentiranje uplate
-							for (int i = 0; i < listaCheckboxova.size(); i++) {
-
-								if (listaCheckboxova.get(i).isSelected()) {
-									mjesec = listaCheckboxova.get(i).getText();
-
-									Uplata u = new Uplata();
-									int rBrMjeseca = 0;
-
-									if (mjesec.equals("januar"))
-										rBrMjeseca = 1;
-									else if (mjesec.equals("februar"))
-										rBrMjeseca = 2;
-									else if (mjesec.equals("mart"))
-										rBrMjeseca = 3;
-									else if (mjesec.equals("april"))
-										rBrMjeseca = 4;
-									else if (mjesec.equals("maj"))
-										rBrMjeseca = 5;
-									else if (mjesec.equals("juni"))
-										rBrMjeseca = 6;
-									else if (mjesec.equals("juli"))
-										rBrMjeseca = 7;
-									else if (mjesec.equals("august"))
-										rBrMjeseca = 8;
-									else if (mjesec.equals("septembar"))
-										rBrMjeseca = 9;
-									else if (mjesec.equals("oktobar"))
-										rBrMjeseca = 10;
-									else if (mjesec.equals("novembar"))
-										rBrMjeseca = 11;
-									else if (mjesec.equals("decembar"))
-										rBrMjeseca = 12;
-									u.setDatumUplate((Date) spinner_2.getValue());
-									u.setDijete((Dijete) comboBox_1.getSelectedItem());
-									u.setVisinaUplate(Double.parseDouble(textField_1.getText()));
-									u.setZaGodinu(godina);
-									u.setZaMjesec(rBrMjeseca);
-									us.evidentirajUplatu(u);
+							
+								if(!zs.postojiZaduzenje(((Dijete) comboBox_1.getSelectedItem()), godina, mjesec)){
+								JOptionPane.showMessageDialog(null,"Ne postoji zaduzenje kod odabranog djeteta za odabrani period.");
+								
+								return;
 								}
-							}
+								else {zs.obrisiZaduzenje(((Dijete) comboBox_1.getSelectedItem()), godina, mjesec);
+								//listaCheckboxova.get(i).setSelected(false);
+								Uplata u = new Uplata();
+								int rBrMjeseca = 0;
+
+								if (mjesec.equals("januar"))
+									rBrMjeseca = 1;
+								else if (mjesec.equals("februar"))
+									rBrMjeseca = 2;
+								else if (mjesec.equals("mart"))
+									rBrMjeseca = 3;
+								else if (mjesec.equals("april"))
+									rBrMjeseca = 4;
+								else if (mjesec.equals("maj"))
+									rBrMjeseca = 5;
+								else if (mjesec.equals("juni"))
+									rBrMjeseca = 6;
+								else if (mjesec.equals("juli"))
+									rBrMjeseca = 7;
+								else if (mjesec.equals("august"))
+									rBrMjeseca = 8;
+								else if (mjesec.equals("septembar"))
+									rBrMjeseca = 9;
+								else if (mjesec.equals("oktobar"))
+									rBrMjeseca = 10;
+								else if (mjesec.equals("novembar"))
+									rBrMjeseca = 11;
+								else if (mjesec.equals("decembar"))
+									rBrMjeseca = 12;
+								u.setDatumUplate((Date) spinner_2.getValue());
+								u.setDijete((Dijete) comboBox_1.getSelectedItem());
+								u.setVisinaUplate(Double.parseDouble(textField_1.getText()));
+								u.setZaGodinu(godina);
+								u.setZaMjesec(rBrMjeseca);
+								us.evidentirajUplatu(u);
+								mjesec=null;}
+								
+							}}
+						
 							textField_1.setText("brise");
 							frmVrti.setAlwaysOnTop(false);
 							JOptionPane.showMessageDialog(null, "Uplata školarine je uspješno evidentirana!",
@@ -234,12 +245,56 @@ public class GlavniProzorBlagajnik {
 						int godina = (Integer) spinner_3.getValue();
 						String mjesec = null;
 						for (int i = 0; i < listaCheckboxova.size(); i++) {
-							if (listaCheckboxova.get(i).isSelected())
+							if (listaCheckboxova.get(i).isSelected()){
+								
 								mjesec = listaCheckboxova.get(i).getText();
-							zs.obrisiZaduzenje(((Dijete) comboBox_1.getSelectedItem()), godina, mjesec);
+							if(!zs.postojiZaduzenje(((Dijete) comboBox_1.getSelectedItem()), godina, mjesec)){
+								JOptionPane.showMessageDialog(null,"Ne postoji zaduzenje kod odabranog djeteta za odabrani period.");
+								JOptionPane.showMessageDialog(null,"uso2");
+								return;
+								}
+							else{zs.obrisiZaduzenje(((Dijete) comboBox_1.getSelectedItem()), godina, mjesec);
+							Uplata u = new Uplata();
+							int rBrMjeseca = 0;
+							if (mjesec.equals("januar"))
+								rBrMjeseca = 1;
+							else if (mjesec.equals("februar"))
+								rBrMjeseca = 2;
+							else if (mjesec.equals("mart"))
+								rBrMjeseca = 3;
+							else if (mjesec.equals("april"))
+								rBrMjeseca = 4;
+							else if (mjesec.equals("maj"))
+								rBrMjeseca = 5;
+							else if (mjesec.equals("juni"))
+								rBrMjeseca = 6;
+							else if (mjesec.equals("juli"))
+								rBrMjeseca = 7;
+							else if (mjesec.equals("august"))
+								rBrMjeseca = 8;
+							else if (mjesec.equals("septembar"))
+								rBrMjeseca = 9;
+							else if (mjesec.equals("oktobar"))
+								rBrMjeseca = 10;
+							else if (mjesec.equals("novembar"))
+								rBrMjeseca = 11;
+							else if (mjesec.equals("decembar"))
+								rBrMjeseca = 12;
+							u.setDatumUplate((Date) spinner_2.getValue());
+							u.setDijete((Dijete) comboBox_1.getSelectedItem());
+							if (textField_1.equals("0.0")) {
+								u.setVisinaUplate(Double.parseDouble(textField_1.getText()));
+							} else {
+								u.setVisinaUplate(Double.parseDouble("0.0"));
+							}
+							u.setZaGodinu(godina);
+							u.setZaMjesec(rBrMjeseca);
+							us.evidentirajUplatu(u);
+							mjesec=null;
+							}}
 						}
 						// Kod za evidentiranje uplate
-						for (int i = 0; i < listaCheckboxova.size(); i++) {
+						/*for (int i = 0; i < listaCheckboxova.size(); i++) {
 
 							if (listaCheckboxova.get(i).isSelected()) {
 								mjesec = listaCheckboxova.get(i).getText();
@@ -281,7 +336,7 @@ public class GlavniProzorBlagajnik {
 								u.setZaMjesec(rBrMjeseca);
 								us.evidentirajUplatu(u);
 							}
-						}
+						}*/
 						frmVrti.setAlwaysOnTop(false);
 						JOptionPane.showMessageDialog(null,
 								"Dijete ne pohaða dodatne aktivnosti, evidantirana je samo uplata školarine!",
@@ -402,8 +457,7 @@ public class GlavniProzorBlagajnik {
 				}
 
 				int godina = (Integer) spinner_3.getValue();
-				ArrayList<Zaduzenja> godisnjaZaduzenja = zs
-						.vratiZaduzenjaZaGodinu(((Dijete) comboBox_1.getSelectedItem()), godina);
+				ArrayList<Zaduzenja> godisnjaZaduzenja = zs.vratiZaduzenjaZaGodinu(((Dijete) comboBox_1.getSelectedItem()), godina);
 				for (int i = 0; i < godisnjaZaduzenja.size(); i++) {
 
 					listaCheckboxova.get(i).setText(godisnjaZaduzenja.get(i).getMjesec());

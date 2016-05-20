@@ -120,6 +120,10 @@ public class ZaduzenjeServis {
 		
 	}
 	
+	public boolean postojiZaduzenje(Dijete d,int godina,String mjesec){
+		Zaduzenja z = vratiSlogZaduzenje(d, godina, mjesec);
+		return (z!=null);
+	}
 	
 	public boolean obrisiZaduzenje(Dijete d,int godina,String mjesec){
 		//Dijete d = ds.nadji(idDjeteta);
