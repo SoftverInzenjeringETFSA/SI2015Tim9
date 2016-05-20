@@ -100,7 +100,7 @@ public class DodavanjeVaspitaca {
 		textFieldAdresa.setBounds(160, 191, 182, 20);
 		frmVrti.getContentPane().add(textFieldAdresa);
 		
-		JLabel labelAdresa = new JLabel("Adresa prebivaliÅ¡ta:");
+		JLabel labelAdresa = new JLabel("Adresa prebivališta:");
 		labelAdresa.setBounds(12, 194, 126, 14);
 		frmVrti.getContentPane().add(labelAdresa);
 		
@@ -108,10 +108,10 @@ public class DodavanjeVaspitaca {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				Pattern patternIme = Pattern.compile("[a-zA-ZÄ�Ä‘Å Å¡ÄŒÄ�Ä†Ä‡Å½Å¾ ]{3,}"); //mogu se unijeti velika,mala slova,brojevi
+				Pattern patternIme = Pattern.compile("[a-zA-ZĐđŠšČčĆćŽž]{3,}"); //mogu se unijeti velika,mala slova,brojevi
 				if(textFieldIme.getText().length() < 3) {
 					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Ime mora sadrÅ¾avati barem 3 slova.");
+					JOptionPane.showMessageDialog(null, "Ime mora sadržavati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
@@ -126,7 +126,7 @@ public class DodavanjeVaspitaca {
 				
 				if(textFieldPrezime.getText().length() < 3) {
 					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Prezime mora sadrÅ¾avati barem 3 slova.");
+					JOptionPane.showMessageDialog(null, "Prezime mora sadržavati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
 					return;
 				}

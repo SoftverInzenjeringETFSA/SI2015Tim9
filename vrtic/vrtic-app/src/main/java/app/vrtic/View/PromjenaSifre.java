@@ -108,6 +108,14 @@ public class PromjenaSifre {
 						    JOptionPane.WARNING_MESSAGE);
 					frmVrti.setAlwaysOnTop(true);
 				}
+				else if(String.valueOf(nova.getPassword()).length()<5){
+					frmVrti.setAlwaysOnTop(false);
+					JOptionPane.showMessageDialog(null,
+						    "Šifra mora biti duža od 5 znakova!",
+						    "Warning",
+						    JOptionPane.WARNING_MESSAGE);
+					frmVrti.setAlwaysOnTop(true);
+				}
 				else{
 					
 					ks.promjeniSifru(k, String.valueOf(nova.getPassword()));

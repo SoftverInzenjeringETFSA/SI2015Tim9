@@ -252,7 +252,7 @@ public class EvidentiranjeDjeteta {
 		button_1.setBounds(237, 392, 58, 23);
 		frmVrti.getContentPane().add(button_1);
 		
-		JLabel lblPohadja = new JLabel("Pohadja:");
+		JLabel lblPohadja = new JLabel("Pohađa:");
 		lblPohadja.setBounds(319, 310, 74, 14);
 		frmVrti.getContentPane().add(lblPohadja);
 		
@@ -307,15 +307,15 @@ public class EvidentiranjeDjeteta {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				Pattern patternIme = Pattern.compile("[a-zA-ZÄ�Ä‘Å Å¡ÄŒÄ�Ä†Ä‡Å½Å¾ ]{3,}"); //mogu se unijeti velika,mala slova,brojevi
+				Pattern patternIme = Pattern.compile("[a-zA-ZĐđŠšČčĆćŽž]{3,}"); //mogu se unijeti velika,mala slova,brojevi
 				Pattern patternJmbg = Pattern.compile("^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{9}$");
-				Pattern patternAdresa = Pattern.compile("[a-zA-Z0-9\\,\\sÄ�Ä‘Å Å¡ÄŒÄ�Ä†Ä‡Å½Å¾. ]{5,}");
+				Pattern patternAdresa = Pattern.compile("[a-zA-Z0-9\\,\\sĐđŠšČčĆćŽž]{5,}");
 				Pattern patternDatum  = Pattern.compile("^[0-3]?[0-9]-[0-3]?[0-9]-(?:[0-9]{2})?[0-9]{2}$");
 				
 				// validacije
 				if(textField.getText().length() < 3) {
 					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Ime mora sadrÅ¾avati barem 3 slova.");
+					JOptionPane.showMessageDialog(null, "Ime mora sadržavati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
@@ -330,7 +330,7 @@ public class EvidentiranjeDjeteta {
 				
 				if(textField_1.getText().length() < 3) {
 					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Prezime mora sadrÅ¾avati barem 3 slova.");
+					JOptionPane.showMessageDialog(null, "Prezime mora sadržavati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
@@ -364,7 +364,7 @@ public class EvidentiranjeDjeteta {
 			
 				if(textField_2.getText().length() < 3) {
 					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Ime roditelja mora sadrÅ¾avati barem 3 slova.");
+					JOptionPane.showMessageDialog(null, "Ime roditelja mora sadržavati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
@@ -380,7 +380,7 @@ public class EvidentiranjeDjeteta {
 				
 				if(textField_3.getText().length() < 3) {
 					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Prezime roditelja mora sadrÅ¾avati barem 3 slova.");
+					JOptionPane.showMessageDialog(null, "Prezime roditelja mora sadržavati barem 3 slova.");
 					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
@@ -410,7 +410,7 @@ public class EvidentiranjeDjeteta {
 				
 				if(!validirajBroj(textField_5.getText())) {
 					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Broj telefona nije u ispravnom formatu.Zahtjeva se u formatu:06xxxxxxx ili 03xxxxxxx,pri cemu je duzina 10 ili 9 cifara.");
+					JOptionPane.showMessageDialog(null, "Broj telefona nije u ispravnom formatu.Zahtjeva se u formatu:06xxxxxxx ili 03xxxxxxx,pri cemu je dužina 10 ili 9 cifara.");
 					frmVrti.setAlwaysOnTop(true);
 					return;
 				}	

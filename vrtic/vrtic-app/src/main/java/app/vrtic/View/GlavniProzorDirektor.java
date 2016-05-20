@@ -713,7 +713,7 @@ public class GlavniProzorDirektor {
 		panel_7.add(spinner);
 
 		JButton btnGeneriiIzvjetaj = new JButton("Generi\u0161i izvje\u0161taj");
-		btnGeneriiIzvjetaj.setBounds(186, 17, 489, 23);
+		btnGeneriiIzvjetaj.setBounds(186, 9, 489, 38);
 		panel_7.add(btnGeneriiIzvjetaj);
 
 		btnGeneriiIzvjetaj.addActionListener(new ActionListener() {
@@ -760,7 +760,7 @@ public class GlavniProzorDirektor {
 				login NoviLogin = new login(s);
 				frmVrti.dispose();
 				frmVrti.setAlwaysOnTop(false);
-				JOptionPane.showMessageDialog(null, "Uspjesno ste se odjavili. Dovidjenja!");
+				JOptionPane.showMessageDialog(null, "Uspje\u0161no ste se odjavili!");
 				frmVrti.setAlwaysOnTop(true);
 				NoviLogin.OtvoriFormu();
 

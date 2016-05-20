@@ -78,9 +78,16 @@ public class DodavanjeAktivnosti {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				AktivnostServis akts = new AktivnostServis(s);
 					if(textField.getText().isEmpty()) {
 						frmVrti.setAlwaysOnTop(false);
 						JOptionPane.showMessageDialog(null, "Niste unijeli naziv aktivnosti.");
+						frmVrti.setAlwaysOnTop(true);
+						return;
+					}
+					else if(akts.provjeriDaLiPostojiIstaAktivnost(textField.getText())) {
+						frmVrti.setAlwaysOnTop(false);
+						JOptionPane.showMessageDialog(null, "Aktivnost pod ovim nazivom veæ postoji!");
 						frmVrti.setAlwaysOnTop(true);
 						return;
 					}
@@ -101,7 +108,6 @@ public class DodavanjeAktivnosti {
 					}
 					
 				    Aktivnost a = new Aktivnost();
-					AktivnostServis akts = new AktivnostServis(s);
 					a.setNaziv(textField.getText());
 					a.setCijena(Integer.valueOf(textField_1.getText()));
 					a.setBrojDjece(0);

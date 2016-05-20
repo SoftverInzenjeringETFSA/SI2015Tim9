@@ -94,7 +94,6 @@ public class DodavanjeKorisnika {
 		frmVrti.getContentPane().add(lblUloga);
 		
 		final JComboBox comboBox = new JComboBox();
-		comboBox.setEditable(true);
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Pravnik/Direktor", "Blagajnik"}));
 		comboBox.setBounds(166, 247, 149, 20);
 		frmVrti.getContentPane().add(comboBox);
@@ -138,16 +137,22 @@ public class DodavanjeKorisnika {
 					ks.kreirajKorisnika(k);
 					comboBox.setSelectedIndex(0);
 					ocistiKontrole();
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null,
 						    "Uspješno ste dodali novog korisnika",
 						    "Obavještenje",
 						    JOptionPane.PLAIN_MESSAGE);
+					frmVrti.setAlwaysOnTop(true);
 				}
-				else if (!validirajFormu(comboBox).equals(""))
+				else if (!validirajFormu(comboBox).equals("")){
+					frmVrti.setAlwaysOnTop(false);
+				
 					JOptionPane.showMessageDialog(null,
 						    porukaValidacija,
 						    "Warning",
 						    JOptionPane.WARNING_MESSAGE);
+					frmVrti.setAlwaysOnTop(true);
+				}
 				ref.refreshujKorisnike();
 			}
 		});
@@ -184,6 +189,8 @@ public class DodavanjeKorisnika {
 			porukaValidacija=validirajBrojTelefona(textField_3.getText());
 		else if(textField_4.getText().equals(""))
 			porukaValidacija="Unesite korisničku šifru korisnika!";
+		else if(textField_4.getText().length()<5)
+			porukaValidacija="Korisnička šifra mora biti duža od 5 znakova!";
 		else if (comboBox.getSelectedIndex()==-1){
 			porukaValidacija="Odaberite privilegiju korisnika!";
 		}

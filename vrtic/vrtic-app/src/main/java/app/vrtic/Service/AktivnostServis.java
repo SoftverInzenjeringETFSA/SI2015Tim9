@@ -159,4 +159,15 @@ public class AktivnostServis {
 		
 	}
 	
+	public boolean provjeriDaLiPostojiIstaAktivnost(String akt){
+		ArrayList<Aktivnost> k= SveAktivnosti();
+		for(int i=0;i<k.size();i++)
+		{
+			if(k.get(i).getNaziv().equals(akt)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 }

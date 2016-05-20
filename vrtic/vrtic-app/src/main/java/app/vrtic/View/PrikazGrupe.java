@@ -92,7 +92,7 @@ public class PrikazGrupe {
 		
 		imeGrupeDynamic = new JTextField();
 		imeGrupeDynamic.setEditable(false);
-		imeGrupeDynamic.setBounds(63, 33, 91, 20);
+		imeGrupeDynamic.setBounds(63, 33, 118, 20);
 		frmVrti.getContentPane().add(imeGrupeDynamic);
 		imeGrupeDynamic.setColumns(10);
 		imeGrupeDynamic.setText(g.getNaziv());
@@ -105,7 +105,9 @@ public class PrikazGrupe {
 		tabelaDijete.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null},
-				
+				{null, null},
+				{null, null},
+				{null, null},
 			},
 			new String[] {
 				"Ime djeteta", "Prezime djeteta"

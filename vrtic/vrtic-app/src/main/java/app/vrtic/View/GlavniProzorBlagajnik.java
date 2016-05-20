@@ -609,7 +609,7 @@ public class GlavniProzorBlagajnik {
 				login NoviLogin = new login(s);
 				frmVrti.dispose();
 				frmVrti.setAlwaysOnTop(false);
-				JOptionPane.showMessageDialog(null, "Uspjesno ste se odjavili. Dovidjenja!");
+				JOptionPane.showMessageDialog(null, "Uspje\u0161no ste se odjavili!");
 				frmVrti.setAlwaysOnTop(true);
 				NoviLogin.OtvoriFormu();
 
