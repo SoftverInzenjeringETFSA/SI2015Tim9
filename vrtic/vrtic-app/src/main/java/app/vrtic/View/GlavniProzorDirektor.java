@@ -159,8 +159,12 @@ public class GlavniProzorDirektor {
 							.dajKorisnika((Integer) table_0.getModel().getValueAt(table_0.getSelectedRow(), 2));
 					PrikazProfilaKorisnika novifrejm = new PrikazProfilaKorisnika(s, k);
 					novifrejm.OtvoriFormu();
-				} else
+				} 
+				else {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Odaberite korisnika u tabeli kojeg je potrebno prikazati");
+					frmVrti.setAlwaysOnTop(true);
+				}
 			}
 
 		});
@@ -218,8 +222,12 @@ public class GlavniProzorDirektor {
 							.dajKorisnika((Integer) table_0.getModel().getValueAt(table_0.getSelectedRow(), 2));
 					IzmjenaKorisnika novifrejm = new IzmjenaKorisnika(s, k, ref);
 					novifrejm.OtvoriFormu();
-				} else
+				} 
+				else {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Odaberite korisnika u tabeli kojeg je potrebno izmjeniti");
+					frmVrti.setAlwaysOnTop(true);
+				}
 			}
 
 		});
@@ -230,14 +238,25 @@ public class GlavniProzorDirektor {
 		btnObrisi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (table_0.getSelectedRow() != -1) {
-					serviskorisnik
-							.izbrisiKorisnika((Integer) table_0.getModel().getValueAt(table_0.getSelectedRow(), 2));
+					Korisnik k = serviskorisnik.dajKorisnika((Integer) table_0.getModel().getValueAt(table_0.getSelectedRow(), 2));
+					if(k.getKorisnickoIme() != user.getKorisnickoIme()) {
+						serviskorisnik.izbrisiKorisnika((Integer) table_0.getModel().getValueAt(table_0.getSelectedRow(), 2));
+						frmVrti.setAlwaysOnTop(false);
+						JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali korisnika");
+						frmVrti.setAlwaysOnTop(true);
+						refreshujKorisnike();
+					}
+					else { 
+						frmVrti.setAlwaysOnTop(false);
+						JOptionPane.showMessageDialog(null, "Došlo je do greške, pokušavate obrisati sami sebe.");
+						frmVrti.setAlwaysOnTop(true);
+					}
+				} 
+				else { 
 					frmVrti.setAlwaysOnTop(false);
-					JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali korisnika");
-					frmVrti.setAlwaysOnTop(true);
-					refreshujKorisnike();
-				} else
 					JOptionPane.showMessageDialog(null, "Odaberite korisnika u tabeli kojeg je potrebno obrisati");
+					frmVrti.setAlwaysOnTop(true);
+				}
 			}
 		});
 
@@ -281,7 +300,9 @@ public class GlavniProzorDirektor {
 					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s, ref, idDjeteta);
 					novifrejm.OtvoriFormu();
 				} else {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Niste odabrali dijete");
+					frmVrti.setAlwaysOnTop(true);
 				}
 			}
 
@@ -314,9 +335,12 @@ public class GlavniProzorDirektor {
 					List<Aktivnostidjeca> sveAktivnostiDjeca = aktivnostDjecaServis.sveAktivnostiDjeca();
 
 					Dijete selektovanoDijete = dijeteServis.nadji(idSelektovanogDjeteta);
-                    if(!dijeteServis.mozeSeIzbrisati(selektovanoDijete))
-                    	JOptionPane.showMessageDialog(null, "Dijete ima zaduzenja, ne moze se izbrisati iz sistema.");
-                    else{
+                    if(!dijeteServis.mozeSeIzbrisati(selektovanoDijete)) {
+    					frmVrti.setAlwaysOnTop(false);
+    					JOptionPane.showMessageDialog(null, "Dijete ima zaduzenja, ne moze se izbrisati iz sistema.");
+    					frmVrti.setAlwaysOnTop(true);
+    				}
+                    else {
 					for (int i = 0; i < sveAktivnostiDjeca.size(); i++) {
 						if (sveAktivnostiDjeca.get(i).getDijete().getIdDijete() == selektovanoDijete.getIdDijete()) {
 							aktivnostDjecaServis.obrisi(sveAktivnostiDjeca.get(i));
@@ -329,9 +353,12 @@ public class GlavniProzorDirektor {
 					frmVrti.setAlwaysOnTop(true);
 					popuniTabeluDjeca();
                     }
-				} else
+				} 
+				else {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Niste odabrali dijete.");
-
+					frmVrti.setAlwaysOnTop(true);
+				}
 			}
 		});
 
@@ -375,8 +402,13 @@ public class GlavniProzorDirektor {
 					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali grupu");
 					frmVrti.setAlwaysOnTop(true);
-				} else
+				}
+				else {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Niste odabrali grupu");
+					frmVrti.setAlwaysOnTop(true);
+				} 
+					
 
 			}
 		});
@@ -395,8 +427,12 @@ public class GlavniProzorDirektor {
 					int idSelektovanog = sveGrupe.get(selektovani).getIdGrupe();
 					PrikazGrupe novifrejm = new PrikazGrupe(s, idSelektovanog);
 					novifrejm.OtvoriFormu();
-				} else
+				} 
+				else {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Niste odabrali grupu");
+					frmVrti.setAlwaysOnTop(true);
+				} 
 			}
 
 		});
@@ -477,10 +513,11 @@ public class GlavniProzorDirektor {
 					JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali aktivnost.");
 					frmVrti.setAlwaysOnTop(true);
 				}
-
-				else
+				else {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Niste odabrali aktivnost.");
-
+					frmVrti.setAlwaysOnTop(true);
+				} 
 			}
 		});
 
@@ -541,8 +578,12 @@ public class GlavniProzorDirektor {
 					JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali vaspitaca");
 					frmVrti.setAlwaysOnTop(true);
 					popuniTabeluVaspitaci();
-				} else
+				}
+				else {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Niste odabrali vaspitaca");
+					frmVrti.setAlwaysOnTop(true);
+				}
 			}
 		});
 		btnObrisiVaspitaca.setBounds(413, 164, 126, 23);
