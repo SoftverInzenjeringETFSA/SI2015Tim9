@@ -133,7 +133,7 @@ public class DodavanjeGrupe {
 			public void actionPerformed(ActionEvent e)
 			{
 					Grupa g = new Grupa();
-					if(validiraj(nazivGrupe.getText(), kapacitetGrupe.getValue().toString()) && vaspitac1.getSelectedIndex()!=-1 && vaspitac2.getSelectedIndex()!=-1){
+					if(validiraj(nazivGrupe.getText(), ((Integer)(redniBrojGrupe.getValue())).toString())==true && vaspitac1.getSelectedIndex()!=-1 && vaspitac2.getSelectedIndex()!=-1){
 					g.setNaziv(nazivGrupe.getText());
 					g.setKapacitet((Integer)kapacitetGrupe.getValue());
 					g.setRedniBroj((Integer)redniBrojGrupe.getValue());
@@ -201,6 +201,7 @@ public class DodavanjeGrupe {
 	public boolean validiraj(String naziv, String redniBroj){
 		GrupaServis gs = new GrupaServis(s);
 		if(gs.provjeriDaLiPostojiIstiNaziv(naziv) || gs.provjeriDaLiPostojiIstiRedniBroj(redniBroj)){
+			
 			return false;
 		}
 		else return true;
