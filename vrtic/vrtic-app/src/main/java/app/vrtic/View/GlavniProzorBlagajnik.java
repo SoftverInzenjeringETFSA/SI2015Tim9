@@ -250,7 +250,7 @@ public class GlavniProzorBlagajnik {
 								mjesec = listaCheckboxova.get(i).getText();
 							if(!zs.postojiZaduzenje(((Dijete) comboBox_1.getSelectedItem()), godina, mjesec)){
 								JOptionPane.showMessageDialog(null,"Ne postoji zaduzenje kod odabranog djeteta za odabrani period.");
-								JOptionPane.showMessageDialog(null,"uso2");
+								
 								return;
 								}
 							else{zs.obrisiZaduzenje(((Dijete) comboBox_1.getSelectedItem()), godina, mjesec);
