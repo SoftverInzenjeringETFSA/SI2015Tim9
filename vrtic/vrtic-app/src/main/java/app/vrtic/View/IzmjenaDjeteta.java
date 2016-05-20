@@ -231,7 +231,8 @@ private JTextField textField_6;
 				Pattern patternJmbg = Pattern.compile("^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{9}$");
 				Pattern patternAdresa = Pattern.compile("[a-zA-Z0-9\\,\\sÄ�Ä‘Å Å¡ÄŒÄ�Ä†Ä‡Å½Å¾. ]{5,}");
 				Pattern patternDatum  = Pattern.compile("^[0-3]?[0-9]-[0-3]?[0-9]-(?:[0-9]{2})?[0-9]{2}$");
-				
+				s.flush();
+				s.clear();
 				// validacije
 				if(textField.getText().length() < 3) {
 					frmVrti.setAlwaysOnTop(false);
