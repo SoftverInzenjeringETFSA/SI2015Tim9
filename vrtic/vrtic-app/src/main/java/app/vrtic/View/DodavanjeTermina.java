@@ -103,8 +103,8 @@ public class DodavanjeTermina {
 		comboBox_1.addItem("Srijeda");
 		comboBox_1.addItem("\u010Detvrtak");
 		comboBox_1.addItem("Petak");
-		comboBox_1.addItem("Subota");
-		comboBox_1.addItem("Nedjelja");
+		//comboBox_1.addItem("Subota");
+		//comboBox_1.addItem("Nedjelja");
 		
 		JLabel lblVrijemeZavretkaAktivnosti = new JLabel("Vrijeme zavr\u0161etka aktivnosti:");
 		lblVrijemeZavretkaAktivnosti.setBounds(10, 205, 183, 14);

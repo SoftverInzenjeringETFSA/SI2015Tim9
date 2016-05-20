@@ -647,6 +647,8 @@ public class GlavniProzorDirektor {
 		spinner_1.setModel(new SpinnerNumberModel(2016, 2000, 3000, 1));
 		spinner_1.setBounds(70, 34, 100, 20);
 		panel_6.add(spinner_1);
+		JSpinner.NumberEditor editor1 = new JSpinner.NumberEditor(spinner_1, "#");
+		spinner_1.setEditor(editor1);
 
 		JButton btnPrikai_1 = new JButton("Prika\u017Ei");
 		btnPrikai_1.addActionListener(new ActionListener() {
@@ -711,6 +713,8 @@ public class GlavniProzorDirektor {
 		spinner.setModel(new SpinnerNumberModel(2016, 2000, 3000, 1));
 		spinner.setBounds(64, 18, 76, 20);
 		panel_7.add(spinner);
+		JSpinner.NumberEditor editor = new JSpinner.NumberEditor(spinner, "#");
+		spinner.setEditor(editor);
 
 		JButton btnGeneriiIzvjetaj = new JButton("Generi\u0161i izvje\u0161taj");
 		btnGeneriiIzvjetaj.setBounds(186, 9, 489, 38);
