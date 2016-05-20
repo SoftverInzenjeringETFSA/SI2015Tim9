@@ -546,6 +546,10 @@ private JTextField textField_6;
 		for(int i=0;i< grupe.size();i++){
 			comboBox.addItem(grupe.get(i));
 		}
+		list_1.setModel(parts);
+		list.setModel(partsSelected);
+	
+
 		comboBox.setSelectedItem(d.getGrupa());
 		spinner.getModel().setValue(d.getDatumUpisa());
 		spinner_1.getModel().setValue(d.getDatumIsteka());

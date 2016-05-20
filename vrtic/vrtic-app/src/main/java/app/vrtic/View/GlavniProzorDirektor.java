@@ -217,6 +217,8 @@ public class GlavniProzorDirektor {
 		panel.add(btnIzmijeni);
 		btnIzmijeni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				s.flush();
+				s.clear();
 				if (table_0.getSelectedRow() != -1) {
 					Korisnik k = serviskorisnik
 							.dajKorisnika((Integer) table_0.getModel().getValueAt(table_0.getSelectedRow(), 2));
@@ -295,6 +297,8 @@ public class GlavniProzorDirektor {
 		panel_1.add(btnIzmijeniPodatke);
 		btnIzmijeniPodatke.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				s.flush();
+				s.clear();
 				if (table_1.getSelectedRow() != -1) {
 					int idDjeteta = odaberiIdKolonu(table_1, 3);
 					IzmjenaDjeteta novifrejm = new IzmjenaDjeteta(s, ref, idDjeteta);
