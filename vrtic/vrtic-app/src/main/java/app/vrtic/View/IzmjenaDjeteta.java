@@ -430,10 +430,11 @@ private JTextPane textPane;
 		    	//	transakcija.commit(); 
 		    		ads.dodajAktivnostDijete(ad);
 				}
-				if(roditelj.getClass()==GlavniProzorDirektor.class) roditelj.refreshajTabeluDjece();
+				//if(roditelj.getClass()==GlavniProzorDirektor.class) roditelj.refreshajTabeluDjece();
 				
 					
-				//roditelj.refreshajTabeluDjece();
+				if(roditelj!=null) roditelj.refreshajTabeluDjece();
+				
 				//Ovdje ide kod za zaduzenja
 			zs.obrisiZaduzenjaZaPeriod(ds.nadji(idDjeteta),(Date) spinner_1.getValue(),stariDatumUgovora,(Date)spinner.getValue());
 			frmVrti.setAlwaysOnTop(false);
