@@ -336,7 +336,12 @@ private JTextField textField_6;
 					return;
 				}	
 				
-				
+				if(gs.daLiJePuna((Grupa) comboBox.getSelectedItem())){
+					frmVrti.setAlwaysOnTop(false);
+					JOptionPane.showMessageDialog(null, "Grupa u koju zelite da dodate dijete je puna.");
+					frmVrti.setAlwaysOnTop(true);
+					return;
+				}
 				
 		int diffM;
 		Date upis = (Date)spinner.getValue();

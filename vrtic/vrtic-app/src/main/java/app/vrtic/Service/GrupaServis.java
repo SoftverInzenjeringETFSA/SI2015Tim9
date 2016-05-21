@@ -5,6 +5,7 @@ import app.vrtic.Model.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -51,7 +52,18 @@ public class GrupaServis {
 		transakcija.commit();
 		return true;
 	}
-	
+	//broj clanova grupe
+	public int vratiBrojClanova(Grupa g){
+		Criteria c = s.createCriteria(Dijete.class);
+		c.add(Restrictions.eq("grupa", g));
+		int broj=c.list().size();
+		return broj;
+	}
+	//da li je puna
+	public boolean daLiJePuna(Grupa g){
+		if(g.getKapacitet()==vratiBrojClanova(g)) return true;
+		else return false;
+	}
 	// vraca sve grupe
 	public ArrayList<Grupa> sveGrupe(){
 		List<Grupa> t = s.createCriteria(Grupa.class).list();

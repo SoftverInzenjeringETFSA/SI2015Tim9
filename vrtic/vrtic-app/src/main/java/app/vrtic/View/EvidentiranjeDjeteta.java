@@ -88,6 +88,7 @@ public class EvidentiranjeDjeteta {
 					EvidentiranjeDjeteta window = new EvidentiranjeDjeteta(s,refreshableRoditelj);
 					window.frmVrti.setVisible(true);
 					window.frmVrti.setAlwaysOnTop(true);
+					
 				} catch (Exception e) {
 					logger.info(e);
 				}
@@ -415,7 +416,12 @@ public class EvidentiranjeDjeteta {
 					return;
 				}	
 				
-				
+				if(gs.daLiJePuna((Grupa) comboBox.getSelectedItem())){
+					frmVrti.setAlwaysOnTop(false);
+					JOptionPane.showMessageDialog(null, "Grupa u koju zelite da dodate dijete je puna.");
+					frmVrti.setAlwaysOnTop(true);
+					return;
+				}
 				
 		int diffM;
 		Date upis = (Date)spinner_1.getValue();
