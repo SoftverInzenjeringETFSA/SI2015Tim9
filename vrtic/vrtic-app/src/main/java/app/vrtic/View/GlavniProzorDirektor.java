@@ -1,6 +1,7 @@
 package app.vrtic.View;
 
 import java.awt.EventQueue;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import javax.swing.table.TableModel;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.omg.CORBA.portable.ApplicationException;
 
 import app.vrtic.Model.Aktivnost;
 import app.vrtic.Model.Aktivnostidjeca;
@@ -766,7 +768,12 @@ public class GlavniProzorDirektor {
 				frmVrti.setAlwaysOnTop(false);
 				JOptionPane.showMessageDialog(null, "Uspje\u0161no ste se odjavili!");
 				frmVrti.setAlwaysOnTop(true);
+				for (Frame window : Frame.getFrames()) {
+				    window.dispose();
+				}
 				NoviLogin.OtvoriFormu();
+				
+			
 
 			}
 		});
