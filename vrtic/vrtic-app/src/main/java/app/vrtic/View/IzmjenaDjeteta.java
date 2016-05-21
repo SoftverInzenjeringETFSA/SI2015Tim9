@@ -73,6 +73,7 @@ private JTextField textField_3;
 private JTextField textField_4;
 private JTextField textField_5;
 private JTextField textField_6;
+private JTextPane textPane;
 /**
  * Launch the application.
  */
@@ -199,7 +200,7 @@ private JTextField textField_6;
 		lblNapomena.setBounds(67, 564, 128, 14);
 		frmVrti.getContentPane().add(lblNapomena);
 		
-		JTextPane textPane = new JTextPane();
+		final JTextPane textPane = new JTextPane();
 		textPane.setBounds(166, 553, 213, 91);
 		frmVrti.getContentPane().add(textPane);
 		final JComboBox comboBox = new JComboBox();
@@ -399,11 +400,11 @@ private JTextField textField_6;
 				Dijete dNovo = ds.nadji(idDjeteta);
 				dNovo.setIme(textField.getText());
 				dNovo.setPrezime(textField_1.getText());
-				dNovo.setImeRoditelja(textField_3.getText());
-				dNovo.setPrezimeRoditelja(textField_4.getText());
+				dNovo.setImeRoditelja(textField_3.getText()+" "+textField_4.getText());
+				dNovo.setPrezimeRoditelja(textPane.getText());
 				dNovo.setAdresaPrebivalista(textField_5.getText());
 				dNovo.setBrojTelefona(textField_6.getText());
-				//Napomena fali
+			
 				dNovo.setDatumRodjenja(textField_2.getText());
 				dNovo.setDatumUpisa((Date) spinner.getValue());
 				dNovo.setDatumIsteka((Date) spinner_1.getValue());
@@ -544,10 +545,15 @@ private JTextField textField_6;
 		textField.setText(d.getIme());
 		textField_1.setText(d.getPrezime());
 		textField_2.setText(d.getDatumRodjenja());
-		textField_3.setText(d.getImeRoditelja());
-		textField_4.setText(d.getPrezimeRoditelja());
+		String str = d.getImeRoditelja();
+		String[] pieces = str.split(" ");
+		textField_3.setText(pieces[0]);
+		textField_4.setText(pieces[1]);
+		//textField_3.setText(d.getImeRoditelja());
+		//textField_4.setText(d.getPrezimeRoditelja());
 		textField_5.setText(d.getAdresaPrebivalista());
 		textField_6.setText(d.getBrojTelefona());
+		textPane.setText(d.getPrezimeRoditelja());
 		ArrayList<Grupa> grupe = gs.sveGrupe();
 		for(int i=0;i< grupe.size();i++){
 			comboBox.addItem(grupe.get(i));

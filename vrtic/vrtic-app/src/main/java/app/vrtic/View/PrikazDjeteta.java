@@ -234,7 +234,7 @@ private JTextField textField_6;
 			public void actionPerformed(ActionEvent e)
 			{
 			frmVrti.setAlwaysOnTop(false);
-			//JOptionPane.showMessageDialog(null, "Uspjesno ažurirani podaci za dijete.");
+			
 			frmVrti.setAlwaysOnTop(true);
 			frmVrti.dispose();
 			}
@@ -349,10 +349,13 @@ private JTextField textField_6;
 		textField.setText(d.getIme());
 		textField_1.setText(d.getPrezime());
 		textField_2.setText(d.getDatumRodjenja());
-		textField_3.setText(d.getImeRoditelja());
-		textField_4.setText(d.getPrezimeRoditelja());
+		String str = d.getImeRoditelja();
+		String[] pieces = str.split(" ");
+		textField_3.setText(pieces[0]);
+		textField_4.setText(pieces[1]);
 		textField_5.setText(d.getAdresaPrebivalista());
 		textField_6.setText(d.getBrojTelefona());
+		textPane.setText(d.getPrezimeRoditelja());
 		ArrayList<Grupa> grupe = gs.sveGrupe();
 		for(int i=0;i< grupe.size();i++){
 			comboBox.addItem(grupe.get(i));

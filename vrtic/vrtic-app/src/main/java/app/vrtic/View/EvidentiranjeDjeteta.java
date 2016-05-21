@@ -74,6 +74,7 @@ public class EvidentiranjeDjeteta {
 	private JTextField textField_4;
 	private JTextField textField_5;
 	private JTextField textField_6;
+	private JTextPane textPane;
 	private final JSpinner spinner_1;
 	private final JSpinner spinner_2;
 	
@@ -160,7 +161,7 @@ public class EvidentiranjeDjeteta {
 		JLabel lblNapomena = new JLabel("Napomena:");
 		lblNapomena.setBounds(67, 564, 128, 14);
 		
-		JTextPane textPane = new JTextPane();
+		final JTextPane textPane = new JTextPane();
 		textPane.setBounds(166, 553, 213, 91);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
@@ -459,8 +460,8 @@ public class EvidentiranjeDjeteta {
 				Dijete d = new Dijete();
 				d.setIme(textField.getText());
 				d.setPrezime(textField_1.getText());
-				d.setImeRoditelja(textField_2.getText());
-				d.setPrezimeRoditelja(textField_3.getText());
+				d.setImeRoditelja(textField_2.getText()+" "+textField_3.getText());
+				d.setPrezimeRoditelja(textPane.getText());
 				d.setAdresaPrebivalista(textField_4.getText());
 				d.setBrojTelefona(textField_5.getText());
 				//Napomena fali
@@ -519,6 +520,8 @@ public class EvidentiranjeDjeteta {
 		textField_4.setText("");
 		textField_5.setText("");
 		textField_6.setText("");
+		textPane.setText("");
+	   
 		
 		Date d = Calendar.getInstance().getTime();
 		spinner_1.setModel(new SpinnerDateModel(d, null, null, Calendar.DAY_OF_YEAR));
