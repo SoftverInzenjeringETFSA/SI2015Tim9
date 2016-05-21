@@ -374,7 +374,7 @@ public class GlavniProzorDirektor {
 		panel_2.setLayout(null);
 
 		JLabel lblSpisakGrupa = new JLabel("Spisak grupa:");
-		lblSpisakGrupa.setBounds(47, 11, 76, 14);
+		lblSpisakGrupa.setBounds(47, 11, 146, 14);
 		panel_2.add(lblSpisakGrupa);
 
 		JButton btnObrisiGrupu = new JButton("Obri\u0161i");
