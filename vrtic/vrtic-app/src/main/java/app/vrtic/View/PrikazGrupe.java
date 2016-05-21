@@ -228,8 +228,9 @@ public void StatistikaAktivnosti(AktivnostServis as){
 		Object[][] data= new Object[aktiv.size()][];
 		for(int i = 0; i<aktiv.size();i++) {
 			
-				data[i]= new Object[]{aktiv.get(i).getNaziv(), aktiv.get(i).getBrojDjece().toString()};
-		
+				//data[i]= new Object[]{aktiv.get(i).getNaziv(), aktiv.get(i).getBrojDjece().toString()};
+			data[i]= new Object[]{aktiv.get(i).getNaziv(), as.vratiBrojClanovaGrupeNaAktivnosti(g2,aktiv.get(i))};    
+			
 				table_1.setModel(new DefaultTableModel(
 				data,
 				new String[] {

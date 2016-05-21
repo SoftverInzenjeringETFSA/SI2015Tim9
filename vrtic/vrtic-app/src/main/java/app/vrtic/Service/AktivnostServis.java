@@ -17,11 +17,13 @@ import org.hibernate.criterion.Restrictions;
 public class AktivnostServis {
 	private Session s;
 	private AktivnostDjecaServis ads;
+	private GrupaServis gs;
 
 	// konstruktor klase AktivnostServis
 	public AktivnostServis(Session s) {
 		this.s = s;
 		this.ads = new AktivnostDjecaServis(s);
+		this.gs = new GrupaServis(s);
 	}
 	public boolean ObrisiAktivnost(int id) {
 		Transaction trans = s.beginTransaction();
@@ -159,6 +161,18 @@ public class AktivnostServis {
 		
 	}
 	
+	public int vratiBrojClanovaGrupeNaAktivnosti(Grupa g,Aktivnost a){
+		int brojac = 0;
+		Criteria c = s.createCriteria(Dijete.class);
+		c.add(Restrictions.eq("grupa",g));
+		List<Dijete> djecaGrupe = c.list();
+		for(int i = 0; i< djecaGrupe.size();i++){
+			if(ads.daLiDijetePohadaOdabranuAktivnost(djecaGrupe.get(i).getIdDijete(),a))
+				brojac++;
+		}
+		return brojac;
+	}
+	
 	public boolean provjeriDaLiPostojiIstaAktivnost(String akt){
 		ArrayList<Aktivnost> k= SveAktivnosti();
 		for(int i=0;i<k.size();i++)
@@ -169,5 +183,7 @@ public class AktivnostServis {
 		}
 		return false;
 	}
+	
+	
 	
 }

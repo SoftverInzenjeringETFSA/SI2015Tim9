@@ -64,6 +64,7 @@ public class GrupaServis {
 		if(g.getKapacitet()==vratiBrojClanova(g)) return true;
 		else return false;
 	}
+	
 	// vraca sve grupe
 	public ArrayList<Grupa> sveGrupe(){
 		List<Grupa> t = s.createCriteria(Grupa.class).list();

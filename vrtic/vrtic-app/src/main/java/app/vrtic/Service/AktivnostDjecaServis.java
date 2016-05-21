@@ -73,4 +73,13 @@ public boolean obrisiListu(ArrayList<Aktivnostidjeca> listaAktDjeca) {
 		}
 		return false;
 	}
+	public boolean daLiDijetePohadaOdabranuAktivnost(int idDjeteta,Aktivnost a){
+		ArrayList<Aktivnostidjeca> sveAD= sveAktivnostiDjeca();
+		
+		for(int i=0;i<sveAD.size();i++){
+			if(sveAD.get(i).getDijete().getIdDijete()==idDjeteta && sveAD.get(i).getAktivnost()==a)
+				return true;
+		}
+		return false;
+	}
 }
