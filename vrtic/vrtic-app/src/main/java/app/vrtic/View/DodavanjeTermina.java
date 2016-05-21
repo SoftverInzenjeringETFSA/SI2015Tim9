@@ -175,8 +175,16 @@ public class DodavanjeTermina {
 				}
 			//    NoviTermin.setGrupa(gs.PretragaPoImenu(grupeComboBox.getSelectedItem().toString()));
 			//    NoviTermin.setAktivnost(as.pretragaPoNazivu(comboBox.getSelectedItem().toString()));
-				if(DaLiJeIspravnoVrijeme(VrijemePocetka.getText())==false || DaLiJeIspravnoVrijeme(VrijemeZavrsetka.getText())==false) JOptionPane.showMessageDialog(null, "Neispravan format vremena!");
-				if(DaLiJeIspravnaSatnica(VrijemePocetka.getText(), VrijemeZavrsetka.getText())==false) JOptionPane.showMessageDialog(null, "Neispravna satnica!");
+				if(DaLiJeIspravnoVrijeme(VrijemePocetka.getText())==false || DaLiJeIspravnoVrijeme(VrijemeZavrsetka.getText())==false){			
+					frmVrti.setAlwaysOnTop(false);
+					JOptionPane.showMessageDialog(null, "Neispravan format vremena!");	
+					frmVrti.setAlwaysOnTop(true);
+				}
+				if(DaLiJeIspravnaSatnica(VrijemePocetka.getText(), VrijemeZavrsetka.getText())==false){
+					frmVrti.setAlwaysOnTop(false);
+					JOptionPane.showMessageDialog(null, "Neispravna satnica!");
+					frmVrti.setAlwaysOnTop(true);
+				}
 				NoviTermin.setVrijemePocetka(VrijemePocetka.getText());
 				NoviTermin.setVrijemeZavrsetka(VrijemeZavrsetka.getText());
 				TerminServis ts = new TerminServis(s);

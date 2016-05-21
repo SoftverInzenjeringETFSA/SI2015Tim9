@@ -308,8 +308,11 @@ private JTextField textField_6;
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-			    if(list.getSelectedIndex()==-1) 
-			    	 JOptionPane.showMessageDialog(null,"Niste odabrali aktivnost!");
+			    if(list.getSelectedIndex()==-1) {
+			    	frmVrti.setAlwaysOnTop(false);
+			    	 JOptionPane.showMessageDialog(null,"Niste odabrali aktivnost!");			    	
+			    	frmVrti.setAlwaysOnTop(true);
+			    }
 			     else {
 			    	 for (Object selectedValue : list.getSelectedValuesList()){
 			    		 parts.addElement((Aktivnost)selectedValue);
@@ -327,8 +330,11 @@ private JTextField textField_6;
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if(list_1.getSelectedIndex()==-1) 
-			    	 JOptionPane.showMessageDialog(null,"Niste odabrali aktivnost!");
+				if(list_1.getSelectedIndex()==-1) {
+					frmVrti.setAlwaysOnTop(false);
+			    	 JOptionPane.showMessageDialog(null,"Niste odabrali aktivnost!");					
+					frmVrti.setAlwaysOnTop(true);
+				}
 			     else {
 			    	 for (Object selectedValue : list_1.getSelectedValuesList()){
 			    		 partsSelected.addElement((Aktivnost)selectedValue);

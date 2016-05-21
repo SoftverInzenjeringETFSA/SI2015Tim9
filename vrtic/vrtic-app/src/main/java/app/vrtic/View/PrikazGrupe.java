@@ -157,7 +157,11 @@ public class PrikazGrupe {
 						novifrejm.OtvoriFormu();
 						frmVrti.dispose();
 					}
-					else JOptionPane.showMessageDialog(null, "Niste odabrali dijete");
+					else{
+						frmVrti.setAlwaysOnTop(false);
+						JOptionPane.showMessageDialog(null, "Niste odabrali dijete");
+						frmVrti.setAlwaysOnTop(true);
+					}
 			}
 
 		});
@@ -177,7 +181,11 @@ public class PrikazGrupe {
 					novifrejm.OtvoriFormu();
 					frmVrti.dispose();
 				}
-				else JOptionPane.showMessageDialog(null, "Niste odabrali dijete");
+				else {
+					frmVrti.setAlwaysOnTop(false);
+					JOptionPane.showMessageDialog(null, "Niste odabrali dijete");
+					frmVrti.setAlwaysOnTop(true);
+				}
 				
 			}
 		});

@@ -505,8 +505,11 @@ private JTextPane textPane;
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-			    if(list.getSelectedIndex()==-1) 
+			    if(list.getSelectedIndex()==-1) {
+			    	 frmVrti.setAlwaysOnTop(false);
 			    	 JOptionPane.showMessageDialog(null,"Niste odabrali aktivnost!");
+			    	 frmVrti.setAlwaysOnTop(true);
+			    }
 			     else {
 			    	 for (Object selectedValue : list.getSelectedValuesList()){
 			    		 parts.addElement((Aktivnost)selectedValue);
@@ -524,8 +527,11 @@ private JTextPane textPane;
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if(list_1.getSelectedIndex()==-1) 
-			    	 JOptionPane.showMessageDialog(null,"Niste odabrali aktivnost!");
+				if(list_1.getSelectedIndex()==-1) {
+					frmVrti.setAlwaysOnTop(false);
+			    	 JOptionPane.showMessageDialog(null,"Niste odabrali aktivnost!");					
+					frmVrti.setAlwaysOnTop(true);
+				}
 			     else {
 			    	 for (Object selectedValue : list_1.getSelectedValuesList()){
 			    		 partsSelected.addElement((Aktivnost)selectedValue);

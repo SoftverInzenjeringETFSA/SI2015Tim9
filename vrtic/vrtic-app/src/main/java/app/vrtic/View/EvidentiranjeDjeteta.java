@@ -223,8 +223,11 @@ public class EvidentiranjeDjeteta {
 		
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-		     if(list.getSelectedIndex()==-1) 
+		     if(list.getSelectedIndex()==-1) {
+		    	 frmVrti.setAlwaysOnTop(false);
 		    	 JOptionPane.showMessageDialog(null,"Niste odabrali aktivnost!");
+		    	 frmVrti.setAlwaysOnTop(true);
+		     }
 		     else {
 		    	 for (Object selectedValue : list.getSelectedValuesList()){
 		    		 partSelected.addElement((Aktivnost)selectedValue);
@@ -240,8 +243,11 @@ public class EvidentiranjeDjeteta {
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(list_1.getSelectedIndex()==-1) 
-			    	 JOptionPane.showMessageDialog(null,"Niste odabrali aktivnost!");
+				if(list_1.getSelectedIndex()==-1) {
+					 frmVrti.setAlwaysOnTop(false);
+			    	 JOptionPane.showMessageDialog(null,"Niste odabrali aktivnost!");					
+			    	 frmVrti.setAlwaysOnTop(true);
+				}
 			     else {
 			    	 for (Object selectedValue : list_1.getSelectedValuesList()){
 			    		 parts.addElement((Aktivnost)selectedValue);

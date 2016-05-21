@@ -623,7 +623,7 @@ public class GlavniProzorDirektor {
 
 			}
 		});
-		btnKreirajRaspored.setBounds(533, 158, 126, 23);
+		btnKreirajRaspored.setBounds(511, 158, 148, 23);
 		panel_5.add(btnKreirajRaspored);
 
 		JPanel panel_6 = new JPanel();

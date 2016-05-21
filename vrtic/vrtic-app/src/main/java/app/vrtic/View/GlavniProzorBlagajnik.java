@@ -161,7 +161,9 @@ public class GlavniProzorBlagajnik {
 				Calendar cal = Calendar.getInstance();
 				Date danasnjiDatum = cal.getTime();
 				if(((Date) spinner_2.getValue()).after(danasnjiDatum) ){
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null,"Datum uplate je u buducnosti!");
+					frmVrti.setAlwaysOnTop(true);
 					return;
 				}
 				// da li je mjesec cekiran
@@ -179,8 +181,9 @@ public class GlavniProzorBlagajnik {
 									mjesec = listaCheckboxova.get(i).getText();
 							
 								if(!zs.postojiZaduzenje(((Dijete) comboBox_1.getSelectedItem()), godina, mjesec)){
-								JOptionPane.showMessageDialog(null,"Ne postoji zaduzenje kod odabranog djeteta za odabrani period.");
-								
+									frmVrti.setAlwaysOnTop(false);
+									JOptionPane.showMessageDialog(null,"Ne postoji zaduzenje kod odabranog djeteta za odabrani period.");
+									frmVrti.setAlwaysOnTop(true);						
 								return;
 								}
 								else {zs.obrisiZaduzenje(((Dijete) comboBox_1.getSelectedItem()), godina, mjesec);
@@ -249,8 +252,9 @@ public class GlavniProzorBlagajnik {
 								
 								mjesec = listaCheckboxova.get(i).getText();
 							if(!zs.postojiZaduzenje(((Dijete) comboBox_1.getSelectedItem()), godina, mjesec)){
+								frmVrti.setAlwaysOnTop(false);
 								JOptionPane.showMessageDialog(null,"Ne postoji zaduzenje kod odabranog djeteta za odabrani period.");
-								
+								frmVrti.setAlwaysOnTop(true);								
 								return;
 								}
 							else{zs.obrisiZaduzenje(((Dijete) comboBox_1.getSelectedItem()), godina, mjesec);
@@ -588,8 +592,9 @@ public class GlavniProzorBlagajnik {
 					JOptionPane.showMessageDialog(null, "Generisali ste izvjestaj!");
 					frmVrti.setAlwaysOnTop(true);
 				} catch (Exception e) {
+					frmVrti.setAlwaysOnTop(false);
 					JOptionPane.showMessageDialog(null, "Doslo je do greske, izvjestaj nije generisan.");
-
+					frmVrti.setAlwaysOnTop(true);
 					logger.info(e);
 				}
 
