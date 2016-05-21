@@ -144,7 +144,7 @@ public class PrikazGrupe {
 		ArrayList<Integer> djecijiID = sveDjecaZaGrupu(g.getNaziv());
 		final ArrayList<Integer> djecijiID2 = djecijiID;
 		JButton btnIzmijeni = new JButton("Izmijeni");
-		btnIzmijeni.setBounds(505, 90, 126, 23);
+		btnIzmijeni.setBounds(505, 111, 126, 23);
 		frmVrti.getContentPane().add(btnIzmijeni);
 		btnIzmijeni.addActionListener(new ActionListener()
 		{
@@ -163,8 +163,26 @@ public class PrikazGrupe {
 		});
 		g2=g;
 		JButton btnObrisi = new JButton("Obri\u0161i");
-		btnObrisi.setBounds(505, 134, 126, 23);
+		btnObrisi.setBounds(505, 145, 126, 23);
 		frmVrti.getContentPane().add(btnObrisi);
+		
+		JButton btnPrikazi = new JButton("Prika\u017Ei");
+		btnPrikazi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(tabelaDijete.getSelectedRow()!=-1) {
+					int ID = djecijiID2.get(tabelaDijete.getSelectedRow());
+					
+					PrikazDjeteta novifrejm = new PrikazDjeteta(s, roditelj ,ID);
+					novifrejm.OtvoriFormu();
+					frmVrti.dispose();
+				}
+				else JOptionPane.showMessageDialog(null, "Niste odabrali dijete");
+				
+			}
+		});
+		btnPrikazi.setBounds(505, 78, 126, 23);
+		frmVrti.getContentPane().add(btnPrikazi);
 		btnObrisi.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -253,27 +271,4 @@ public void StatistikaAktivnosti(AktivnostServis as){
 		}
 		*/
 		}
-
-// Export tabele
-/*
-public void exportTable(JTable jTable1,File file) throws IOException{
-    TableModel model=jTable1.getModel();
-    FileWriter out=new FileWriter(file);
-    BufferedWriter bw=new BufferedWriter(out);
-    for (int i=0;i<model.getColumnCount();i++){
-      bw.write(model.getColumnName(i)+"\t");
-    }
-    bw.write("\n");
-    for (int i=0;i<model.getRowCount();i++){
-      for (int j=0;j<model.getColumnCount();j++){
-        bw.write(model.getValueAt(i,j).toString()+"\t");
-      }
-      bw.write("\n");
-    }
-    bw.close();
- System.out.print("Pisanje u " + file);
-
-
-}
-*/
 }
