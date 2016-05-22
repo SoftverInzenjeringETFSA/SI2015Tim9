@@ -2,12 +2,15 @@ package app.vrtic;
 
 import org.hibernate.Transaction;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import app.vrtic.Model.Korisnik;
@@ -17,12 +20,14 @@ import app.vrtic.View.login;
  * Hello world!
  *
  */
+
 public class App 
-{
+{	final static Logger logger = Logger.getLogger(login.class);
 	
 	private static Scanner sc = new Scanner(System.in);
     public static void main( String[] args )
     {
+    	try{
         System.out.println( "Hello World!" );
         Session session = HibernateUtil.getSessionFactory().openSession();
       //Kod za transakcije
@@ -34,6 +39,10 @@ public class App
          */
         login lg = new login(session);
         lg.OtvoriFormu();
+    	}
+    	catch(Exception e){
+    		logger.info(e);
+    	}
     }
     /*
     public static ArrayList<Korisnik> dajKorisnike(Session s){
